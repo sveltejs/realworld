@@ -1,4 +1,4 @@
-<Editor :article on:publish='create(event.article)' :inProgress/>
+<Editor :article on:publish='update(event.article)' :inProgress/>
 
 <script>
 	import { goto } from 'sapper/runtime/app.js';
@@ -13,23 +13,25 @@
 
 		store: () => store,
 
+		preload({ params }) {
+			return api.get(`articles/${params.slug}`);
+		},
+
 		data() {
 			return {
-				article: {
-					title: '',
-					description: '',
-					body: '',
-					tagInput: ''
-				},
 				inProgress: false
 			};
 		},
 
 		methods: {
-			create(article) {
+			update(article) {
+				const { slug } = this.get('params');
+
+				console.log(article, slug);
+
 				this.set({ inProgress: true });
 
-				api.post('articles', { article }).then(response => {
+				api.put(`articles/${slug}`, { article }).then(response => {
 					if (response.article) {
 						goto(`/article/${response.article.slug}`);
 					}

@@ -1,0 +1,103 @@
+<:Head>
+	<title>New post • Conduit</title>
+</:Head>
+
+<Layout page='editor'>
+	<div class="editor-page">
+		<div class="container page">
+			<div class="row">
+				<div class="col-md-10 offset-md-1 col-xs-12">
+
+					<ListErrors :errors/>
+
+					<form>
+						<fieldset>
+
+							<fieldset class="form-group">
+								<input class="form-control form-control-lg" type="text" placeholder="Article Title" bind:value=title>
+							</fieldset>
+
+							<fieldset class="form-group">
+								<input class="form-control" type="text" placeholder="What's this article about?" bind:value=description>
+							</fieldset>
+
+							<fieldset class="form-group">
+								<textarea class="form-control" rows="8" placeholder="Write your article (in markdown)" bind:value=body/>
+							</fieldset>
+
+							<fieldset class="form-group">
+								<input class="form-control" type="text" placeholder="Enter tags" bind:value=tagInput onKeyUp={this.watchForEnter}>
+
+								<div class="tag-list">
+									{{#each tagList as tag}}
+										<span class="tag-default tag-pill">
+											<i class="ion-close-round" on:click='removeTag(tag)'/>
+											{{tag}}
+										</span>
+									{{/each}}
+								</div>
+							</fieldset>
+
+							<button class="btn btn-lg pull-xs-right btn-primary" type="button" disabled={{inProgress}} on:click='publish()'>
+								Publish Article
+							</button>
+						</fieldset>
+					</form>
+
+				</div>
+			</div>
+		</div>
+	</div>
+</Layout>
+
+<script>
+	import Layout from '../_components/Layout.html';
+	import ListErrors from '../_components/ListErrors.html';
+	import store from '../_store.js';
+	import * as api from '../_api.js';
+	import { goto } from 'sapper/runtime/app.js';
+
+	export default {
+		components: {
+			Layout,
+			ListErrors
+		},
+
+		store: () => store,
+
+		computed: {
+			tagList: tagInput => {
+				// TODO
+				return [];
+			}
+		},
+
+		oncreate() {
+			const { title, description, body, tagInput } = this.get('article');
+			this.set({ title, description, body, tagInput });
+		},
+
+		methods: {
+			removeTag(tag) {
+				console.error('TODO remove tag', tag);
+			},
+
+			publish() {
+				const { title, description, body, tagInput } = this.get();
+				this.fire('publish', {
+					article: { title, description, body, tagInput }
+				});
+			},
+
+			submit() {
+				api.post('articles', {
+					article: this.get()
+				}).then(response => {
+					if (response.article) {
+						goto(`/article/${response.article.slug}`);
+					}
+				});
+			}
+		}
+	};
+</script>

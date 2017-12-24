@@ -13,7 +13,7 @@
 		</div>
 
 		<div class="pull-xs-right">
-			<button class='btn btn-sm {{favorited ? "btn-primary" : "btn-outline-primary"}}' on:click='toggleFavorite()'>
+			<button class='btn btn-sm {{article.favorited ? "btn-primary" : "btn-outline-primary"}}' on:click='toggleFavorite()'>
 				<i class="ion-heart"></i> {{article.favoritesCount}}
 			</button>
 		</div>
@@ -34,10 +34,18 @@
 </div>
 
 <script>
+	import * as api from '../../_api.js';
+
 	export default {
 		methods: {
 			toggleFavorite() {
-				console.error('TODO')
+				const { article } = this.get();
+
+				// TODO optimistic UI
+				const fn = article.favorited ? api.del : api.post;
+				fn(`articles/${article.slug}/favorite`).then(response => {
+					this.set(response);
+				});
 			}
 		}
 	};

@@ -16,15 +16,15 @@
 							<a href="/settings" class="btn btn-sm btn-outline-secondary action-btn">
 								<i class="ion-gear-a"></i> Edit Profile Settings
 							</a>
+						{{else}}
+							<button
+								class='btn btn-sm action-btn {{profile.following ? "btn-secondary" : "btn-outline-secondary"}}'
+								on:click='toggleFollowing()'
+							>
+								<i class="ion-plus-round"></i>
+								{{profile.following ? 'Unfollow' : 'Follow'}} {{profile.username}}
+							</button>
 						{{/if}}
-
-						<button
-							class='btn btn-sm action-btn {{profile.following ? "btn-secondary" : "btn-outline-secondary"}}'
-							on:click='toggleFollowing()'
-						>
-							<i class="ion-plus-round"></i>
-							{{profile.following ? 'Unfollow' : 'Follow'}} {{profile.username}}
-						</button>
 					</div>
 				</div>
 			</div>

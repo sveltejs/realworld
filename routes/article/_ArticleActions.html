@@ -1,22 +1,35 @@
 {{#if canModify}}
 	<span>
 		<a href='/editor/{{article.slug}}' class="btn btn-outline-secondary btn-sm">
-			<i class="ion-edit"></i> Edit Article
+			<i class="ion-edit"/> Edit Article
 		</a>
 
 		<button class="btn btn-outline-danger btn-sm" on:click='remove()'>
-			<i class="ion-trash-a"></i> Delete Article
+			<i class="ion-trash-a"/> Delete Article
 		</button>
 	</span>
 {{else}}
-	<span></span>
+	<!-- TODO is this necessary? -->
+	<span/>
 {{/if}}
 
 <script>
+	import { goto } from 'sapper/runtime/app.js';
+	import * as api from '../_api.js';
+
 	export default {
+		computed: {
+			canModify: (article, $user) => $user && article.author.username === $user.username
+		},
+
 		methods: {
 			remove() {
-				console.error('TODO remove')
+				const { slug } = this.get('article');
+
+				api.del(`/articles/${slug}`).then(response => {
+					console.log(response);
+					goto('/');
+				});
 			}
 		}
 	};
