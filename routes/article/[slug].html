@@ -1,0 +1,85 @@
+<:Head>
+	<title>{{article.title}}</title>
+</:Head>
+
+<Layout page='login'>
+	<div class="article-page">
+
+		<div class="banner">
+			<div class="container">
+				<h1>{{article.title}}</h1>
+				<ArticleMeta :article :canModify/>
+			</div>
+		</div>
+
+		<div class="container page">
+			<div class="row article-content">
+				<div class="col-xs-12">
+
+					<div>{{{markup}}}</div>
+
+					<ul class="tag-list">
+						{{#each article.tagList as tag}}
+							<li class="tag-default tag-pill tag-outline">
+								{{tag}}
+							</li>
+						{{/each}}
+					</ul>
+
+				</div>
+			</div>
+
+			<hr />
+
+			<div class="article-actions">
+			</div>
+
+			<div class="row">
+				<CommentContainer :comments errors={{commentErrors}} slug={{params.slug}}/>
+			</div>
+		</div>
+	</div>
+</Layout>
+
+<script>
+	import marked from 'marked';
+	import Layout from '../_components/Layout.html';
+	import ArticleMeta from './_ArticleMeta.html';
+	import CommentContainer from './_CommentContainer.html';
+	import store from '../_store.js';
+	import { base } from '../_config.js';
+
+	export default {
+		components: {
+			Layout,
+			ArticleMeta,
+			CommentContainer
+		},
+
+		store: () => store,
+
+		data() {
+			return {
+				comments: [] // we'll lazy-load these
+			}
+		},
+
+		computed: {
+			markup: article => marked(article.body)
+		},
+
+		preload({ params }) {
+			return fetch(`${base}/articles/${params.slug}`).then(r => r.json());
+		},
+
+		oncreate() {
+			const { slug } = this.get('params');
+
+			fetch(`${base}/articles/${slug}/comments`)
+				.then(r => r.json())
+				.then(({ comments }) => {
+					this.set({ comments });
+				});
+		}
+	};
+</script>

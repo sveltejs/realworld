@@ -1,0 +1,52 @@
+<:Head>
+	<title>Conduit</title>
+</:Head>
+
+<Layout page='home'>
+	<div class="home-page">
+
+		<div class="banner">
+			<div class="container">
+				<h1 class="logo-font">conduit</h1>
+				<p>A place to share your knowledge.</p>
+			</div>
+		</div>
+
+		<div class="container page">
+			<div class="row">
+				<MainView :tag bind:tab />
+
+				<div class="col-md-3">
+					<div class="sidebar">
+						<p>Popular Tags</p>
+						<Tags :tags on:select='set({ tag: event.tag, tab: "tag" })' />
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</Layout>
+
+<script>
+	import Layout from './_components/Layout.html';
+	import MainView from './_components/MainView/index.html';
+	import Tags from './_components/Tags.html';
+	import store from './_store.js';
+	import * as api from './_api.js';
+
+	export default {
+		components: {
+			Layout,
+			MainView,
+			Tags
+		},
+
+		store: () => store,
+
+		oncreate() {
+			api.get('tags').then(({ tags }) => {
+				this.set({ tags });
+			});
+		}
+	};
+</script>

@@ -1,0 +1,45 @@
+<div class="col-md-9">
+	<div class="feed-toggle">
+		<ul class="nav nav-pills outline-active">
+			{{#if $user}}
+				<li class="nav-item">
+					<a href="" class='nav-link {{tab === "feed" ? "active" : "" }}' on:click='set({ tab: "feed", tag: null })'>
+						Your Feed
+					</a>
+				</li>
+			{{/if}}
+
+			<li class="nav-item">
+				<a href="" class='nav-link {{tab === "all" ? "active" : "" }}' on:click='set({ tab: "all", tag: null })'>
+					Global Feed
+				</a>
+			</li>
+
+			{{#if tag}}
+				<li class="nav-item">
+					<a href="" class='nav-link {{tab === "tag" ? "active" : "" }}' on:click='set({ tab: "tag" })'>
+						<i class="ion-pound"></i> {{tag}}
+					</a>
+				</li>
+			{{/if}}
+		</ul>
+	</div>
+
+	<ArticleList :tab :tag/>
+</div>
+
+<script>
+	import ArticleList from '../ArticleList/index.html';
+
+	export default {
+		components: {
+			ArticleList
+		},
+
+		data() {
+			return {
+				tab: 'feed'
+			};
+		}
+	};
+</script>

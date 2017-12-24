@@ -1,0 +1,23 @@
+{{#if canModify}}
+	<span>
+		<a href='/editor/{{article.slug}}' class="btn btn-outline-secondary btn-sm">
+			<i class="ion-edit"></i> Edit Article
+		</a>
+
+		<button class="btn btn-outline-danger btn-sm" on:click='remove()'>
+			<i class="ion-trash-a"></i> Delete Article
+		</button>
+	</span>
+{{else}}
+	<span></span>
+{{/if}}
+
+<script>
+	export default {
+		methods: {
+			remove() {
+				console.error('TODO remove')
+			}
+		}
+	};
+</script>

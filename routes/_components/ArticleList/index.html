@@ -1,0 +1,60 @@
+{{#if articles}}
+	{{#if articles.length === 0}}
+		<div class="article-preview">
+			No articles are here... yet.
+		</div>
+	{{else}}
+		<div>
+			{{#each articles as article @slug}}
+				<ArticlePreview :article/>
+			{{/each}}
+
+			<ListPagination :articlesCount :page on:select='set({ page: event.page })' />
+		</div>
+	{{/if}}
+{{else}}
+	<div class="article-preview">Loading...</div>
+{{/if}}
+
+<script>
+	import ArticlePreview from './ArticlePreview.html';
+	import ListPagination from './ListPagination.html';
+	import * as api from '../../_api.js';
+	import { base } from '../../_config.js';
+
+	export default {
+		components: {
+			ArticlePreview,
+			ListPagination
+		},
+
+		data() {
+			return {
+				page: 0
+			};
+		},
+
+		computed: {
+			query: (tab, page, username, favorites, tag) => {
+				const endpoint = tab === 'feed' ? 'articles/feed' : 'articles';
+				const page_size = tab === 'feed' ? 5 : 10;
+
+				let params = `limit=${page_size}&offset=${page * page_size}`;
+				if (tab === 'tag') params += `&tag=${tag}`;
+				if (tab === 'profile') params += `&${favorites ? 'favorited' : 'author'}=${encodeURIComponent(username)}`;
+
+				return `${endpoint}?${params}`;
+			}
+		},
+
+		oncreate() {
+			this.observe('query', query => {
+				api.get(query)
+					.then(data => {
+						// TODO do we need some error handling here?
+						this.set(data);
+					});
+			});
+		}
+	};
+</script>

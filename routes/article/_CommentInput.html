@@ -1,0 +1,38 @@
+<form class="card comment-form" on:submit='submit(event)'>
+	<div class="card-block">
+		<textarea class="form-control" placeholder="Write a comment..." bind:value=comment rows="3"/>
+	</div>
+
+	<div class="card-footer">
+		<img src={{$user.image}} class="comment-author-img" alt={{$user.username}} >
+		<button class="btn btn-sm btn-primary" type="submit">Post Comment</button>
+	</div>
+</form>
+
+<script>
+	import * as api from '../_api.js';
+	import { base } from '../_config.js';
+
+	export default {
+		data() {
+			return {
+				comment: ''
+			};
+		},
+
+		methods: {
+			submit(event) {
+				event.preventDefault();
+
+				const { slug, comment } = this.get();
+				console.log({ slug, comment })
+
+				api.post(`articles/${slug}/comments`, {
+					comment
+				}).then(response => {
+					console.log({ response });
+				});
+			}
+		}
+	};
+</script>

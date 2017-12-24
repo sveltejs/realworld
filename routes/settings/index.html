@@ -1,0 +1,62 @@
+<:Head>
+	<title>Settings • Conduit</title>
+</:Head>
+
+<Layout page='settings'>
+	<div class="settings-page">
+		<div class="container page">
+			<div class="row">
+				<div class="col-md-6 offset-md-3 col-xs-12">
+
+					<h1 class="text-xs-center">Your Settings</h1>
+
+					<ListErrors :errors/>
+
+					<SettingsForm on:save='save(event)' :inProgress/>
+
+					<hr />
+
+					<button class="btn btn-outline-danger" on:click='logout()'>
+						Or click here to logout.
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</Layout>
+
+<script>
+	import { goto } from 'sapper/runtime/app.js';
+	import Layout from '../_components/Layout.html';
+	import ListErrors from '../_components/ListErrors.html';
+	import SettingsForm from './_SettingsForm.html';
+	import store from '../_store.js';
+
+	export default {
+		components: {
+			Layout,
+			ListErrors,
+			SettingsForm
+		},
+
+		store: () => store,
+
+		methods: {
+			logout() {
+				goto('/');
+				store.logout();
+			},
+
+			save(user) {
+				this.set({ inProgress: true });
+
+				store.save(user).then(response => {
+					this.set({
+						errors: response.errors,
+						inProgress: false
+					});
+				});
+			}
+		}
+	};
+</script>

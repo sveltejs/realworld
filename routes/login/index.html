@@ -1,0 +1,78 @@
+<:Head>
+	<title>Sign in • Conduit</title>
+</:Head>
+
+<Layout page='login'>
+	<div class="auth-page">
+		<div class="container page">
+			<div class="row">
+
+				<div class="col-md-6 offset-md-3 col-xs-12">
+					<h1 class="text-xs-center">Sign In</h1>
+					<p class="text-xs-center">
+						<a href="/register">Need an account?</a>
+					</p>
+
+					<ListErrors :errors/>
+
+					<form on:submit='submit(event)'>
+						<fieldset class="form-group">
+							<input class="form-control form-control-lg" type="email" placeholder="Email" bind:value=email>
+						</fieldset>
+						<fieldset class="form-group">
+							<input class="form-control form-control-lg" type="password" placeholder="Password" bind:value=password>
+						</fieldset>
+						<button class="btn btn-lg btn-primary pull-xs-right" type="submit" disabled='{{!email || !password}}'>
+							Sign in
+						</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</Layout>
+
+<script>
+	import { goto } from 'sapper/runtime/app.js';
+	import Layout from '../_components/Layout.html';
+	import ListErrors from '../_components/ListErrors.html';
+	import store from '../_store.js';
+
+	export default {
+		components: {
+			Layout,
+			ListErrors
+		},
+
+		store: () => store,
+
+		data() {
+			return {
+				email: '',
+				password: '',
+				errors: null
+			};
+		},
+
+		methods: {
+			submit(event) {
+				event.preventDefault();
+
+				const { email, password } = this.get();
+
+				store.login({ email, password })
+					.then(response => {
+						if (response.errors) {
+							this.set({ errors: response.errors });
+						} else {
+							goto('/');
+						}
+					})
+					.catch(err => {
+						// TODO handle network errors
+						console.error({ err });
+					});
+			}
+		}
+	};
+</script>
