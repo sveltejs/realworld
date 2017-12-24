@@ -7,6 +7,12 @@
 						Your Feed
 					</a>
 				</li>
+			{{else}}
+				<li class="nav-item">
+					<a href="/login" class='nav-link'>
+						Your Feed
+					</a>
+				</li>
 			{{/if}}
 
 			<li class="nav-item">
@@ -38,7 +44,7 @@
 
 		data() {
 			return {
-				tab: 'feed'
+				tab: 'all'
 			};
 		}
 	};
