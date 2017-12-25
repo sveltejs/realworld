@@ -8,7 +8,9 @@
     "start": "cross-env NODE_ENV=production node server.js",
     "cy:run": "cypress run",
     "cy:open": "cypress open",
-    "test": "run-p --race dev cy:run"
+    "test": "run-p --race dev cy:run",
+    "stage": "now",
+    "deploy": "now && now alias"
   },
   "dependencies": {
     "compression": "^1.7.1",
@@ -20,12 +22,24 @@
     "marked": "^0.3.9",
     "node-fetch": "^1.7.3",
     "npm-run-all": "^4.1.2",
-    "sapper": "^0.2.3",
+    "sapper": "^0.2.10",
     "serve-static": "^1.13.1",
     "style-loader": "^0.19.0",
     "svelte": "^1.49.1",
     "svelte-loader": "^2.3.1",
     "uglifyjs-webpack-plugin": "^1.1.2",
     "webpack": "^3.10.0"
+  },
+  "now": {
+    "alias": "svelte-realworld.now.sh",
+    "files": [
+      "assets",
+      "routes",
+      "templates",
+      "server.js",
+      "webpack.client.config.js",
+      "webpack.server.config.js",
+      "yarn.lock"
+    ]
   }
 }
