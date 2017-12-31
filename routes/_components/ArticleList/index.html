@@ -6,7 +6,7 @@
 	{{else}}
 		<div>
 			{{#each articles as article @slug}}
-				<ArticlePreview :article/>
+				<ArticlePreview :user :article/>
 			{{/each}}
 
 			<ListPagination :articlesCount :page on:select='set({ page: event.page })' />
@@ -22,10 +22,7 @@
 	import * as api from '../../_api.js';
 
 	export default {
-		components: {
-			ArticlePreview,
-			ListPagination
-		},
+		components: { ArticlePreview, ListPagination },
 
 		data() {
 			return {

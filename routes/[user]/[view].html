@@ -59,10 +59,7 @@
 	import * as auth from '../_auth.js';
 
 	export default {
-		components: {
-			Layout,
-			ArticleList
-		},
+		components: { Layout, ArticleList },
 
 		preload({ session, params }) {
 			const username = params.user.slice(1);

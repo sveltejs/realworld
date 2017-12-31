@@ -33,11 +33,7 @@
 	import * as auth from '../_auth.js';
 
 	export default {
-		components: {
-			Layout,
-			ListErrors,
-			SettingsForm
-		},
+		components: { Layout, ListErrors, SettingsForm },
 
 		preload({ session }) {
 			return {
@@ -47,8 +43,9 @@
 
 		methods: {
 			logout() {
-				auth.logout();
-				goto('/');
+				auth.logout().then(() => {
+					goto('/');
+				});
 			},
 
 			save(user) {

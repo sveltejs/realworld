@@ -12,11 +12,13 @@
 			</span>
 		</div>
 
-		<div class="pull-xs-right">
-			<button class='btn btn-sm {{article.favorited ? "btn-primary" : "btn-outline-primary"}}' on:click='toggleFavorite()'>
-				<i class="ion-heart"></i> {{article.favoritesCount}}
-			</button>
-		</div>
+		{{#if user}}
+			<div class="pull-xs-right">
+				<button class='btn btn-sm {{article.favorited ? "btn-primary" : "btn-outline-primary"}}' on:click='toggleFavorite()'>
+					<i class="ion-heart"></i> {{article.favoritesCount}}
+				</button>
+			</div>
+		{{/if}}
 	</div>
 
 	<a href='/article/{{article.slug}}' class="preview-link">
@@ -39,11 +41,14 @@
 	export default {
 		methods: {
 			toggleFavorite() {
-				const { article } = this.get();
+				const { article, user } = this.get();
 
 				// TODO optimistic UI
-				const fn = article.favorited ? api.del : api.post;
-				fn(`articles/${article.slug}/favorite`).then(response => {
+				const promise = article.favorited ?
+					api.del(`articles/${article.slug}/favorite`, user && user.token) :
+					api.post(`articles/${article.slug}/favorite`, null, user && user.token);
+
+				promise.then(response => {
 					this.set(response);
 				});
 			}

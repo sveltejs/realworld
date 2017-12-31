@@ -12,7 +12,15 @@ function send({ method, path, data, token }) {
 		opts.headers['Authorization'] = `Token ${token}`;
 	}
 
-	return fetch(`${base}/${path}`, opts).then(r => method === 'DELETE' ? r.text() : r.json());
+	return fetch(`${base}/${path}`, opts)
+		.then(r => r.text())
+		.then(json => {
+			try {
+				return JSON.parse(json);
+			} catch (err) {
+				return json;
+			}
+		});
 }
 
 export function get(path, token) {

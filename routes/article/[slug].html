@@ -50,11 +50,7 @@
 	import * as auth from '../_auth.js';
 
 	export default {
-		components: {
-			Layout,
-			ArticleMeta,
-			CommentContainer
-		},
+		components: { Layout, ArticleMeta, CommentContainer },
 
 		preload({ session, params }) {
 			return api.get(`articles/${params.slug}`).then(({ article }) => {

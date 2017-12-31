@@ -27,7 +27,7 @@ export function login(credentials) {
 }
 
 export function logout() {
-	return post(`/auth/login`).then(response => {
+	return post(`/auth/logout`).then(response => {
 		user = null;
 		return response;
 	});
