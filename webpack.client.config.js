@@ -41,6 +41,11 @@ module.exports = {
 		].filter(Boolean)
 	},
 	plugins: [
+		new webpack.optimize.CommonsChunkPlugin({
+			name: 'main',
+			async: true,
+			children: true
+		}),
 		config.dev && new webpack.HotModuleReplacementPlugin(),
 		!config.dev && new ExtractTextPlugin('main.css'),
 		!config.dev && new webpack.optimize.ModuleConcatenationPlugin(),
