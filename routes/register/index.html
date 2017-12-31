@@ -40,7 +40,7 @@
 	import { goto } from 'sapper/runtime.js';
 	import Layout from '../_components/Layout.html';
 	import ListErrors from '../_components/ListErrors.html';
-	import { user, register } from '../_auth.js';
+	import * as auth from '../_auth.js';
 
 	export default {
 		components: {
@@ -50,7 +50,7 @@
 
 		preload({ session }) {
 			return {
-				user: session ? session.user : user
+				user: session ? session.user : auth.user
 			};
 		},
 
@@ -69,7 +69,7 @@
 
 				const { username, email, password } = this.get();
 
-				register({ username, email, password })
+				auth.register({ username, email, password })
 					.then(response => {
 						if (response.errors) {
 							this.set({ errors: response.errors });

@@ -8,7 +8,7 @@
 		<div class="banner">
 			<div class="container">
 				<h1>{{article.title}}</h1>
-				<ArticleMeta :article/>
+				<ArticleMeta :user :article/>
 			</div>
 		</div>
 
@@ -47,8 +47,7 @@
 	import ArticleMeta from './_ArticleMeta.html';
 	import CommentContainer from './_CommentContainer.html';
 	import * as api from '../_api.js';
-	import { user } from '../_auth.js';
-	import { base } from '../_config.js';
+	import * as auth from '../_auth.js';
 
 	export default {
 		components: {
@@ -61,7 +60,7 @@
 			return api.get(`articles/${params.slug}`).then(({ article }) => {
 				return {
 					article,
-					user: session ? session.user : user
+					user: session ? session.user : auth.user
 				};
 			});
 		},
@@ -79,11 +78,9 @@
 		oncreate() {
 			const { slug } = this.get('params');
 
-			fetch(`${base}/articles/${slug}/comments`)
-				.then(r => r.json())
-				.then(({ comments }) => {
-					this.set({ comments });
-				});
+			api.get(`articles/${slug}/comments`).then(({ comments }) => {
+				this.set({ comments });
+			});
 		}
 	};
 </script>

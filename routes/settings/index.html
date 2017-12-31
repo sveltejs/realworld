@@ -30,7 +30,7 @@
 	import Layout from '../_components/Layout.html';
 	import ListErrors from '../_components/ListErrors.html';
 	import SettingsForm from './_SettingsForm.html';
-	import { logout, save, user } from '../_auth.js';
+	import * as auth from '../_auth.js';
 
 	export default {
 		components: {
@@ -41,27 +41,20 @@
 
 		preload({ session }) {
 			return {
-				user: session ? session.user : user
+				user: session ? session.user : auth.user
 			};
 		},
 
 		methods: {
 			logout() {
-				logout();
+				auth.logout();
 				goto('/');
 			},
 
 			save(user) {
 				this.set({ inProgress: true });
 
-				fetch(`/auth/save`, {
-					method: 'POST',
-					body: JSON.stringify(user),
-					headers: {
-						'Content-Type': 'application/json'
-					},
-					credentials: 'include'
-				}).then(r => r.json()).then(response => {
+				auth.save(user).then(response => {
 					this.set({
 						user: response.user || this.get('user'),
 						errors: response.errors,

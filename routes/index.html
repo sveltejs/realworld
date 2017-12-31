@@ -31,7 +31,7 @@
 	import Layout from './_components/Layout.html';
 	import MainView from './_components/MainView/index.html';
 	import Tags from './_components/Tags.html';
-	import { user } from './_auth.js';
+	import * as auth from './_auth.js';
 	import * as api from './_api.js';
 
 	export default {
@@ -43,7 +43,7 @@
 
 		preload({ session }) {
 			return {
-				user: session ? session.user : user
+				user: session ? session.user : auth.user
 			};
 		},
 

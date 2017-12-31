@@ -24,9 +24,9 @@
 
 		methods: {
 			remove() {
-				const { slug } = this.get('article');
+				const { user, article } = this.get();
 
-				api.del(`/articles/${slug}`).then(response => {
+				api.del(`/articles/${article.slug}`, user && user.token).then(response => {
 					goto('/');
 				});
 			}

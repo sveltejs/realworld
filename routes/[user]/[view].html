@@ -56,7 +56,7 @@
 	import Layout from '../_components/Layout.html';
 	import ArticleList from '../_components/ArticleList/index.html';
 	import * as api from '../_api.js';
-	import { user } from '../_auth.js';
+	import * as auth from '../_auth.js';
 
 	export default {
 		components: {
@@ -66,10 +66,10 @@
 
 		preload({ session, params }) {
 			const username = params.user.slice(1);
-			const u = session ? session.user : user;
+			const user = session ? session.user : auth.user;
 
-			return api.get(`profiles/${username}`, u && u.token).then(({ profile }) => {
-				return { profile, user: u, favorites: params.view === 'favorites' };
+			return api.get(`profiles/${username}`, user && user.token).then(({ profile }) => {
+				return { profile, user, favorites: params.view === 'favorites' };
 			});
 		},
 

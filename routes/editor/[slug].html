@@ -1,42 +1,122 @@
-<Editor :user :article on:publish='update(event.article)' :inProgress/>
+<Layout page='editor' :user>
+	<div class="editor-page">
+		<div class="container page">
+			<div class="row">
+				<div class="col-md-10 offset-md-1 col-xs-12">
+					<ListErrors :errors/>
+
+					<form>
+						<fieldset>
+							<fieldset class="form-group">
+								<input class="form-control form-control-lg" type="text" placeholder="Article Title" bind:value=article.title>
+							</fieldset>
+
+							<fieldset class="form-group">
+								<input class="form-control" type="text" placeholder="What's this article about?" bind:value=article.description>
+							</fieldset>
+
+							<fieldset class="form-group">
+								<textarea class="form-control" rows="8" placeholder="Write your article (in markdown)" bind:value=article.body/>
+							</fieldset>
+
+							<fieldset class="form-group">
+								<input class="form-control" type="text" placeholder="Enter tags" on:enter='addTag(this)'>
+
+								<div class="tag-list">
+									{{#each article.tagList as tag, i}}
+										<span class="tag-default tag-pill">
+											<i class="ion-close-round" on:click='splice("article.tagList", i, 1)'/>
+											{{tag}}
+										</span>
+									{{/each}}
+								</div>
+							</fieldset>
+
+							<button class="btn btn-lg pull-xs-right btn-primary" type="button" disabled={{inProgress}} on:click='publish()'>
+								Publish Article
+							</button>
+						</fieldset>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</Layout>
 
 <script>
 	import { goto } from 'sapper/runtime.js';
-	import Editor from './_EditorPage.html';
+	import Layout from '../_components/Layout.html';
+	import ListErrors from '../_components/ListErrors.html';
+	import { push, splice } from 'svelte-extras';
 	import * as api from '../_api.js';
-	import { user } from '../_auth.js';
+	import * as auth from '../_auth.js';
 
 	export default {
-		components: {
-			Editor
-		},
+		components: { Layout, ListErrors },
 
 		preload({ session, params }) {
+			const user = session ? session.user : auth.user;
+
+			if (params.slug === undefined) {
+				return { user };
+			}
+
 			return api.get(`articles/${params.slug}`).then(({ article }) => {
-				return {
-					article,
-					user: session ? session.user : user
-				};
+				return { article, user };
 			});
 		},
 
 		data() {
 			return {
-				inProgress: false
+				inProgress: false,
+				article: {
+					title: '',
+					description: '',
+					body: '',
+					tagList: []
+				}
 			};
 		},
 
 		methods: {
-			update(article) {
-				const { params, user } = this.get();
+			push,
+			splice,
+
+			addTag(input) {
+				this.push('article.tagList', input.value);
+				input.value = '';
+			},
+
+			publish() {
+				const { article, params, user } = this.get();
 
 				this.set({ inProgress: true });
 
-				api.put(`articles/${params.slug}`, { article }, user && user.token).then(response => {
+				const promise = params.slug === null ?
+					api.post('articles', { article }, user && user.token) :
+					api.put(`articles/${params.slug}`, { article }, user && user.token);
+
+				promise.then(response => {
 					if (response.article) {
 						goto(`/article/${response.article.slug}`);
 					}
 				});
+			}
+		},
+
+		events: {
+			enter(node, callback) {
+				function onkeydown(event) {
+					if (event.which === 13) callback();
+				}
+
+				node.addEventListener('keydown', onkeydown);
+
+				return {
+					teardown() {
+						node.removeEventListener('keydown', onkeydown);
+					}
+				};
 			}
 		}
 	};

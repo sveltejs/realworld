@@ -38,5 +38,5 @@ export function register(user) {
 }
 
 export function save(user) {
-	return fetch(`/auth/save`, user).then(interceptUser);
+	return post(`/auth/save`, user).then(interceptUser);
 }
