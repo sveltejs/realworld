@@ -1,17 +1,21 @@
-<Editor :article on:publish='create(event.article)' :inProgress/>
+<Editor :user :article on:publish='create(event.article)' :inProgress/>
 
 <script>
-	import { goto } from 'sapper/runtime/app.js';
+	import { goto } from 'sapper/runtime.js';
 	import Editor from './_EditorPage.html';
-	import store from '../_store.js';
 	import * as api from '../_api.js';
+	import { user } from '../_auth.js';
 
 	export default {
 		components: {
 			Editor
 		},
 
-		store: () => store,
+		preload({ session }) {
+			return {
+				user: session ? session.user : user
+			};
+		},
 
 		data() {
 			return {
@@ -29,7 +33,9 @@
 			create(article) {
 				this.set({ inProgress: true });
 
-				api.post('articles', { article }).then(response => {
+				const { user } = this.get();
+
+				api.post('articles', { article }, user && user.token).then(response => {
 					if (response.article) {
 						goto(`/article/${response.article.slug}`);
 					}

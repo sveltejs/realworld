@@ -2,7 +2,7 @@
 	<title>Sign in • Conduit</title>
 </:Head>
 
-<Layout page='login'>
+<Layout page='login' :user>
 	<div class="auth-page">
 		<div class="container page">
 			<div class="row">
@@ -33,10 +33,10 @@
 </Layout>
 
 <script>
-	import { goto } from 'sapper/runtime/app.js';
+	import { goto } from 'sapper/runtime.js';
 	import Layout from '../_components/Layout.html';
 	import ListErrors from '../_components/ListErrors.html';
-	import store from '../_store.js';
+	import { login, user } from '../_auth.js';
 
 	export default {
 		components: {
@@ -44,7 +44,11 @@
 			ListErrors
 		},
 
-		store: () => store,
+		preload({ session }) {
+			return {
+				user: session ? session.user : user
+			};
+		},
 
 		data() {
 			return {
@@ -60,7 +64,7 @@
 
 				const { email, password } = this.get();
 
-				store.login({ email, password })
+				login({ email, password })
 					.then(response => {
 						if (response.errors) {
 							this.set({ errors: response.errors });

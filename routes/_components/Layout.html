@@ -1,4 +1,4 @@
-<Nav page={{page}}/>
+<Nav :page :user />
 
 <main>
 	<slot></slot>
@@ -8,8 +8,6 @@
 	import Nav from './Nav.html';
 
 	export default {
-		components: {
-			Nav
-		}
+		components: { Nav }
 	};
 </script>

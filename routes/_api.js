@@ -1,41 +1,34 @@
-import { base, token } from './_config.js';
+import { base } from './_config.js';
 
-function headers(obj = {}) {
-	return Object.assign(token ? { 'Authorization': `Token ${token}` } : {}, obj);
-}
+function send({ method, path, data, token }) {
+	const opts = { method, headers: {} };
 
-export function get(path) {
-	return fetch(`${base}/${path}`, { headers: headers() })
-		.then(r => r.json());
-}
-
-export function del(path) {
-	return fetch(`${base}/${path}`, { method: 'DELETE', headers: headers() })
-		.then(r => r.json());
-}
-
-export function post(path, data) {
-	const opts = {
-		method: 'POST',
-		body: JSON.stringify(data),
-		headers: headers({
-			'Content-Type': 'application/json'
-		})
+	if (data) {
+		opts.headers['Content-Type'] = 'application/json';
+		opts.body = JSON.stringify(data);
 	}
 
-	return fetch(`${base}/${path}`, opts)
-		.then(r => r.json());
+	if (token) {
+		opts.headers['Authorization'] = `Token ${token}`;
+	}
+
+	return fetch(`${base}/${path}`, opts).then(r => method === 'DELETE' ? r.text() : r.json());
 }
 
-export function put(path, data) {
-	const opts = {
-		method: 'PUT',
-		body: JSON.stringify(data),
-		headers: headers({
-			'Content-Type': 'application/json'
-		})
-	};
+export function get(path, token) {
+	return send({ method: 'GET', path, token });
+}
 
-	return fetch(`${base}/${path}`, opts)
-		.then(r => r.json());
+export function del(path, token) {
+	console.log('deleting with token', token);
+	return send({ method: 'DELETE', path, token });
+}
+
+export function post(path, data, token) {
+	console.log('posting with token', token);
+	return send({ method: 'POST', path, data, token });
+}
+
+export function put(path, data, token) {
+	return send({ method: 'PUT', path, data, token });
 }

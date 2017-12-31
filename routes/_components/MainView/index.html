@@ -1,7 +1,7 @@
 <div class="col-md-9">
 	<div class="feed-toggle">
 		<ul class="nav nav-pills outline-active">
-			{{#if $user}}
+			{{#if user}}
 				<li class="nav-item">
 					<a href="" class='nav-link {{tab === "feed" ? "active" : "" }}' on:click='set({ tab: "feed", tag: null })'>
 						Your Feed
@@ -31,7 +31,7 @@
 		</ul>
 	</div>
 
-	<ArticleList :tab :tag/>
+	<ArticleList :user :tab :tag/>
 </div>
 
 <script>

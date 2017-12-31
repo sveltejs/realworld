@@ -2,7 +2,7 @@
 	<title>{{article.title}}</title>
 </:Head>
 
-<Layout page='login'>
+<Layout page='login' :user>
 	<div class="article-page">
 
 		<div class="banner">
@@ -35,7 +35,7 @@
 			</div>
 
 			<div class="row">
-				<CommentContainer :comments errors={{commentErrors}} slug={{params.slug}}/>
+				<CommentContainer :user :comments errors={{commentErrors}} slug={{params.slug}}/>
 			</div>
 		</div>
 	</div>
@@ -46,7 +46,8 @@
 	import Layout from '../_components/Layout.html';
 	import ArticleMeta from './_ArticleMeta.html';
 	import CommentContainer from './_CommentContainer.html';
-	import store from '../_store.js';
+	import * as api from '../_api.js';
+	import { user } from '../_auth.js';
 	import { base } from '../_config.js';
 
 	export default {
@@ -56,20 +57,23 @@
 			CommentContainer
 		},
 
-		store: () => store,
+		preload({ session, params }) {
+			return api.get(`articles/${params.slug}`).then(({ article }) => {
+				return {
+					article,
+					user: session ? session.user : user
+				};
+			});
+		},
 
 		data() {
 			return {
-				comments: [] // we'll lazy-load these
-			}
+				comments: [] // we'll lazy-load these in oncreate
+			};
 		},
 
 		computed: {
 			markup: article => marked(article.body)
-		},
-
-		preload({ params }) {
-			return fetch(`${base}/articles/${params.slug}`).then(r => r.json());
 		},
 
 		oncreate() {

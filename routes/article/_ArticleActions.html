@@ -14,12 +14,12 @@
 {{/if}}
 
 <script>
-	import { goto } from 'sapper/runtime/app.js';
+	import { goto } from 'sapper/runtime.js';
 	import * as api from '../_api.js';
 
 	export default {
 		computed: {
-			canModify: (article, $user) => $user && article.author.username === $user.username
+			canModify: (article, user) => user && article.author.username === user.username
 		},
 
 		methods: {
@@ -27,7 +27,6 @@
 				const { slug } = this.get('article');
 
 				api.del(`/articles/${slug}`).then(response => {
-					console.log(response);
 					goto('/');
 				});
 			}

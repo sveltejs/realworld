@@ -1,10 +1,10 @@
 <form class="card comment-form" on:submit='submit(event)'>
 	<div class="card-block">
-		<textarea class="form-control" placeholder="Write a comment..." bind:value=comment rows="3"/>
+		<textarea class="form-control" placeholder="Write a comment..." bind:value=body rows="3"/>
 	</div>
 
 	<div class="card-footer">
-		<img src={{$user.image}} class="comment-author-img" alt={{$user.username}} >
+		<img src={{user.image}} class="comment-author-img" alt={{user.username}} >
 		<button class="btn btn-sm btn-primary" type="submit">Post Comment</button>
 	</div>
 </form>
@@ -15,22 +15,20 @@
 
 	export default {
 		data() {
-			return {
-				comment: ''
-			};
+			return { body: '' };
 		},
 
 		methods: {
 			submit(event) {
 				event.preventDefault();
 
-				const { slug, comment } = this.get();
-				console.log({ slug, comment })
+				const { slug, body, user } = this.get();
 
-				api.post(`articles/${slug}/comments`, {
-					comment
-				}).then(response => {
-					console.log({ response });
+				api.post(`articles/${slug}/comments`, { comment: { body } }, user && user.token).then(response => {
+					if (response.comment) {
+						this.fire('commented', response);
+						this.set({ body: '' });
+					}
 				});
 			}
 		}

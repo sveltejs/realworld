@@ -1,20 +1,23 @@
-<Editor :article on:publish='update(event.article)' :inProgress/>
+<Editor :user :article on:publish='update(event.article)' :inProgress/>
 
 <script>
-	import { goto } from 'sapper/runtime/app.js';
+	import { goto } from 'sapper/runtime.js';
 	import Editor from './_EditorPage.html';
-	import store from '../_store.js';
 	import * as api from '../_api.js';
+	import { user } from '../_auth.js';
 
 	export default {
 		components: {
 			Editor
 		},
 
-		store: () => store,
-
-		preload({ params }) {
-			return api.get(`articles/${params.slug}`);
+		preload({ session, params }) {
+			return api.get(`articles/${params.slug}`).then(({ article }) => {
+				return {
+					article,
+					user: session ? session.user : user
+				};
+			});
 		},
 
 		data() {
@@ -25,13 +28,11 @@
 
 		methods: {
 			update(article) {
-				const { slug } = this.get('params');
-
-				console.log(article, slug);
+				const { params, user } = this.get();
 
 				this.set({ inProgress: true });
 
-				api.put(`articles/${slug}`, { article }).then(response => {
+				api.put(`articles/${params.slug}`, { article }, user && user.token).then(response => {
 					if (response.article) {
 						goto(`/article/${response.article.slug}`);
 					}

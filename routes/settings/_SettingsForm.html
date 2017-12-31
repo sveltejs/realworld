@@ -27,8 +27,6 @@
 </form>
 
 <script>
-	import store from '../_store.js';
-
 	export default {
 		data() {
 			return {
@@ -41,7 +39,8 @@
 		},
 
 		oncreate() {
-			this.store.observe('user', user => {
+			this.observe('user', user => {
+				// set local state from user (don't mutate user directly)
 				this.set(user);
 			});
 		},
@@ -49,7 +48,9 @@
 		methods: {
 			submit(event) {
 				event.preventDefault();
-				this.fire('save', this.get());
+
+				const { image, username, bio, email, password } = this.get();
+				this.fire('save', { image, username, bio, email, password });
 			}
 		}
 	};

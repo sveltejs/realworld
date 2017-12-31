@@ -2,7 +2,7 @@
 	<title>New post • Conduit</title>
 </:Head>
 
-<Layout page='editor'>
+<Layout page='editor' :user>
 	<div class="editor-page">
 		<div class="container page">
 			<div class="row">
@@ -53,17 +53,14 @@
 <script>
 	import Layout from '../_components/Layout.html';
 	import ListErrors from '../_components/ListErrors.html';
-	import store from '../_store.js';
 	import * as api from '../_api.js';
-	import { goto } from 'sapper/runtime/app.js';
+	import { goto } from 'sapper/runtime.js';
 
 	export default {
 		components: {
 			Layout,
 			ListErrors
 		},
-
-		store: () => store,
 
 		computed: {
 			tagList: tagInput => {
@@ -86,16 +83,6 @@
 				const { title, description, body, tagInput } = this.get();
 				this.fire('publish', {
 					article: { title, description, body, tagInput }
-				});
-			},
-
-			submit() {
-				api.post('articles', {
-					article: this.get()
-				}).then(response => {
-					if (response.article) {
-						goto(`/article/${response.article.slug}`);
-					}
 				});
 			}
 		}

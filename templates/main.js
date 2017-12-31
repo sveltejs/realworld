@@ -1,4 +1,6 @@
-import { init } from '__app__';
+import { init } from 'sapper/runtime.js';
+import { init as initAuth } from '../routes/_auth.js';
 
-// `routes` is an array of route objects injected by Sapper
-init(document.querySelector('#sapper'), __routes__);
+initAuth().then(() => {
+	init(document.querySelector('#sapper'), __routes__);
+});

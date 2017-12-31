@@ -2,7 +2,7 @@
 	<title>Settings • Conduit</title>
 </:Head>
 
-<Layout page='settings'>
+<Layout page='settings' :user>
 	<div class="settings-page">
 		<div class="container page">
 			<div class="row">
@@ -12,7 +12,7 @@
 
 					<ListErrors :errors/>
 
-					<SettingsForm on:save='save(event)' :inProgress/>
+					<SettingsForm on:save='save(event)' :user :inProgress/>
 
 					<hr />
 
@@ -26,11 +26,11 @@
 </Layout>
 
 <script>
-	import { goto } from 'sapper/runtime/app.js';
+	import { goto } from 'sapper/runtime.js';
 	import Layout from '../_components/Layout.html';
 	import ListErrors from '../_components/ListErrors.html';
 	import SettingsForm from './_SettingsForm.html';
-	import store from '../_store.js';
+	import { logout, save, user } from '../_auth.js';
 
 	export default {
 		components: {
@@ -39,19 +39,31 @@
 			SettingsForm
 		},
 
-		store: () => store,
+		preload({ session }) {
+			return {
+				user: session ? session.user : user
+			};
+		},
 
 		methods: {
 			logout() {
+				logout();
 				goto('/');
-				store.logout();
 			},
 
 			save(user) {
 				this.set({ inProgress: true });
 
-				store.save(user).then(response => {
+				fetch(`/auth/save`, {
+					method: 'POST',
+					body: JSON.stringify(user),
+					headers: {
+						'Content-Type': 'application/json'
+					},
+					credentials: 'include'
+				}).then(r => r.json()).then(response => {
 					this.set({
+						user: response.user || this.get('user'),
 						errors: response.errors,
 						inProgress: false
 					});

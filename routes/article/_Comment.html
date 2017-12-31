@@ -14,7 +14,7 @@
 			{{new Date(comment.createdAt).toDateString()}}
 		</span>
 
-		{{#if $user && comment.author.username === $user.username}}
+		{{#if user && comment.author.username === user.username}}
 			<span class="mod-options">
 				<i class="ion-trash-a" on:click='remove()'></i>
 			</span>
@@ -23,10 +23,16 @@
 </div>
 
 <script>
+	import * as api from '../_api.js';
+
 	export default {
 		methods: {
 			remove() {
-				console.error('TODO');
+				const { comment, slug, user } = this.get();
+
+				api.del(`articles/${slug}/comments/${comment.id}`, user && user.token).then(response => {
+					this.fire('deleted');
+				});
 			}
 		}
 	};

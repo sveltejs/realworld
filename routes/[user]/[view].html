@@ -2,7 +2,7 @@
 	<title>{{profile.username}} • Conduit</title>
 </:Head>
 
-<Layout page='settings'>
+<Layout page='profile' :user>
 	<div class="profile-page">
 		<div class="user-info">
 			<div class="container">
@@ -55,9 +55,8 @@
 <script>
 	import Layout from '../_components/Layout.html';
 	import ArticleList from '../_components/ArticleList/index.html';
-	import store from '../_store.js';
-	import { base } from '../_config.js';
 	import * as api from '../_api.js';
+	import { user } from '../_auth.js';
 
 	export default {
 		components: {
@@ -65,16 +64,28 @@
 			ArticleList
 		},
 
+		preload({ session, params }) {
+			const username = params.user.slice(1);
+			const u = session ? session.user : user;
+
+			return api.get(`profiles/${username}`, u && u.token).then(({ profile }) => {
+				return { profile, user: u, favorites: params.view === 'favorites' };
+			});
+		},
+
 		computed: {
-			isUser: (profile, $user) => $user && profile.username === $user.username
+			isUser: (profile, user) => user && profile.username === user.username
 		},
 
 		methods: {
 			toggleFollowing() {
-				const { profile } = this.get();
+				const { profile, user } = this.get();
 
-				const fn = profile.following ? api.del : api.post;
-				fn(`profiles/${profile.username}/follow`).then(response => {
+				const promise = profile.following ?
+					api.del(`profiles/${profile.username}/follow`, user && user.token) :
+					api.post(`profiles/${profile.username}/follow`, null, user && user.token);
+
+				promise.then(response => {
 					this.set(response);
 				});
 			}

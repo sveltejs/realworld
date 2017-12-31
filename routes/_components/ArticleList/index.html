@@ -49,7 +49,10 @@
 
 		oncreate() {
 			this.observe('query', query => {
-				api.get(query)
+				this.set({ articles: null });
+
+				const { user } = this.get();
+				api.get(query, user && user.token)
 					.then(data => {
 						// TODO do we need some error handling here?
 						this.set(data);
