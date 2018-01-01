@@ -28,12 +28,10 @@ export function get(path, token) {
 }
 
 export function del(path, token) {
-	console.log('deleting with token', token);
 	return send({ method: 'DELETE', path, token });
 }
 
 export function post(path, data, token) {
-	console.log('posting with token', token);
 	return send({ method: 'POST', path, data, token });
 }
 

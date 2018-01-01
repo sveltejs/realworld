@@ -10,13 +10,36 @@
 		</span>
 	</div>
 
-	<ArticleActions :user :article />
+	{{#if canModify}}
+		<span>
+			<a href='/editor/{{article.slug}}' class="btn btn-outline-secondary btn-sm">
+				<i class="ion-edit"/> Edit Article
+			</a>
+
+			<button class="btn btn-outline-danger btn-sm" on:click='remove()'>
+				<i class="ion-trash-a"/> Delete Article
+			</button>
+		</span>
+	{{/if}}
 </div>
 
 <script>
-	import ArticleActions from './_ArticleActions.html';
+	import { goto } from 'sapper/runtime.js';
+	import * as api from '../_api.js';
 
 	export default {
-		components: { ArticleActions }
+		computed: {
+			canModify: (article, user) => user && article.author.username === user.username
+		},
+
+		methods: {
+			remove() {
+				const { user, article } = this.get();
+
+				api.del(`/articles/${article.slug}`, user && user.token).then(response => {
+					goto('/');
+				});
+			}
+		}
 	};
 </script>
