@@ -24,7 +24,7 @@
     "marked": "^0.3.9",
     "node-fetch": "^1.7.3",
     "npm-run-all": "^4.1.2",
-    "sapper": "^0.2.10",
+    "sapper": "^0.3.1",
     "serve-static": "^1.13.1",
     "session-file-store": "^1.2.0",
     "style-loader": "^0.19.0",
