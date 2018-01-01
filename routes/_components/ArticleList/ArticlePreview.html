@@ -43,7 +43,6 @@
 			toggleFavorite() {
 				const { article, user } = this.get();
 
-				// TODO optimistic UI
 				const promise = article.favorited ?
 					api.del(`articles/${article.slug}/favorite`, user && user.token) :
 					api.post(`articles/${article.slug}/favorite`, null, user && user.token);
@@ -51,6 +50,17 @@
 				promise.then(response => {
 					this.set(response);
 				});
+
+				// optimistic UI
+				if (article.favorited) {
+					article.favoritesCount -= 1;
+					article.favorited = false;
+				} else {
+					article.favoritesCount += 1;
+					article.favorited = true;
+				}
+
+				this.set({ article });
 			}
 		}
 	};

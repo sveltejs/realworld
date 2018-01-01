@@ -85,6 +85,10 @@
 				promise.then(response => {
 					this.set(response);
 				});
+
+				// optimistic UI
+				profile.following = !profile.following;
+				this.set({ profile });
 			}
 		}
 	};
