@@ -9,7 +9,7 @@
 				<ArticlePreview :user :article/>
 			{{/each}}
 
-			<ListPagination :articlesCount :page on:select='set({ page: event.page })' />
+			<ListPagination :articlesCount :base :page />
 		</div>
 	{{/if}}
 {{else}}
@@ -22,38 +22,6 @@
 	import * as api from '../../_api.js';
 
 	export default {
-		components: { ArticlePreview, ListPagination },
-
-		data() {
-			return {
-				page: 0
-			};
-		},
-
-		computed: {
-			query: (tab, page, username, favorites, tag) => {
-				const endpoint = tab === 'feed' ? 'articles/feed' : 'articles';
-				const page_size = tab === 'feed' ? 5 : 10;
-
-				let params = `limit=${page_size}&offset=${page * page_size}`;
-				if (tab === 'tag') params += `&tag=${tag}`;
-				if (tab === 'profile') params += `&${favorites ? 'favorited' : 'author'}=${encodeURIComponent(username)}`;
-
-				return `${endpoint}?${params}`;
-			}
-		},
-
-		oncreate() {
-			this.observe('query', query => {
-				this.set({ articles: null });
-
-				const { user } = this.get();
-				api.get(query, user && user.token)
-					.then(data => {
-						// TODO do we need some error handling here?
-						this.set(data);
-					});
-			});
-		}
+		components: { ArticlePreview, ListPagination }
 	};
 </script>

@@ -36,16 +36,16 @@
 					<div class="articles-toggle">
 						<ul class="nav nav-pills outline-active">
 							<li class="nav-item">
-								<a href='/@{{profile.username}}' class="nav-link {{favorites ? '' : 'active'}}">My Articles</a>
+								<a rel='prefetch' href='/user/{{profile.username}}/posts/1' class="nav-link {{favorites ? '' : 'active'}}">My Articles</a>
 							</li>
 
 							<li class="nav-item">
-								<a class="nav-link {{favorites ? 'active' : ''}}" href='/@{{profile.username}}/favorites'>Favorited Articles</a>
+								<a rel='prefetch' href='/user/{{profile.username}}/favorites/1' class="nav-link {{favorites ? 'active' : ''}}">Favorited Articles</a>
 							</li>
 						</ul>
 					</div>
 
-					<ArticleList tab='profile' username='{{profile.username}}' :favorites/>
+					<ArticleList :articles :articlesCount :base :page :user />
 				</div>
 			</div>
 		</div>
@@ -53,20 +53,39 @@
 </Layout>
 
 <script>
-	import Layout from '../_components/Layout.html';
-	import ArticleList from '../_components/ArticleList/index.html';
-	import * as api from '../_api.js';
-	import * as auth from '../_auth.js';
+	import Layout from '../../../_components/Layout.html';
+	import ArticleList from '../../../_components/ArticleList/index.html';
+	import * as api from '../../../_api.js';
+	import * as auth from '../../../_auth.js';
+
+	const page_size = 5;
 
 	export default {
 		components: { Layout, ArticleList },
 
 		preload({ session, params }) {
-			const username = params.user.slice(1);
+			const { username, view } = params;
+			const page = +params.page - 1;
+
 			const user = session ? session.user : auth.user;
 
-			return api.get(`profiles/${username}`, user && user.token).then(({ profile }) => {
-				return { profile, user, favorites: params.view === 'favorites' };
+			let query = `articles?limit=${page_size}&offset=${page * page_size}&${view === 'favorites' ? 'favorited' : 'author'}=${encodeURIComponent(username)}`;
+
+			return Promise.all([
+				api.get(query, user && user.token),
+				api.get(`profiles/${params.username}`, user && user.token)
+			]).then(([{ articles, articlesCount }, { profile }]) => {
+				return {
+					articles,
+					articlesCount,
+					profile,
+					user,
+					base: `${username}/${view}`,
+					username,
+					view,
+					page,
+					favorites: view === 'favorites'
+				};
 			});
 		},
 

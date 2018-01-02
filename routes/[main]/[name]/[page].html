@@ -1,0 +1,117 @@
+<:Head>
+	<title>Conduit</title>
+</:Head>
+
+<Layout page='home' :user>
+	<div class="home-page">
+
+		<div class="banner">
+			<div class="container">
+				<h1 class="logo-font">conduit</h1>
+				<p>A place to share your knowledge.</p>
+			</div>
+		</div>
+
+		<div class="container page">
+			<div class="row">
+				<div class="col-md-9">
+					<div class="feed-toggle">
+						<ul class="nav nav-pills outline-active">
+							{{#if user}}
+								<li class="nav-item">
+									<a rel='prefetch' href='/feed/latest/1' class='nav-link {{latest ? "active" : "" }}'>
+										Your Feed
+									</a>
+								</li>
+							{{else}}
+								<li class="nav-item">
+									<a href="/login" class='nav-link'>
+										Your Feed
+									</a>
+								</li>
+							{{/if}}
+
+							<li class="nav-item">
+								<a rel='prefetch' href='/feed/global/1' class='nav-link {{global ? "active" : "" }}'>
+									Global Feed
+								</a>
+							</li>
+
+							{{#if tag}}
+								<li class="nav-item">
+									<a rel='prefetch' href="/tag/{{tag}}/1" class='nav-link {{tag ? "active" : "" }}'>
+										<i class="ion-pound"></i> {{tag}}
+									</a>
+								</li>
+							{{/if}}
+						</ul>
+					</div>
+
+					<ArticleList :articles :articlesCount :base :page :user />
+				</div>
+
+				<div class="col-md-3">
+					<div class="sidebar">
+						<p>Popular Tags</p>
+
+						<div class="tag-list">
+							{{#each tags as tag}}
+								<a rel='preload' href='/tag/{{tag}}/1' class='tag-default tag-pill'>
+									{{tag}}
+								</a>
+							{{/each}}
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</Layout>
+
+<script>
+	import Layout from '../../_components/Layout.html';
+	import ArticleList from '../../_components/ArticleList/index.html';
+	import * as auth from '../../_auth.js';
+	import * as api from '../../_api.js';
+
+	const page_size = 10;
+
+	export default {
+		components: { Layout, ArticleList },
+
+		preload({ params, session }) {
+			const { main, name } = params;
+			const page = +params.page - 1;
+
+			const user = session ? session.user : auth.user;
+
+			const endpoint = main === 'feed' && name === 'latest' ? 'articles/feed' : 'articles';
+
+			let query = `${endpoint}?limit=${page_size}&offset=${page * page_size}`;
+			if (main === 'tag') query += `&tag=${name}`;
+
+			const tag = main === 'tag' ? name : null;
+			const latest = main === 'feed' && name === 'latest';
+			const global = main === 'feed' && name === 'global';
+
+			return Promise.all([
+				api.get(query, user && user.token),
+				api.get('tags')
+			]).then(([{ articles, articlesCount }, { tags }]) => {
+				return {
+					articles,
+					articlesCount,
+					tags,
+					base: `${main}/${name}`,
+					main,
+					name,
+					page,
+					user,
+					tag,
+					latest,
+					global
+				};
+			});
+		}
+	};
+</script>

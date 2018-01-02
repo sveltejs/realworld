@@ -10,7 +10,7 @@
     "cy:open": "cypress open",
     "test": "run-p --race dev cy:run",
     "stage": "now",
-    "deploy": "now && now alias"
+    "deploy": "git-branch-is master && now && now alias"
   },
   "dependencies": {
     "body-parser": "^1.18.2",
@@ -45,5 +45,8 @@
       "webpack.server.config.js",
       "yarn.lock"
     ]
+  },
+  "devDependencies": {
+    "git-branch-is": "^0.1.0"
   }
 }

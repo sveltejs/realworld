@@ -1,11 +1,11 @@
 <div class="article-preview">
 	<div class="article-meta">
-		<a href='/@{{article.author.username}}'>
+		<a rel='prefetch' href='/user/{{encodeURIComponent(article.author.username)}}'>
 			<img src={{article.author.image}} alt={{article.author.username}} />
 		</a>
 
 		<div class="info">
-			<a class="author" href='/@{{article.author.username}}'> {{article.author.username}}
+			<a rel='prefetch' href='/user/{{encodeURIComponent(article.author.username)}}' class="author"> {{article.author.username}}
 			</a>
 			<span class="date">
 				{{new Date(article.createdAt).toDateString()}}
@@ -21,7 +21,7 @@
 		{{/if}}
 	</div>
 
-	<a href='/article/{{article.slug}}' class="preview-link">
+	<a rel='prefetch' href='/article/{{article.slug}}' class="preview-link">
 		<h1>{{article.title}}</h1>
 		<p>{{article.description}}</p>
 		<span>Read more...</span>

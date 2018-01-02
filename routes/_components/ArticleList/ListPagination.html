@@ -1,10 +1,9 @@
 {{#if articlesCount > 10}}
 	<nav>
 		<ul class="pagination">
-
 			{{#each range as v}}
-				<li class='page-item {{v === page ? "active": ""}}' on:click='fire("select", { page: v })'>
-					<a class="page-link" href="">{{v + 1}}</a>
+				<li class='page-item {{v === page ? "active": ""}}'>
+					<a rel='prefetch' href="/{{base}}/{{v + 1}}" class="page-link">{{v + 1}}</a>
 				</li>
 			{{/each}}
 		</ul>
