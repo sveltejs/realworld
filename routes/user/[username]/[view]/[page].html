@@ -64,7 +64,8 @@
 		components: { Layout, ArticleList },
 
 		preload({ session, params }) {
-			const { username, view } = params;
+			const username = decodeURIComponent(params.username);
+			const view = params.view;
 			const page = +params.page - 1;
 
 			const user = session ? session.user : auth.user;
