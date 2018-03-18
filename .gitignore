@@ -5,3 +5,6 @@ yarn.lock
 cypress/screenshots
 templates/.*
 .sessions
+export
+build
+app/manifest

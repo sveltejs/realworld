@@ -8,7 +8,7 @@ export function post(req, res) {
 			req.session.user = response.user;
 		}
 
-		res.set({
+		res.writeHead(200, {
 			'Content-Type': 'application/json'
 		});
 

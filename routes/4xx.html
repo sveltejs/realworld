@@ -1,0 +1,30 @@
+<:Head>
+	<title>{{error.message}}</title>
+</:Head>
+
+<Layout page='home' :user>
+	<div class="home-page">
+
+		<div class="banner">
+			<div class="container">
+				<h1 class="logo-font">conduit</h1>
+				<p>A place to share your knowledge.</p>
+			</div>
+		</div>
+
+		<div class="container page">
+			<div class="row">
+				<h2>{{error.status}}</h2>
+				<p>{{error.message}}</p>
+			</div>
+		</div>
+	</div>
+</Layout>
+
+<script>
+	import Layout from './_components/Layout.html';
+
+	export default {
+		components: { Layout }
+	};
+</script>
