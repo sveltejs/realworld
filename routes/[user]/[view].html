@@ -55,18 +55,17 @@
 <script>
 	import Layout from '../_components/Layout.html';
 	import ArticleList from '../_components/ArticleList/index.html';
-	import * as api from '../_api.js';
-	import * as auth from '../_auth.js';
+	import * as api from '../../client/api.js';
+	import * as auth from '../../client/auth.js';
 
 	export default {
 		components: { Layout, ArticleList },
 
 		preload({ session, params }) {
 			const username = params.user.slice(1);
-			const { user } = this.store.get(); // TODO remove this
 
-			return api.get(`profiles/${username}`, user && user.token).then(({ profile }) => {
-				return { profile, user, favorites: params.view === 'favorites' };
+			return api.get(`profiles/${username}`).then(({ profile }) => {
+				return { profile, favorites: params.view === 'favorites' };
 			});
 		},
 
@@ -77,11 +76,10 @@
 		methods: {
 			toggleFollowing() {
 				const { profile } = this.get();
-				const { user } = this.store.get(); // TODO remove
 
 				const promise = profile.following ?
-					api.del(`profiles/${profile.username}/follow`, user && user.token) :
-					api.post(`profiles/${profile.username}/follow`, null, user && user.token);
+					api.del(`profiles/${profile.username}/follow`) :
+					api.post(`profiles/${profile.username}/follow`, null);
 
 				promise.then(response => {
 					this.set(response);

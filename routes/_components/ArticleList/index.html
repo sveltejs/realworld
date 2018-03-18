@@ -19,7 +19,7 @@
 <script>
 	import ArticlePreview from './ArticlePreview.html';
 	import ListPagination from './ListPagination.html';
-	import * as api from '../../_api.js';
+	import * as api from '../../../client/api.js';
 
 	export default {
 		components: { ArticlePreview, ListPagination },
@@ -47,8 +47,7 @@
 			this.observe('query', query => {
 				this.set({ articles: null });
 
-				const { user } = this.store.get(); // TODO no need to pass this around
-				api.get(query, user && user.token) // TODO token should not be visible client-side
+				api.get(query)
 					.then(data => {
 						// TODO do we need some error handling here?
 						this.set(data);

@@ -10,7 +10,7 @@
 </form>
 
 <script>
-	import * as api from '../_api.js';
+	import * as api from '../../client/api.js';
 
 	export default {
 		data() {
@@ -22,9 +22,8 @@
 				event.preventDefault();
 
 				const { slug, body } = this.get();
-				const { user } = this.store.get(); // TODO remove
 
-				api.post(`articles/${slug}/comments`, { comment: { body } }, user && user.token).then(response => {
+				api.post(`articles/${slug}/comments`, { comment: { body } }).then(response => {
 					if (response.comment) {
 						this.fire('commented', response);
 						this.set({ body: '' });

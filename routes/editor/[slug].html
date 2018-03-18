@@ -48,8 +48,8 @@
 	import Layout from '../_components/Layout.html';
 	import ListErrors from '../_components/ListErrors.html';
 	import { push, splice } from 'svelte-extras';
-	import * as api from '../_api.js';
-	import * as auth from '../_auth.js';
+	import * as api from '../../client/api.js';
+	import * as auth from '../../client/auth.js';
 
 	export default {
 		components: { Layout, ListErrors },
@@ -87,13 +87,12 @@
 
 			publish() {
 				const { article, params } = this.get();
-				const { user } = this.store.get(); // TODO remove
 
 				this.set({ inProgress: true });
 
 				const promise = params.slug === null ?
-					api.post('articles', { article }, user && user.token) :
-					api.put(`articles/${params.slug}`, { article }, user && user.token);
+					api.post('articles', { article }) :
+					api.put(`articles/${params.slug}`, { article });
 
 				promise.then(response => {
 					if (response.article) {

@@ -36,17 +36,16 @@
 </div>
 
 <script>
-	import * as api from '../../_api.js';
+	import * as api from '../../../client/api.js';
 
 	export default {
 		methods: {
 			toggleFavorite() {
 				const { article } = this.get();
-				const { user } = this.store.get(); // TODO no need to pass this around
 
 				const promise = article.favorited ?
-					api.del(`articles/${article.slug}/favorite`, user && user.token) :
-					api.post(`articles/${article.slug}/favorite`, null, user && user.token);
+					api.del(`articles/${article.slug}/favorite`) :
+					api.post(`articles/${article.slug}/favorite`, null);
 
 				promise.then(response => {
 					this.set(response);

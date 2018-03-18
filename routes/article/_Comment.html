@@ -23,15 +23,14 @@
 </div>
 
 <script>
-	import * as api from '../_api.js';
+	import * as api from '../../client/api.js';
 
 	export default {
 		methods: {
 			remove() {
 				const { comment, slug } = this.get();
-				const { user } = this.store.get(); // TODO remove
 
-				api.del(`articles/${slug}/comments/${comment.id}`, user && user.token).then(response => {
+				api.del(`articles/${slug}/comments/${comment.id}`).then(response => {
 					this.fire('deleted');
 				});
 			}

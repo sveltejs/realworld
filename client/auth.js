@@ -1,4 +1,4 @@
-export let user;
+import store from './store.js';
 
 function post(endpoint, data) {
 	return fetch(endpoint, {
@@ -12,25 +12,8 @@ function post(endpoint, data) {
 }
 
 function interceptUser(response) {
-	if (response.user) user = response.user;
+	if (response.user) store.set({ user: response.user });
 	return response;
-}
-
-export function init() {
-	return fetch(`/auth/user`, { credentials: 'include' })
-		.then(r => r.json())
-		.then(interceptUser);
-}
-
-export function login(credentials) {
-	return post(`/auth/login`, credentials).then(interceptUser);
-}
-
-export function logout() {
-	return post(`/auth/logout`).then(response => {
-		user = null;
-		return response;
-	});
 }
 
 export function register(user) {
@@ -39,4 +22,15 @@ export function register(user) {
 
 export function save(user) {
 	return post(`/auth/save`, user).then(interceptUser);
+}
+
+export function login(credentials) {
+	return post(`/auth/login`, credentials).then(interceptUser);
+}
+
+export function logout() {
+	return post(`/auth/logout`).then(response => {
+		store.set({ user: null });
+		return response;
+	});
 }
