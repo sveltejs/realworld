@@ -6,7 +6,7 @@
 	{{else}}
 		<div>
 			{{#each articles as article @slug}}
-				<ArticlePreview :user :article/>
+				<ArticlePreview :article/>
 			{{/each}}
 
 			<ListPagination :articlesCount :page on:select='set({ page: event.page })' />
@@ -47,8 +47,8 @@
 			this.observe('query', query => {
 				this.set({ articles: null });
 
-				const { user } = this.get();
-				api.get(query, user && user.token)
+				const { user } = this.store.get(); // TODO no need to pass this around
+				api.get(query, user && user.token) // TODO token should not be visible client-side
 					.then(data => {
 						// TODO do we need some error handling here?
 						this.set(data);

@@ -39,10 +39,12 @@
 		},
 
 		oncreate() {
-			this.observe('user', user => {
+			const observer = this.store.observe('user', user => {
 				// set local state from user (don't mutate user directly)
 				this.set(user);
 			});
+
+			this.on('destroy', observer.cancel);
 		},
 
 		methods: {

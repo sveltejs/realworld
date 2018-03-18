@@ -7,6 +7,7 @@ import compression from 'compression';
 import sapper from 'sapper';
 import serve from 'serve-static';
 import fetch from 'node-fetch';
+import { Store } from 'svelte/store.js';
 import { routes } from './manifest/server.js';
 
 const { PORT } = process.env;
@@ -35,5 +36,10 @@ polka()
 	.use(bodyParser.json())
 	.use(compression({ threshold: 0 }))
 	.use(serve('assets'))
-	.use(sapper({ routes }))
+	.use(sapper({
+		routes,
+		store: req => new Store({
+			user: req.session.user
+		})
+	}))
 	.listen(PORT);

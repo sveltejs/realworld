@@ -2,13 +2,13 @@
 	<title>{{article.title}}</title>
 </:Head>
 
-<Layout page='login' :user>
+<Layout page='login'>
 	<div class="article-page">
 
 		<div class="banner">
 			<div class="container">
 				<h1>{{article.title}}</h1>
-				<ArticleMeta :user :article/>
+				<ArticleMeta :article/>
 			</div>
 		</div>
 
@@ -35,7 +35,7 @@
 			</div>
 
 			<div class="row">
-				<CommentContainer :user :comments errors={{commentErrors}} slug={{params.slug}}/>
+				<CommentContainer :comments errors={{commentErrors}} slug={{params.slug}}/>
 			</div>
 		</div>
 	</div>
@@ -52,11 +52,10 @@
 	export default {
 		components: { Layout, ArticleMeta, CommentContainer },
 
-		preload({ session, params }) {
+		preload({ params }) {
 			return api.get(`articles/${params.slug}`).then(({ article }) => {
 				return {
-					article,
-					user: session ? session.user : auth.user
+					article
 				};
 			});
 		},

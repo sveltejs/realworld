@@ -12,7 +12,7 @@
 			</span>
 		</div>
 
-		{{#if user}}
+		{{#if $user}}
 			<div class="pull-xs-right">
 				<button class='btn btn-sm {{article.favorited ? "btn-primary" : "btn-outline-primary"}}' on:click='toggleFavorite()'>
 					<i class="ion-heart"></i> {{article.favoritesCount}}
@@ -41,7 +41,8 @@
 	export default {
 		methods: {
 			toggleFavorite() {
-				const { article, user } = this.get();
+				const { article } = this.get();
+				const { user } = this.store.get(); // TODO no need to pass this around
 
 				const promise = article.favorited ?
 					api.del(`articles/${article.slug}/favorite`, user && user.token) :

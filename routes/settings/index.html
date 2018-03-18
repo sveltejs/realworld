@@ -2,7 +2,7 @@
 	<title>Settings • Conduit</title>
 </:Head>
 
-<Layout page='settings' :user>
+<Layout page='settings'>
 	<div class="settings-page">
 		<div class="container page">
 			<div class="row">
@@ -12,7 +12,7 @@
 
 					<ListErrors :errors/>
 
-					<SettingsForm on:save='save(event)' :user :inProgress/>
+					<SettingsForm on:save='save(event)' :inProgress/>
 
 					<hr />
 
@@ -35,12 +35,6 @@
 	export default {
 		components: { Layout, ListErrors, SettingsForm },
 
-		preload({ session }) {
-			return {
-				user: session ? session.user : auth.user
-			};
-		},
-
 		methods: {
 			logout() {
 				auth.logout().then(() => {
@@ -53,9 +47,12 @@
 
 				auth.save(user).then(response => {
 					this.set({
-						user: response.user || this.get('user'),
 						errors: response.errors,
 						inProgress: false
+					});
+
+					this.store.set({
+						user: response.user || this.get('user')
 					});
 				});
 			}

@@ -2,7 +2,7 @@
 	<title>{{profile.username}} • Conduit</title>
 </:Head>
 
-<Layout page='profile' :user>
+<Layout page='profile'>
 	<div class="profile-page">
 		<div class="user-info">
 			<div class="container">
@@ -63,7 +63,7 @@
 
 		preload({ session, params }) {
 			const username = params.user.slice(1);
-			const user = session ? session.user : auth.user;
+			const { user } = this.store.get(); // TODO remove this
 
 			return api.get(`profiles/${username}`, user && user.token).then(({ profile }) => {
 				return { profile, user, favorites: params.view === 'favorites' };
@@ -71,12 +71,13 @@
 		},
 
 		computed: {
-			isUser: (profile, user) => user && profile.username === user.username
+			isUser: (profile, $user) => $user && profile.username === $user.username
 		},
 
 		methods: {
 			toggleFollowing() {
-				const { profile, user } = this.get();
+				const { profile } = this.get();
+				const { user } = this.store.get(); // TODO remove
 
 				const promise = profile.following ?
 					api.del(`profiles/${profile.username}/follow`, user && user.token) :

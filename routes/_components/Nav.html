@@ -6,7 +6,7 @@
 				<a class="nav-link {{page === 'home' ? 'active' : ''}}" href="/">Home</a>
 			</li>
 
-			{{#if user}}
+			{{#if $user}}
 				<li class="nav-item">
 					<a href="/editor" class="nav-link {{page === 'editor' ? 'active' : ''}}">
 						<i class="ion-compose"></i>&nbsp;New Post
@@ -20,8 +20,8 @@
 				</li>
 
 				<li class="nav-item">
-					<a href='/@{{user.username}}' class="nav-link">
-						<img src={{user.image}} class="user-pic" alt={{user.username}} /> {{user.username}}
+					<a href='/@{{$user.username}}' class="nav-link">
+						<img src={{$user.image}} class="user-pic" alt={{$user.username}} /> {{$user.username}}
 					</a>
 				</li>
 			{{else}}

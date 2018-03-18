@@ -2,7 +2,7 @@
 	<title>Sign in • Conduit</title>
 </:Head>
 
-<Layout page='login' :user>
+<Layout page='login'>
 	<div class="auth-page">
 		<div class="container page">
 			<div class="row">
@@ -40,12 +40,6 @@
 
 	export default {
 		components: { Layout, ListErrors },
-
-		preload({ session }) {
-			return {
-				user: session ? session.user : auth.user
-			};
-		},
 
 		data() {
 			return {

@@ -1,4 +1,4 @@
-<Layout page='editor' :user>
+<Layout page='editor'>
 	<div class="editor-page">
 		<div class="container page">
 			<div class="row">
@@ -55,14 +55,12 @@
 		components: { Layout, ListErrors },
 
 		preload({ session, params }) {
-			const user = session ? session.user : auth.user;
-
 			if (params.slug === undefined) {
-				return { user };
+				return {};
 			}
 
 			return api.get(`articles/${params.slug}`).then(({ article }) => {
-				return { article, user };
+				return { article };
 			});
 		},
 
@@ -88,7 +86,8 @@
 			},
 
 			publish() {
-				const { article, params, user } = this.get();
+				const { article, params } = this.get();
+				const { user } = this.store.get(); // TODO remove
 
 				this.set({ inProgress: true });
 

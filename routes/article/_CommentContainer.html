@@ -1,8 +1,8 @@
 <div class="col-xs-12 col-md-8 offset-md-2">
-	{{#if user}}
+	{{#if $user}}
 		<div>
 			<ListErrors :errors/>
-			<CommentInput :user :slug on:commented='unshift("comments", event.comment)'/>
+			<CommentInput :slug on:commented='unshift("comments", event.comment)'/>
 		</div>
 	{{else}}
 		<p>
@@ -11,7 +11,7 @@
 	{{/if}}
 
 	{{#each comments as comment, i @id}}
-		<Comment :user :comment :slug on:deleted='splice("comments", i, 1)'/>
+		<Comment :comment :slug on:deleted='splice("comments", i, 1)'/>
 	{{/each}}
 </div>
 

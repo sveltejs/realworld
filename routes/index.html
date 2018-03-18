@@ -2,7 +2,7 @@
 	<title>Conduit</title>
 </:Head>
 
-<Layout page='home' :user>
+<Layout page='home'>
 	<div class="home-page">
 
 		<div class="banner">
@@ -14,7 +14,7 @@
 
 		<div class="container page">
 			<div class="row">
-				<MainView :user :tag bind:tab />
+				<MainView :tag bind:tab />
 
 				<div class="col-md-3">
 					<div class="sidebar">
@@ -36,12 +36,6 @@
 
 	export default {
 		components: { Layout, MainView, Tags },
-
-		preload({ session }) {
-			return {
-				user: session ? session.user : auth.user
-			};
-		},
 
 		oncreate() {
 			api.get('tags').then(({ tags }) => {
