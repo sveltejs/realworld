@@ -1,42 +1,43 @@
 <nav class="navbar navbar-light">
 	<div class="container">
-		<a class="navbar-brand" href="/">conduit</a>
+		<a class="navbar-brand" href=".">conduit</a>
 		<ul class="nav navbar-nav pull-xs-right">
 			<li class="nav-item">
-				<a class="nav-link {{page === 'home' ? 'active' : ''}}" href="/">Home</a>
+				<a class="nav-link {path === '/' ? 'active' : ''}" href="/">Home</a>
 			</li>
 
-			{{#if user}}
+			{#if $user}
 				<li class="nav-item">
-					<a href="/editor" class="nav-link {{page === 'editor' ? 'active' : ''}}">
+					<a href="/editor" class="nav-link {path === '/editor' ? 'active' : ''}">
 						<i class="ion-compose"></i>&nbsp;New Post
 					</a>
 				</li>
 
 				<li class="nav-item">
-					<a href="/settings" class="nav-link {{page === 'settings' ? 'active' : ''}}">
+					<a href="/settings" class="nav-link {path === '/settings' ? 'active' : ''}">
 						<i class="ion-gear-a"></i>&nbsp;Settings
 					</a>
 				</li>
 
 				<li class="nav-item">
-					<a href='/@{{user.username}}' class="nav-link">
-						<img src={{user.image}} class="user-pic" alt={{user.username}} /> {{user.username}}
+					<a href='/@{$user.username}' class="nav-link">
+						<!-- <img src={$user.image} class="user-pic" alt={$user.username}> -->
+						{$user.username}
 					</a>
 				</li>
-			{{else}}
+			{:else}
 				<li class="nav-item">
-					<a href="/login" class="nav-link {{page === 'login' ? 'active' : ''}}">
+					<a href="/login" class="nav-link {path === '/login' ? 'active' : ''}">
 						Sign in
 					</a>
 				</li>
 
 				<li class="nav-item">
-					<a href="/register" class="nav-link {{page === 'register' ? 'active' : ''}}">
+					<a href="/register" class="nav-link {path === '/register' ? 'active' : ''}">
 						Sign up
 					</a>
 				</li>
-			{{/if}}
+			{/if}
 		</ul>
 	</div>
 </nav>

@@ -20,7 +20,7 @@
 			<input class="form-control form-control-lg" type="password" placeholder="New Password" bind:value=password>
 		</fieldset>
 
-		<button class="btn btn-lg btn-primary pull-xs-right" type="submit" disabled={{inProgress}}>
+		<button class="btn btn-lg btn-primary pull-xs-right" type="submit" disabled={inProgress}>
 			Update Settings
 		</button>
 	</fieldset>
@@ -30,19 +30,8 @@
 	export default {
 		data() {
 			return {
-				image: '',
-				username: '',
-				bio: '',
-				email: '',
 				password: ''
 			};
-		},
-
-		oncreate() {
-			this.observe('user', user => {
-				// set local state from user (don't mutate user directly)
-				this.set(user);
-			});
 		},
 
 		methods: {

@@ -1,11 +1,11 @@
-{{#if tags}}
+{#if tags}
 	<div className="tag-list">
-		{{#each tags as tag}}
-			<a href="" class="tag-default tag-pill" on:click='fire("select", { tag })'>
-				{{tag}}
+		{#each tags as tag}
+			<a href="." class="tag-default tag-pill" on:click='fire("select", { tag })'>
+				{tag}
 			</a>
-		{{/each}}
+		{/each}
 	</div>
-{{else}}
+{:else}
 	<div>Loading Tags...</div>
-{{/if}}
+{/if}

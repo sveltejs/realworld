@@ -1,6 +1,10 @@
 const base = 'https://conduit.productionready.io/api';
 
-function send({ method, path, data, token }) {
+function send({ method, path, data, token, fetch }) {
+	if (!fetch) {
+		fetch = process.browser ? window.fetch : require('node-fetch').default;
+	}
+
 	const opts = { method, headers: {} };
 
 	if (data) {
@@ -23,8 +27,8 @@ function send({ method, path, data, token }) {
 		});
 }
 
-export function get(path, token) {
-	return send({ method: 'GET', path, token });
+export function get(path, token, fetch) {
+	return send({ method: 'GET', path, token, fetch });
 }
 
 export function del(path, token) {
