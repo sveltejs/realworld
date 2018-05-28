@@ -1,15 +1,17 @@
 {
-  "name": "TODO",
-  "description": "TODO",
+  "name": "svelte-realworld",
+  "description": "A Svelte/Sapper implementation of RealWorld",
   "version": "0.0.1",
   "scripts": {
     "dev": "sapper dev",
-    "build": "sapper build",
-    "export": "sapper export",
+    "sapper": "sapper build",
     "start": "node build",
     "cy:run": "cypress run",
     "cy:open": "cypress open",
-    "test": "run-p --race dev cy:run"
+    "test": "run-p --race dev cy:run",
+    "prestage": "sapper build",
+    "stage": "now",
+    "deploy": "now && now alias"
   },
   "dependencies": {
     "body-parser": "^1.18.3",
@@ -18,15 +20,23 @@
     "express-session": "^1.15.6",
     "marked": "^0.4.0",
     "node-fetch": "^2.1.2",
-    "sapper": "^0.12.0",
+    "sapper": "^0.13.0",
     "serve-static": "^1.13.1",
     "session-file-store": "^1.2.0",
     "svelte-extras": "^2.0.2"
   },
   "devDependencies": {
     "npm-run-all": "^4.1.2",
-    "svelte": "^2.0.0",
+    "svelte": "^2.7.0",
     "svelte-loader": "^2.9.0",
-    "webpack": "^4.7.0"
+    "webpack": "^4.10.0"
+  },
+  "now": {
+    "alias": "svelte-realworld.now.sh",
+    "files": [
+      "assets",
+      "build",
+      "yarn.lock"
+    ]
   }
 }
