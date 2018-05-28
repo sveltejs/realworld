@@ -1,6 +1,8 @@
 const base = 'https://conduit.productionready.io/api';
 
 function send({ method, path, data, token }) {
+	const fetch = process.browser ? window.fetch : require('node-fetch').default;
+
 	const opts = { method, headers: {} };
 
 	if (data) {

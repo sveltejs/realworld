@@ -1,24 +1,24 @@
 <div class="card">
 	<div class="card-block">
-		<p class="card-text">{{comment.body}}</p>
+		<p class="card-text">{comment.body}</p>
 	</div>
 
 	<div class="card-footer">
-		<a href='/@{{comment.author.username}}' class="comment-author">
-			<img src={{comment.author.image}} class="comment-author-img" alt={{comment.author.username}} />
+		<a href='/@{comment.author.username}' class="comment-author">
+			<img src={comment.author.image} class="comment-author-img" alt={comment.author.username} />
 		</a>
 
-		<a href='/@{{comment.author.username}}' class="comment-author">{{comment.author.username}}</a>
+		<a href='/@{comment.author.username}' class="comment-author">{comment.author.username}</a>
 
 		<span class="date-posted">
-			{{new Date(comment.createdAt).toDateString()}}
+			{new Date(comment.createdAt).toDateString()}
 		</span>
 
-		{{#if user && comment.author.username === user.username}}
+		{#if $user && comment.author.username === $user.username}
 			<span class="mod-options">
 				<i class="ion-trash-a" on:click='remove()'></i>
 			</span>
-		{{/if}}
+		{/if}
 	</div>
 </div>
 
@@ -28,7 +28,8 @@
 	export default {
 		methods: {
 			remove() {
-				const { comment, slug, user } = this.get();
+				const { comment, slug } = this.get();
+				const { user } = this.store.get();
 
 				api.del(`articles/${slug}/comments/${comment.id}`, user && user.token).then(response => {
 					this.fire('deleted');

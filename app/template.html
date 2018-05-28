@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset='utf-8'>
+	<meta name='viewport' content='width=device-width'>
+	<meta name='theme-color' content='#aa1e1e'>
+
+	%sapper.base%
+
+	<link rel='manifest' href='manifest.json'>
+	<link rel='icon' type='image/png' href='favicon.png'>
+
+	<!-- Import Ionicon icons & Google Fonts our Bootstrap theme relies on -->
+	<link href="//code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet" type="text/css">
+	<link href="//fonts.googleapis.com/css?family=Titillium+Web:700|Source+Serif+Pro:400,700|Merriweather+Sans:400,700|Source+Sans+Pro:400,300,600,700,300italic,400italic,600italic,700italic"
+	 rel="stylesheet" type="text/css">
+	<!-- Import the custom Bootstrap 4 theme from our hosted CDN -->
+	<link rel="stylesheet" href="//demo.productionready.io/main.css">
+
+	<style>
+		body {
+			/* prevent scrollbar popin */
+			min-height: 101vh;
+		}
+	</style>
+
+	<!-- Sapper generates a <style> tag containing critical CSS
+	     for the current page. CSS for the rest of the app is
+	     lazily loaded when it precaches secondary pages -->
+	%sapper.styles%
+
+	<!-- This contains the contents of the <svelte:head> component, if
+	     the current page has one -->
+	%sapper.head%
+</head>
+<body>
+	<!-- The application will be rendered inside this element,
+	     because `app/client.js` references it -->
+	<div id='sapper'>%sapper.html%</div>
+
+	<!-- Sapper creates a <script> tag containing `app/client.js`
+	     and anything else it needs to hydrate the app and
+	     initialise the router -->
+	%sapper.scripts%
+</body>
+</html>

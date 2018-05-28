@@ -1,0 +1,15 @@
+<Nav path={props.path}/>
+
+<main>
+	<svelte:component this={Page} {...props}/>
+</main>
+
+<script>
+	import Nav from '../routes/_components/Nav.html';
+
+	export default {
+		components: {
+			Nav
+		}
+	};
+</script>

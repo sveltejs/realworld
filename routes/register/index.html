@@ -1,55 +1,45 @@
-<:Head>
+<svelte:head>
 	<title>Sign up • Conduit</title>
-</:Head>
+</svelte:head>
 
-<Layout page='register' :user>
-	<div class="auth-page">
-		<div class="container page">
-			<div class="row">
+<div class="auth-page">
+	<div class="container page">
+		<div class="row">
 
-				<div class="col-md-6 offset-md-3 col-xs-12">
-					<h1 class="text-xs-center">Sign up</h1>
-					<p class="text-xs-center">
-						<a href="/login">Have an account?</a>
-					</p>
+			<div class="col-md-6 offset-md-3 col-xs-12">
+				<h1 class="text-xs-center">Sign up</h1>
+				<p class="text-xs-center">
+					<a href="/login">Have an account?</a>
+				</p>
 
-					<ListErrors :errors/>
+				<ListErrors {errors}/>
 
-					<form on:submit='submit(event)'>
-						<fieldset class="form-group">
-							<input class="form-control form-control-lg" type="text" placeholder="Your Name" bind:value=username>
-						</fieldset>
-						<fieldset class="form-group">
-							<input class="form-control form-control-lg" type="text" placeholder="Email" bind:value=email>
-						</fieldset>
-						<fieldset class="form-group">
-							<input class="form-control form-control-lg" type="password" placeholder="Password" bind:value=password>
-						</fieldset>
-						<button class="btn btn-lg btn-primary pull-xs-right">
-							Sign up
-						</button>
-					</form>
-				</div>
-
+				<form on:submit='submit(event)'>
+					<fieldset class="form-group">
+						<input class="form-control form-control-lg" type="text" placeholder="Your Name" bind:value=username>
+					</fieldset>
+					<fieldset class="form-group">
+						<input class="form-control form-control-lg" type="text" placeholder="Email" bind:value=email>
+					</fieldset>
+					<fieldset class="form-group">
+						<input class="form-control form-control-lg" type="password" placeholder="Password" bind:value=password>
+					</fieldset>
+					<button class="btn btn-lg btn-primary pull-xs-right">
+						Sign up
+					</button>
+				</form>
 			</div>
+
 		</div>
 	</div>
-</Layout>
+</div>
 
 <script>
 	import { goto } from 'sapper/runtime.js';
-	import Layout from '../_components/Layout.html';
 	import ListErrors from '../_components/ListErrors.html';
-	import * as auth from '../_auth.js';
 
 	export default {
-		components: { Layout, ListErrors },
-
-		preload({ session }) {
-			return {
-				user: session ? session.user : auth.user
-			};
-		},
+		components: { ListErrors },
 
 		data() {
 			return {
@@ -66,7 +56,7 @@
 
 				const { username, email, password } = this.get();
 
-				auth.register({ username, email, password })
+				this.store.register({ username, email, password })
 					.then(response => {
 						if (response.errors) {
 							this.set({ errors: response.errors });

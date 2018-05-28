@@ -1,18 +1,18 @@
 <div class="article-meta">
-	<a href='/@{{article.author.username}}'>
-		<img src={{article.author.image}} alt={{article.author.username}} />
+	<a href='/@{article.author.username}'>
+		<img src={article.author.image} alt={article.author.username} />
 	</a>
 
 	<div class="info">
-		<a href='/@{{article.author.username}}' class="author"> {{article.author.username}}</a>
+		<a href='/@{article.author.username}' class="author"> {article.author.username}</a>
 		<span class="date">
-			{{new Date(article.createdAt).toDateString()}}
+			{new Date(article.createdAt).toDateString()}
 		</span>
 	</div>
 
-	{{#if canModify}}
+	{#if canModify}
 		<span>
-			<a href='/editor/{{article.slug}}' class="btn btn-outline-secondary btn-sm">
+			<a href='/editor/{article.slug}' class="btn btn-outline-secondary btn-sm">
 				<i class="ion-edit"/> Edit Article
 			</a>
 
@@ -20,7 +20,7 @@
 				<i class="ion-trash-a"/> Delete Article
 			</button>
 		</span>
-	{{/if}}
+	{/if}
 </div>
 
 <script>
@@ -29,12 +29,13 @@
 
 	export default {
 		computed: {
-			canModify: (article, user) => user && article.author.username === user.username
+			canModify: ({ article, $user }) => $user && article.author.username === $user.username
 		},
 
 		methods: {
 			remove() {
-				const { user, article } = this.get();
+				const { article } = this.get();
+				const { user } = this.store.get();
 
 				api.del(`/articles/${article.slug}`, user && user.token).then(response => {
 					goto('/');

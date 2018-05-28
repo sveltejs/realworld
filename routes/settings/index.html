@@ -1,49 +1,39 @@
-<:Head>
+<svelte:head>
 	<title>Settings • Conduit</title>
-</:Head>
+</svelte:head>
 
-<Layout page='settings' :user>
-	<div class="settings-page">
-		<div class="container page">
-			<div class="row">
-				<div class="col-md-6 offset-md-3 col-xs-12">
+<div class="settings-page">
+	<div class="container page">
+		<div class="row">
+			<div class="col-md-6 offset-md-3 col-xs-12">
 
-					<h1 class="text-xs-center">Your Settings</h1>
+				<h1 class="text-xs-center">Your Settings</h1>
 
-					<ListErrors :errors/>
+				<ListErrors {errors}/>
 
-					<SettingsForm on:save='save(event)' :user :inProgress/>
+				<SettingsForm on:save='save(event)' {...$user} {inProgress}/>
 
-					<hr />
+				<hr />
 
-					<button class="btn btn-outline-danger" on:click='logout()'>
-						Or click here to logout.
-					</button>
-				</div>
+				<button class="btn btn-outline-danger" on:click='logout()'>
+					Or click here to logout.
+				</button>
 			</div>
 		</div>
 	</div>
-</Layout>
+</div>
 
 <script>
 	import { goto } from 'sapper/runtime.js';
-	import Layout from '../_components/Layout.html';
 	import ListErrors from '../_components/ListErrors.html';
 	import SettingsForm from './_SettingsForm.html';
-	import * as auth from '../_auth.js';
 
 	export default {
-		components: { Layout, ListErrors, SettingsForm },
-
-		preload({ session }) {
-			return {
-				user: session ? session.user : auth.user
-			};
-		},
+		components: { ListErrors, SettingsForm },
 
 		methods: {
 			logout() {
-				auth.logout().then(() => {
+				this.store.logout().then(() => {
 					goto('/');
 				});
 			},
@@ -51,9 +41,9 @@
 			save(user) {
 				this.set({ inProgress: true });
 
-				auth.save(user).then(response => {
+				this.store.save(user).then(response => {
 					this.set({
-						user: response.user || this.get('user'),
+						user: response.user || this.get().user,
 						errors: response.errors,
 						inProgress: false
 					});

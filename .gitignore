@@ -1,7 +1,11 @@
 .DS_Store
 node_modules
-.sapper
+/.sapper/
 yarn.lock
-cypress/screenshots
-templates/.*
-.sessions
+yarn-error.log
+/cypress/screenshots/
+/templates/.*
+/export/
+/build/
+/app/manifest/
+/.sessions/

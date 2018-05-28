@@ -1,49 +1,32 @@
 {
-  "name": "svelte-realworld",
-  "description": "Svelte implementation of the RealWorld app",
+  "name": "TODO",
+  "description": "TODO",
   "version": "0.0.1",
   "scripts": {
-    "dev": "node server.js",
+    "dev": "sapper dev",
     "build": "sapper build",
-    "start": "cross-env NODE_ENV=production node server.js",
+    "export": "sapper export",
+    "start": "node build",
     "cy:run": "cypress run",
     "cy:open": "cypress open",
-    "test": "run-p --race dev cy:run",
-    "stage": "now",
-    "deploy": "now && now alias"
+    "test": "run-p --race dev cy:run"
   },
   "dependencies": {
-    "body-parser": "^1.18.2",
+    "body-parser": "^1.18.3",
     "compression": "^1.7.1",
-    "cross-env": "^5.1.1",
-    "css-loader": "^0.28.7",
-    "express": "^4.16.2",
+    "express": "^4.16.3",
     "express-session": "^1.15.6",
-    "extract-text-webpack-plugin": "^3.0.2",
-    "glob": "^7.1.2",
-    "marked": "^0.3.9",
-    "node-fetch": "^1.7.3",
-    "npm-run-all": "^4.1.2",
-    "sapper": "^0.3.1",
+    "marked": "^0.4.0",
+    "node-fetch": "^2.1.2",
+    "sapper": "^0.12.0",
     "serve-static": "^1.13.1",
     "session-file-store": "^1.2.0",
-    "style-loader": "^0.19.0",
-    "svelte": "^1.49.1",
-    "svelte-extras": "^1.6.0",
-    "svelte-loader": "^2.3.1",
-    "uglifyjs-webpack-plugin": "^1.1.2",
-    "webpack": "^3.10.0"
+    "svelte-extras": "^2.0.2"
   },
-  "now": {
-    "alias": "svelte-realworld.now.sh",
-    "files": [
-      "assets",
-      "routes",
-      "templates",
-      "server.js",
-      "webpack.client.config.js",
-      "webpack.server.config.js",
-      "yarn.lock"
-    ]
+  "devDependencies": {
+    "npm-run-all": "^4.1.2",
+    "svelte": "^2.0.0",
+    "svelte-loader": "^2.9.0",
+    "webpack": "^4.7.0"
   }
 }

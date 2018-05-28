@@ -1,68 +1,62 @@
-<Layout page='editor' :user>
-	<div class="editor-page">
-		<div class="container page">
-			<div class="row">
-				<div class="col-md-10 offset-md-1 col-xs-12">
-					<ListErrors :errors/>
+<div class="editor-page">
+	<div class="container page">
+		<div class="row">
+			<div class="col-md-10 offset-md-1 col-xs-12">
+				<ListErrors {errors}/>
 
-					<form>
-						<fieldset>
-							<fieldset class="form-group">
-								<input class="form-control form-control-lg" type="text" placeholder="Article Title" bind:value=article.title>
-							</fieldset>
-
-							<fieldset class="form-group">
-								<input class="form-control" type="text" placeholder="What's this article about?" bind:value=article.description>
-							</fieldset>
-
-							<fieldset class="form-group">
-								<textarea class="form-control" rows="8" placeholder="Write your article (in markdown)" bind:value=article.body/>
-							</fieldset>
-
-							<fieldset class="form-group">
-								<input class="form-control" type="text" placeholder="Enter tags" on:enter='addTag(this)'>
-
-								<div class="tag-list">
-									{{#each article.tagList as tag, i}}
-										<span class="tag-default tag-pill">
-											<i class="ion-close-round" on:click='splice("article.tagList", i, 1)'/>
-											{{tag}}
-										</span>
-									{{/each}}
-								</div>
-							</fieldset>
-
-							<button class="btn btn-lg pull-xs-right btn-primary" type="button" disabled={{inProgress}} on:click='publish()'>
-								Publish Article
-							</button>
+				<form>
+					<fieldset>
+						<fieldset class="form-group">
+							<input class="form-control form-control-lg" type="text" placeholder="Article Title" bind:value=article.title>
 						</fieldset>
-					</form>
-				</div>
+
+						<fieldset class="form-group">
+							<input class="form-control" type="text" placeholder="What's this article about?" bind:value=article.description>
+						</fieldset>
+
+						<fieldset class="form-group">
+							<textarea class="form-control" rows="8" placeholder="Write your article (in markdown)" bind:value=article.body/>
+						</fieldset>
+
+						<fieldset class="form-group">
+							<input class="form-control" type="text" placeholder="Enter tags" on:enter='addTag(this)'>
+
+							<div class="tag-list">
+								{#each article.tagList as tag, i}
+									<span class="tag-default tag-pill">
+										<i class="ion-close-round" on:click='splice("article.tagList", i, 1)'/>
+										{tag}
+									</span>
+								{/each}
+							</div>
+						</fieldset>
+
+						<button class="btn btn-lg pull-xs-right btn-primary" type="button" disabled={inProgress} on:click='publish()'>
+							Publish Article
+						</button>
+					</fieldset>
+				</form>
 			</div>
 		</div>
 	</div>
-</Layout>
+</div>
 
 <script>
 	import { goto } from 'sapper/runtime.js';
-	import Layout from '../_components/Layout.html';
 	import ListErrors from '../_components/ListErrors.html';
 	import { push, splice } from 'svelte-extras';
 	import * as api from '../_api.js';
-	import * as auth from '../_auth.js';
 
 	export default {
-		components: { Layout, ListErrors },
+		components: { ListErrors },
 
-		preload({ session, params }) {
-			const user = session ? session.user : auth.user;
-
+		preload({ params }) {
 			if (params.slug === undefined) {
-				return { user };
+				return {};
 			}
 
-			return api.get(`articles/${params.slug}`).then(({ article }) => {
-				return { article, user };
+			return api.get(`articles/${params.slug}`, null).then(({ article }) => {
+				return { article };
 			});
 		},
 
