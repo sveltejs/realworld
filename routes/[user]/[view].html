@@ -58,15 +58,10 @@
 		components: { ArticleList },
 
 		preload({ session, params }) {
-			console.trace(JSON.stringify(params));
-
 			const username = params.user.slice(1);
 			const { user } = this.store.get();
 
-			console.log(1);
-
 			return api.get(`profiles/${username}`, user && user.token, this.fetch).then(({ profile }) => {
-				console.log(2);
 				return { profile, favorites: params.view === 'favorites' };
 			});
 		},
