@@ -48,8 +48,8 @@
 	export default {
 		components: { ArticleMeta, CommentContainer },
 
-		preload({ session, params }) {
-			return api.get(`articles/${params.slug}`, null, this.fetch).then(({ article }) => {
+		preload({ params }) {
+			return api.get(`articles/${params.slug}`, null).then(({ article }) => {
 				return {
 					article
 				};

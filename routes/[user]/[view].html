@@ -57,11 +57,11 @@
 	export default {
 		components: { ArticleList },
 
-		preload({ session, params }) {
+		preload({ params }) {
 			const username = params.user.slice(1);
 			const { user } = this.store.get();
 
-			return api.get(`profiles/${username}`, user && user.token, this.fetch).then(({ profile }) => {
+			return api.get(`profiles/${username}`, user && user.token).then(({ profile }) => {
 				return { profile, favorites: params.view === 'favorites' };
 			});
 		},

@@ -50,15 +50,13 @@
 	export default {
 		components: { ListErrors },
 
-		preload({ session, params }) {
-			const user = session ? session.user : auth.user;
-
+		preload({ params }) {
 			if (params.slug === undefined) {
-				return { user };
+				return {};
 			}
 
-			return api.get(`articles/${params.slug}`, null, this.fetch).then(({ article }) => {
-				return { article, user };
+			return api.get(`articles/${params.slug}`, null).then(({ article }) => {
+				return { article };
 			});
 		},
 
