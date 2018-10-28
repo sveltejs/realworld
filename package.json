@@ -18,9 +18,9 @@
     "compression": "^1.7.1",
     "express": "^4.16.3",
     "express-session": "^1.15.6",
-    "marked": "^0.4.0",
+    "marked": "^0.5.1",
     "node-fetch": "^2.1.2",
-    "sapper": "^0.13.0",
+    "sapper": "^0.24.0",
     "serve-static": "^1.13.1",
     "session-file-store": "^1.2.0",
     "svelte-extras": "^2.0.2"

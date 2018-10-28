@@ -1,7 +1,5 @@
-import { init } from 'sapper/runtime.js';
-import { routes } from './manifest/client.js';
+import * as sapper from '../__sapper__/client.js';
 import { Store } from 'svelte/store.js';
-import App from './App.html';
 
 function post(endpoint, data) {
 	return fetch(endpoint, {
@@ -44,10 +42,8 @@ class ConduitStore extends Store {
 	}
 }
 
-init({
+sapper.start({
 	target: document.querySelector('#sapper'),
-	routes,
-	App,
 	store: data => {
 		return new ConduitStore(data);
 	}
