@@ -1,7 +1,7 @@
-<Nav path={props.path}/>
+<Nav segment={child.segment}/>
 
 <main>
-	<svelte:component this={Page} {...props}/>
+	<svelte:component this={child.component} {...child.props}/>
 </main>
 
 <script>

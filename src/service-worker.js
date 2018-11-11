@@ -1,4 +1,4 @@
-import { timestamp, assets, shell, routes } from './manifest/service-worker.js';
+import { files, shell, routes, timestamp } from '../__sapper__/service-worker.js';
 
 const ASSETS = `cache${timestamp}`;
 
