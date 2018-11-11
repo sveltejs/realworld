@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "sapper dev",
     "sapper": "sapper build",
-    "start": "node build",
+    "start": "node __sapper__/build",
     "cy:run": "cypress run",
     "cy:open": "cypress open",
     "test": "run-p --race dev cy:run",
@@ -34,8 +34,7 @@
   "now": {
     "alias": "svelte-realworld.now.sh",
     "files": [
-      "assets",
-      "build",
+      "__sapper__",
       "yarn.lock"
     ]
   }
