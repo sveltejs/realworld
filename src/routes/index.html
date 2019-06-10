@@ -26,17 +26,15 @@
 </div>
 
 <script>
+	import {onMount} from 'svelte'; 
+	
 	import MainView from './_components/MainView/index.html';
 	import Tags from './_components/Tags.html';
 	import * as api from './_api.js';
 
-	export default {
-		components: { MainView, Tags },
-
-		oncreate() {
-			api.get('tags').then(({ tags }) => {
-				this.set({ tags });
-			});
-		}
-	};
+	onMount(() => {
+		api.get('tags').then(({ tags }) => {
+			this.set({ tags });
+		});
+	})
 </script>
