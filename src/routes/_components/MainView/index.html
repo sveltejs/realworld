@@ -3,7 +3,7 @@
 		<ul class="nav nav-pills outline-active">
 			{#if $user}
 				<li class="nav-item">
-					<a href="." class='nav-link {tab === "feed" ? "active" : "" }' on:click='set({ tab: "feed", tag: null })'>
+					<a href="." class='nav-link {tab === "feed" ? "active" : "" }' on:click='{yourFeed}'>
 						Your Feed
 					</a>
 				</li>
@@ -16,14 +16,14 @@
 			{/if}
 
 			<li class="nav-item">
-				<a href="." class='nav-link {tab === "all" ? "active" : "" }' on:click='set({ tab: "all", tag: null })'>
+				<a href="." class='nav-link {tab === "all" ? "active" : "" }' on:click='{globalfeed}'>
 					Global Feed
 				</a>
 			</li>
 
 			{#if tag}
 				<li class="nav-item">
-					<a href="." class='nav-link {tab === "tag" ? "active" : "" }' on:click='set({ tab: "tag" })'>
+					<a href="." class='nav-link {tab === "tag" ? "active" : "" }' on:click='{() => tab = "tag"}'>
 						<i class="ion-pound"></i> {tag}
 					</a>
 				</li>
@@ -37,13 +37,15 @@
 <script>
 	import ArticleList from '../ArticleList/index.html';
 
-	export default {
-		components: { ArticleList },
+	export let tab = 'all', tag;
 
-		data() {
-			return {
-				tab: 'all'
-			};
-		}
-	};
+	function yourFeed() {
+		tab = "feed";
+		tag = null;
+	}
+
+	function globalfeed() {
+		tab = "all"; 
+		tag = null;
+	}
 </script>

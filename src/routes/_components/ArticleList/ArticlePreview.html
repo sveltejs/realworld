@@ -38,31 +38,25 @@
 <script>
 	import * as api from '../../_api.js';
 
-	export default {
-		methods: {
-			toggleFavorite() {
-				const { article } = this.get();
-				const { user } = this.store.get();
+	export let article;
 
-				const promise = article.favorited ?
-					api.del(`articles/${article.slug}/favorite`, user && user.token) :
-					api.post(`articles/${article.slug}/favorite`, null, user && user.token);
+	function toggleFavorite() {
+		const promise = article.favorited ?
+			api.del(`articles/${article.slug}/favorite`, $user && $user.token) :
+			api.post(`articles/${article.slug}/favorite`, null, $user && $user.token);
 
-				promise.then(response => {
-					this.set(response);
-				});
+		promise.then(response => {
+			this.set(response);
+		});
 
-				// optimistic UI
-				if (article.favorited) {
-					article.favoritesCount -= 1;
-					article.favorited = false;
-				} else {
-					article.favoritesCount += 1;
-					article.favorited = true;
-				}
-
-				this.set({ article });
-			}
+		// optimistic UI
+		if (article.favorited) {
+			article.favoritesCount -= 1;
+			article.favorited = false;
+		} else {
+			article.favoritesCount += 1;
+			article.favorited = true;
 		}
-	};
+	}
+	
 </script>

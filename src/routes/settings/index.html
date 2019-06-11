@@ -11,11 +11,11 @@
 
 				<ListErrors {errors}/>
 
-				<SettingsForm on:save='save(event)' {...$user} {inProgress}/>
+				<SettingsForm on:save='{({ detail }) => save(detail)}' {...$user} {inProgress}/>
 
 				<hr />
 
-				<button class="btn btn-outline-danger" on:click='logout()'>
+				<button class="btn btn-outline-danger" on:click='{logout}'>
 					Or click here to logout.
 				</button>
 			</div>
@@ -28,27 +28,21 @@
 	import ListErrors from '../_components/ListErrors.html';
 	import SettingsForm from './_SettingsForm.html';
 
-	export default {
-		components: { ListErrors, SettingsForm },
+	let inProgress;
 
-		methods: {
-			logout() {
-				this.store.logout().then(() => {
-					goto('/');
-				});
-			},
+	function logout() {
+		this.store.logout().then(() => {
+			goto('/');
+		});
+	}
 
-			save(user) {
-				this.set({ inProgress: true });
+	function save(user) {
+		inProgress = true;
 
-				this.store.save(user).then(response => {
-					this.set({
-						user: response.user || this.get().user,
-						errors: response.errors,
-						inProgress: false
-					});
-				});
-			}
-		}
-	};
+		this.store.save(user).then(response => {
+			user = response.user || user;
+			errors = response.errors;
+			inProgress = false;
+		});
+	}
 </script>

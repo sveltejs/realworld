@@ -1,4 +1,4 @@
-<form class="card comment-form" on:submit='submit(event)'>
+<form class="card comment-form" on:submit|preventDefault='{submit}'>
 	<div class="card-block">
 		<textarea class="form-control" placeholder="Write a comment..." bind:value=body rows="3"/>
 	</div>
@@ -10,27 +10,19 @@
 </form>
 
 <script>
+	import { createEventDispatcher } from 'svelte';
 	import * as api from '../_api.js';
-
-	export default {
-		data() {
-			return { body: '' };
-		},
-
-		methods: {
-			submit(event) {
-				event.preventDefault();
-
-				const { slug, body } = this.get();
-				const { user } = this.store.get();
-
-				api.post(`articles/${slug}/comments`, { comment: { body } }, user && user.token).then(response => {
-					if (response.comment) {
-						this.fire('commented', response);
-						this.set({ body: '' });
-					}
-				});
+	
+	export let slug;
+	let body = '';
+	
+	function submit(event) {
+		api.post(`articles/${slug}/comments`, { comment: { body } }, $user && $user.token).then(response => {
+			if (response.comment) {
+				dispatch('commented', response);
+				body = '';
 			}
-		}
-	};
+		});
+	}
+		
 </script>

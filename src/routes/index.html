@@ -18,7 +18,7 @@
 			<div class="col-md-3">
 				<div class="sidebar">
 					<p>Popular Tags</p>
-					<Tags {tags} on:select='set({ tag: event.tag, tab: "tag" })' />
+					<Tags {tags} on:select='{setTags}' />
 				</div>
 			</div>
 		</div>
@@ -31,6 +31,12 @@
 	import MainView from './_components/MainView/index.html';
 	import Tags from './_components/Tags.html';
 	import * as api from './_api.js';
+
+
+	function setTags({ detail }) {
+		tag = detail.tag; 
+		tab = "tag";
+	}
 
 	onMount(() => {
 		api.get('tags').then(({ tags }) => {

@@ -12,15 +12,15 @@
 {/if}
 
 <script>
-	export default {
-		computed: {
-			range({ articlesCount }) {
-				const range = [];
-				for (let i = 0; i < Math.ceil(articlesCount / 10); ++i) {
-					range.push(i);
-				}
-				return range;
-			}
+	export let articlesCount, page;
+	let range;
+
+	$:  {
+		const rangeArr = [];
+		for (let i = 0; i < Math.ceil(articlesCount / 10); ++i) {
+			range.push(i);
 		}
-	};
+		range = rangeArr;
+	}
+			
 </script>

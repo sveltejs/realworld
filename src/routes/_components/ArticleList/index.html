@@ -9,7 +9,7 @@
 				<ArticlePreview {article}/>
 			{/each}
 
-			<ListPagination {articlesCount} {page} on:select='set({ page: event.page })' />
+			<ListPagination {articlesCount} {page} on:select='{({ detail }) => page = detail.page })}' />
 		</div>
 	{/if}
 {:else}
@@ -21,39 +21,58 @@
 	import ListPagination from './ListPagination.html';
 	import * as api from '../../_api.js';
 
-	export default {
-		components: { ArticlePreview, ListPagination },
+	export let tab, username, favourites, tag;
 
-		data() {
-			return {
-				page: 0
-			};
-		},
+	let page = 0, query, page;
+	
+	$: {
+		const endpoint = tab === 'feed' ? 'articles/feed' : 'articles';
+		const page_size = tab === 'feed' ? 5 : 10;
 
-		computed: {
-			query: ({ tab, page, username, favorites, tag }) => {
-				const endpoint = tab === 'feed' ? 'articles/feed' : 'articles';
-				const page_size = tab === 'feed' ? 5 : 10;
+		let params = `limit=${page_size}&offset=${page * page_size}`;
+		if (tab === 'tag') params += `&tag=${tag}`;
+		if (tab === 'profile') params += `&${favorites ? 'favorited' : 'author'}=${encodeURIComponent(username)}`;
 
-				let params = `limit=${page_size}&offset=${page * page_size}`;
-				if (tab === 'tag') params += `&tag=${tag}`;
-				if (tab === 'profile') params += `&${favorites ? 'favorited' : 'author'}=${encodeURIComponent(username)}`;
+		query = `${endpoint}?${params}`;
+	}
 
-				return `${endpoint}?${params}`;
-			}
-		},
+	$: query && getData();
 
-		onstate({ changed, current }) {
-			if (changed.query) {
-				this.set({ articles: null });
+	function getData() {
+		articles = null;
 
-				const { user } = this.store.get();
-				api.get(current.query, user && user.token)
-					.then(data => {
-						// TODO do we need some error handling here?
-						this.set(data);
-					});
-			}
-		}
-	};
+		api.get(current.query, $user && $user.token)
+			.then(data => {
+				console.log(data)
+				// TODO do we need some error handling here?
+			//	this.set(data);
+			});
+	}
+
+		// computed: {
+		// 	 query: ({ tab, page, username, favorites, tag }) => {
+		// 		const endpoint = tab === 'feed' ? 'articles/feed' : 'articles';
+		// 		const page_size = tab === 'feed' ? 5 : 10;
+
+		// 		let params = `limit=${page_size}&offset=${page * page_size}`;
+		// 		if (tab === 'tag') params += `&tag=${tag}`;
+		// 		if (tab === 'profile') params += `&${favorites ? 'favorited' : 'author'}=${encodeURIComponent(username)}`;
+
+		// 		query = `${endpoint}?${params}`;
+		// 	}
+		// },
+
+		// onstate({ changed, current }) {
+		// 	if (changed.query) {
+		// 		this.set({ articles: null });
+
+		// 		const { user } = this.store.get();
+		// 		api.get(current.query, user && user.token)
+		// 			.then(data => {
+		// 				// TODO do we need some error handling here?
+		// 				this.set(data);
+		// 			});
+		// 	}
+		// }
+	
 </script>

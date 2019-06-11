@@ -2,7 +2,7 @@
 	{#if $user}
 		<div>
 			<ListErrors {errors}/>
-			<CommentInput {slug} on:commented='unshift("comments", event.comment)'/>
+			<CommentInput {slug} on:commented='{({ detail }) => comments = [detail.comment, ...comments] }'/>
 		</div>
 	{:else}
 		<p>
@@ -11,7 +11,7 @@
 	{/if}
 
 	{#each comments as comment, i (comment.id)}
-		<Comment {comment} {slug} on:deleted='splice("comments", i, 1)'/>
+		<Comment {comment} {slug} on:deleted='{() => comments = comments.filter((_, index) => i !== index)}'/>
 	{/each}
 </div>
 
@@ -19,10 +19,6 @@
 	import ListErrors from '../_components/ListErrors.html';
 	import CommentInput from './_CommentInput.html';
 	import Comment from './_Comment.html';
-	import { unshift, splice } from 'svelte-extras';
 
-	export default {
-		components: { ListErrors, CommentInput, Comment },
-		methods: { unshift, splice }
-	};
+	export let comments, errors, slug;
 </script>

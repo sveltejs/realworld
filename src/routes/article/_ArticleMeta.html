@@ -16,7 +16,7 @@
 				<i class="ion-edit"/> Edit Article
 			</a>
 
-			<button class="btn btn-outline-danger btn-sm" on:click='remove()'>
+			<button class="btn btn-outline-danger btn-sm" on:click='{remove}'>
 				<i class="ion-trash-a"/> Delete Article
 			</button>
 		</span>
@@ -27,20 +27,13 @@
 	import { goto } from '../../../__sapper__/client.js';
 	import * as api from '../_api.js';
 
-	export default {
-		computed: {
-			canModify: ({ article, $user }) => $user && article.author.username === $user.username
-		},
+	let article, user;
+	$: canModify = $user && article.author.username === $user.username
 
-		methods: {
-			remove() {
-				const { article } = this.get();
-				const { user } = this.store.get();
 
-				api.del(`/articles/${article.slug}`, user && user.token).then(response => {
-					goto('/');
-				});
-			}
-		}
-	};
+	function remove() {
+		api.del(`/articles/${article.slug}`, user && user.token).then(response => {
+			goto('/');
+		});
+	}
 </script>

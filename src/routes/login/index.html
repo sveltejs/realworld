@@ -14,12 +14,12 @@
 
 				<ListErrors {errors}/>
 
-				<form on:submit='submit(event)'>
+				<form on:submit|preventDefault='{submit}'>
 					<fieldset class="form-group">
-						<input class="form-control form-control-lg" type="email" placeholder="Email" bind:value=email>
+						<input class="form-control form-control-lg" type="email" placeholder="Email" bind:value={email}>
 					</fieldset>
 					<fieldset class="form-group">
-						<input class="form-control form-control-lg" type="password" placeholder="Password" bind:value=password>
+						<input class="form-control form-control-lg" type="password" placeholder="Password" bind:value={password}>
 					</fieldset>
 					<button class="btn btn-lg btn-primary pull-xs-right" type="submit" disabled='{!email || !password}'>
 						Sign in
@@ -34,36 +34,23 @@
 	import { goto } from '../../../__sapper__/client.js';
 	import ListErrors from '../_components/ListErrors.html';
 
-	export default {
-		components: { ListErrors },
-
-		data() {
-			return {
-				email: '',
-				password: '',
-				errors: null
-			};
-		},
-
-		methods: {
-			submit(event) {
-				event.preventDefault();
-
-				const { email, password } = this.get();
-
-				this.store.login({ email, password })
-					.then(response => {
-						if (response.errors) {
-							this.set({ errors: response.errors });
-						} else {
-							goto('/');
-						}
-					})
-					.catch(err => {
-						// TODO handle network errors
-						console.error({ err });
-					});
-			}
-		}
-	};
+	let email = '',
+	password = '',
+	errors = null
+			
+	function submit(event) {
+		this.store.login({ email, password })
+			.then(response => {
+				if (response.errors) {
+					errors = response.errors;
+				} else {
+					goto('/');
+				}
+			})
+			.catch(err => {
+				// TODO handle network errors
+				console.error({ err });
+			});
+	}
+		
 </script>

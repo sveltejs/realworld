@@ -18,7 +18,7 @@
 					{:else}
 						<button
 							class='btn btn-sm action-btn {profile.following ? "btn-secondary" : "btn-outline-secondary"}'
-							on:click='toggleFollowing()'
+							on:click='{toggleFollowing}'
 						>
 							<i class="ion-plus-round"></i>
 							{profile.following ? 'Unfollow' : 'Follow'} {profile.username}
@@ -50,43 +50,41 @@
 	</div>
 </div>
 
+
+<script context="module">
+	export function preload({ params }) {
+		const username = params.user.slice(1);
+		// replace store
+		const { user } = this.store.get();
+
+		return api.get(`profiles/${username}`, user && user.token).then(({ profile }) => {
+			return { profile, favorites: params.view === 'favorites' };
+		});
+	}
+</script>
+
 <script>
 	import ArticleList from '../_components/ArticleList/index.html';
 	import * as api from '../_api.js';
 
-	export default {
-		components: { ArticleList },
+	export let profile, favourites;
+		
+	$: isUser= $user && (profile.username === $user.username)
+	
+	function toggleFollowing() {
 
-		preload({ params }) {
-			const username = params.user.slice(1);
-			const { user } = this.store.get();
+		const promise = profile.following ?
+			api.del(`profiles/${profile.username}/follow`, $user && $user.token) :
+			api.post(`profiles/${profile.username}/follow`, null, $user && $user.token);
 
-			return api.get(`profiles/${username}`, user && user.token).then(({ profile }) => {
-				return { profile, favorites: params.view === 'favorites' };
-			});
-		},
+		promise.then(response => {
+			profile = response.profile;
+			favourites = response.favourites;
+		});
 
-		computed: {
-			isUser: ({ profile, $user }) => $user && (profile.username === $user.username)
-		},
-
-		methods: {
-			toggleFollowing() {
-				const { profile } = this.get();
-				const { user } = this.store.get();
-
-				const promise = profile.following ?
-					api.del(`profiles/${profile.username}/follow`, user && user.token) :
-					api.post(`profiles/${profile.username}/follow`, null, user && user.token);
-
-				promise.then(response => {
-					this.set(response);
-				});
-
-				// optimistic UI
-				profile.following = !profile.following;
-				this.set({ profile });
-			}
-		}
-	};
+		// optimistic UI
+		profile.following = !profile.following;
+		//this.set({ profile });
+	}
+	
 </script>

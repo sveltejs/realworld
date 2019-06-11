@@ -23,18 +23,17 @@
 </div>
 
 <script>
-	import * as api from '../_api.js';
+  import { createEventDispatcher } from "svelte";
+  import * as api from "../_api.js";
 
-	export default {
-		methods: {
-			remove() {
-				const { comment, slug } = this.get();
-				const { user } = this.store.get();
-
-				api.del(`articles/${slug}/comments/${comment.id}`, user && user.token).then(response => {
-					this.fire('deleted');
-				});
-			}
-		}
-	};
+	export let comment, slug;
+	const dispatch = createEventDispatcher();
+  
+  function remove() {
+		api
+		.del(`articles/${slug}/comments/${comment.id}`, $user && $user.token)
+		.then(response => {
+			dispatch("deleted");
+		});
+	}
 </script>

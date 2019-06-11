@@ -39,39 +39,33 @@
 	</div>
 </div>
 
+<script context="module">
+	export function preload({ params }) {
+		return api.get(`articles/${params.slug}`, null).then(({ article }) => {
+			return {
+				article
+			};
+		});
+	}
+</script>
+
 <script>
+	import { onMount } from 'svelte';
 	import marked from 'marked';
 	import ArticleMeta from './_ArticleMeta.html';
 	import CommentContainer from './_CommentContainer.html';
 	import * as api from '../_api.js';
 
-	export default {
-		components: { ArticleMeta, CommentContainer },
+	export let article;
 
-		preload({ params }) {
-			return api.get(`articles/${params.slug}`, null).then(({ article }) => {
-				return {
-					article
-				};
-			});
-		},
+	let comments = []; // we'll lazy-load these in onMount
+	$: markup = marked(article.body)
+	$: ({ slug } = params)
 
-		data() {
-			return {
-				comments: [] // we'll lazy-load these in oncreate
-			};
-		},
-
-		computed: {
-			markup: ({ article }) => marked(article.body)
-		},
-
-		oncreate() {
-			const { slug } = this.get().params;
-
-			api.get(`articles/${slug}/comments`).then(({ comments }) => {
-				this.set({ comments });
-			});
-		}
-	};
+	onMount(() => {
+		api.get(`articles/${slug}/comments`).then((res) => {
+			comments = res.comments;
+		});
+	});
+	
 </script>
