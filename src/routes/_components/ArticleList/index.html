@@ -24,34 +24,30 @@
 
 	export let tab, username, favorites, tag;
 	const { session, page } = stores();
-	console.log($page)
 	let query, articles, articlesCount;
-	
+
+	$: currentPage = $page.params && $page.params.page ? +$page.params.page - 1 : 0
 	$: {
 		const endpoint = tab === 'feed' ? 'articles/feed' : 'articles';
 		const page_size = tab === 'feed' ? 5 : 10;
 
-		let params = `limit=${page_size}&offset=${parseInt($page.params.page, 10) * page_size}`;
+		let params = `limit=${page_size}&offset=${currentPage * page_size}`;
 		if (tab === 'tag') params += `&tag=${tag}`;
 		if (tab === 'profile') params += `&${favorites ? 'favorited' : 'author'}=${encodeURIComponent(username)}`;
 
 		query = `${endpoint}?${params}`;
-		console.log(query)
 	}
 
 	$: query && getData();
 
 	function getData() {
-		//if (process.browser) document.body.scrollTop = document.documentElement.scrollTop = 0;
 		articles = null;
 
 		api.get(query, $session.user && $session.user.token)
 			.then(data => {
-				console.log(data)
 				// TODO do we need some error handling here?
 				articles = data.articles;
 				articlesCount = data.articlesCount
 			});
 	}
-	$: console.log(articles)
 </script>

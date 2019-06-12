@@ -4,7 +4,7 @@
 
 			{#each range as v}
 				<li class='page-item {v === page ? "active": ""}'>
-					<a class="page-link" href="/{v}">{v + 1}</a>
+					<a class="page-link" href="/{v ? v + 1 : ''}">{v + 1}</a>
 				</li>
 			{/each}
 		</ul>
