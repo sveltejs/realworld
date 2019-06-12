@@ -32,6 +32,7 @@
     "@babel/preset-env": "^7.1.5",
     "@babel/runtime": "^7.1.5",
     "chokidar": "^2.0.4",
+    "cypress": "^3.3.1",
     "npm-run-all": "^4.1.2",
     "rollup": "^1.14.6",
     "rollup-plugin-babel": "^4.3.2",
