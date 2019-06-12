@@ -9,39 +9,42 @@ function post(endpoint, data) {
   }).then(r => r.json());
 }
 
+const session = () => {
+  let store;
 
-let store;
+  return {
+    set(sessionStore) {
+      store = sessionStore;
+    },
 
-export const userSession = {
-  set(sessionStore) {
-    store = sessionStore;
-  },
+    login(credentials) {
+      return post(`auth/login`, credentials).then(response => {
+        if (response.user) store.update(state => ({ ...state, user: response.user }));
+        return response;
+      });
+    },
 
-  login(credentials) {
-    return post(`auth/login`, credentials).then(response => {
-      if (response.user) store.update(state => ({ ...state, user: response.user }));
-      return response;
-    });
-  },
+    logout() {
+      return post(`auth/logout`).then(response => {
+        store.update(state => ({ ...state, user: null }));
+        return response;
+      });
+    },
 
-  logout() {
-    return post(`auth/logout`).then(response => {
-      store.update(state => ({ ...state, user: null }));
-      return response;
-    });
-  },
+    register(user) {
+      return post(`auth/register`, user).then(response => {
+        if (response.user) store.update(state => ({ ...state, user: response.user }));
+        return response;
+      });
+    },
 
-  register(user) {
-    return post(`auth/register`, user).then(response => {
-      if (response.user) store.update(state => ({ ...state, user: response.user }));
-      return response;
-    });
-  },
-
-  save(user) {
-    return post(`auth/save`, user).then(response => {
-      if (response.user) store.update(state => ({ ...state, user: response.user }));
-      return response;
-    });
-  }
+    save(user) {
+      return post(`auth/save`, user).then(response => {
+        if (response.user) store.update(state => ({ ...state, user: response.user }));
+        return response;
+      });
+    }
+  };
 }
+
+export const userSession = session();

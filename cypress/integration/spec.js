@@ -12,6 +12,7 @@ describe('Sapper template app', () => {
 		cy.contains('h1', 'conduit')
 	});
 
+	// TODO more tests!
 	it('is possible to change route', () => {
 		cy.visit('/login');
 		cy.contains('h1', 'Sign In')
@@ -43,6 +44,7 @@ describe('Sapper template app', () => {
 		cy.get(':nth-child(3) > .form-control').type(pw)
 		cy.get('form').submit()
 
+		// cy.visit('/')
 		cy.contains(usr);
 		cy.get(':nth-child(3) > .nav-link')
 			.should('have.attr', 'href')
