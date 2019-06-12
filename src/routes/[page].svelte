@@ -5,5 +5,5 @@
 <Index />
 
 <script>
-	import Index from './_Index.html';
+	import Index from './_Index.svelte';
 </script>

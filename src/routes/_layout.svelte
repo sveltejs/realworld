@@ -6,7 +6,7 @@
 
 <script>
 	import { stores } from '@sapper/app';
-	import Nav from '../routes/_components/Nav.html';
+	import Nav from '../routes/_components/Nav.svelte';
 	import { userSession } from '../store.js';
 
 	export let segment;

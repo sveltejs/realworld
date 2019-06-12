@@ -22,8 +22,8 @@
 
 <script>
   import { onMount } from 'svelte'; 
-  import MainView from './_components/MainView/index.html';
-  import Tags from './_components/Tags.html';
+  import MainView from './_components/MainView/index.svelte';
+  import Tags from './_components/Tags.svelte';
   import * as api from './_api.js';
 
   let tab, tag, tags;

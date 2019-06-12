@@ -18,7 +18,7 @@
 
 <script>
 	import { stores, goto } from '@sapper/app';
-	import Profile from './_Profile.html';
+	import Profile from './_Profile.svelte';
 
 	export let profile, favorites;
 	const { session } = stores();

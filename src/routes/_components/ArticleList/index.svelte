@@ -18,8 +18,8 @@
 
 <script>
 	import { stores } from '@sapper/app';
-	import ArticlePreview from './ArticlePreview.html';
-	import ListPagination from './ListPagination.html';
+	import ArticlePreview from './ArticlePreview.svelte';
+	import ListPagination from './ListPagination.svelte';
 	import * as api from '../../_api.js';
 
 	export let tab, username, favorites, tag;

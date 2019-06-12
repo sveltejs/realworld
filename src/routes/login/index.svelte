@@ -32,7 +32,7 @@
 
 <script>
 	import { goto } from '@sapper/app';
-	import ListErrors from '../_components/ListErrors.html';
+	import ListErrors from '../_components/ListErrors.svelte';
 	import { userSession } from '../../store.js';
 
 	let email = '',

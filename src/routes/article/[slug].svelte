@@ -54,8 +54,8 @@
 	import { stores } from '@sapper/app';
 	import marked from 'marked';
 
-	import ArticleMeta from './_ArticleMeta.html';
-	import CommentContainer from './_CommentContainer.html';
+	import ArticleMeta from './_ArticleMeta.svelte';
+	import CommentContainer from './_CommentContainer.svelte';
 	import * as api from '../_api.js';
 
 	export let article, params;

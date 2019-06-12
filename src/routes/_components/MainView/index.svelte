@@ -36,7 +36,7 @@
 
 <script>
 	import { stores } from '@sapper/app';
-	import ArticleList from '../ArticleList/index.html';
+	import ArticleList from '../ArticleList/index.svelte';
 
 	export let tab = 'all', tag;
 	const { session } = stores();

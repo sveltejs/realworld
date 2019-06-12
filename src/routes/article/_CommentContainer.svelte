@@ -16,9 +16,9 @@
 </div>
 
 <script>
-	import ListErrors from '../_components/ListErrors.html';
-	import CommentInput from './_CommentInput.html';
-	import Comment from './_Comment.html';
+	import ListErrors from '../_components/ListErrors.svelte';
+	import CommentInput from './_CommentInput.svelte';
+	import Comment from './_Comment.svelte';
 
 	export let comments, errors, slug, user;
 </script>

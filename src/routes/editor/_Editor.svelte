@@ -43,7 +43,7 @@
 
 <script>
   import { goto, stores } from '@sapper/app';
-  import ListErrors from '../_components/ListErrors.html';
+  import ListErrors from '../_components/ListErrors.svelte';
   import * as api from '../_api.js';
 
   export let params, article;

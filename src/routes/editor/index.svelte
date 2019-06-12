@@ -13,8 +13,8 @@
 </script>
 <script>
 	import { goto } from '@sapper/app';
-	import ListErrors from '../_components/ListErrors.html';
-	import Editor from './_Editor.html';
+	import ListErrors from '../_components/ListErrors.svelte';
+	import Editor from './_Editor.svelte';
 	import * as api from '../_api.js';
 
 	export let 

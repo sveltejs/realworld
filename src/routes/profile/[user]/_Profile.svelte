@@ -52,7 +52,7 @@
 
 <script>
 	import { stores, goto } from '@sapper/app';
-	import ArticleList from '../../_components/ArticleList/index.html';
+	import ArticleList from '../../_components/ArticleList/index.svelte';
 
 	export let profile, favorites;
 	const { session } = stores();

@@ -25,8 +25,8 @@
 
 <script>
 	import { goto, stores } from '@sapper/app';
-	import ListErrors from '../_components/ListErrors.html';
-	import SettingsForm from './_SettingsForm.html';
+	import ListErrors from '../_components/ListErrors.svelte';
+	import SettingsForm from './_SettingsForm.svelte';
 	import { userSession } from '../../store.js';
 
 	let inProgress, errors, user;
