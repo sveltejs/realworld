@@ -10,3 +10,4 @@ yarn-error.log
 /build/
 /app/manifest/
 /.sessions/
+.vscode
