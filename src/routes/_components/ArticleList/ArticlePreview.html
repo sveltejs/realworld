@@ -5,7 +5,7 @@
 		</a>
 
 		<div class="info">
-			<a class="author" href='/@{article.author.username}'> {article.author.username}
+			<a class="author" href='/profile/@{article.author.username}'> {article.author.username}
 			</a>
 			<span class="date">
 				{new Date(article.createdAt).toDateString()}
@@ -46,7 +46,7 @@
 			api.post(`articles/${article.slug}/favorite`, null, user && user.token);
 
 		promise.then(response => {
-			this.set(response);
+			article = response.article;
 		});
 
 		// optimistic UI

@@ -9,7 +9,7 @@
 				<ArticlePreview {article} user={$session.user}/>
 			{/each}
 
-			<ListPagination {articlesCount} {page} on:select='{ ({ detail }) => page = detail.page }' />
+			<ListPagination {articlesCount} page={parseInt($page.params.user, 10)}  />
 		</div>
 	{/if}
 {:else}
@@ -23,60 +23,35 @@
 	import * as api from '../../_api.js';
 
 	export let tab, username, favorites, tag;
-	const { session } = stores();
-
-	let page = 0, query, articles, articlesCount;
+	const { session, page } = stores();
+	console.log($page)
+	let query, articles, articlesCount;
 	
 	$: {
 		const endpoint = tab === 'feed' ? 'articles/feed' : 'articles';
 		const page_size = tab === 'feed' ? 5 : 10;
 
-		let params = `limit=${page_size}&offset=${page * page_size}`;
+		let params = `limit=${page_size}&offset=${parseInt($page.params.page, 10) * page_size}`;
 		if (tab === 'tag') params += `&tag=${tag}`;
 		if (tab === 'profile') params += `&${favorites ? 'favorited' : 'author'}=${encodeURIComponent(username)}`;
 
 		query = `${endpoint}?${params}`;
+		console.log(query)
 	}
 
 	$: query && getData();
 
 	function getData() {
+		//if (process.browser) document.body.scrollTop = document.documentElement.scrollTop = 0;
 		articles = null;
 
 		api.get(query, $session.user && $session.user.token)
 			.then(data => {
 				console.log(data)
 				// TODO do we need some error handling here?
-			//	this.set(data);
 				articles = data.articles;
 				articlesCount = data.articlesCount
 			});
 	}
 	$: console.log(articles)
-		// computed: {
-		// 	 query: ({ tab, page, username, favorites, tag }) => {
-		// 		const endpoint = tab === 'feed' ? 'articles/feed' : 'articles';
-		// 		const page_size = tab === 'feed' ? 5 : 10;
-
-		// 		let params = `limit=${page_size}&offset=${page * page_size}`;
-		// 		if (tab === 'tag') params += `&tag=${tag}`;
-		// 		if (tab === 'profile') params += `&${favorites ? 'favorited' : 'author'}=${encodeURIComponent(username)}`;
-
-		// 		query = `${endpoint}?${params}`;
-		// 	}
-		// },
-
-		// onstate({ changed, current }) {
-		// 	if (changed.query) {
-		// 		this.set({ articles: null });
-
-		// 		const { user } = this.store.get();
-		// 		api.get(current.query, user && user.token)
-		// 			.then(data => {
-		// 				// TODO do we need some error handling here?
-		// 				this.set(data);
-		// 			});
-		// 	}
-		// }
-	
 </script>

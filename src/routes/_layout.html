@@ -5,12 +5,11 @@
 </main>
 
 <script>
-		import { stores } from '@sapper/app';
+	import { stores } from '@sapper/app';
 	import { userSession } from '../store.js';
-
 	import Nav from '../routes/_components/Nav.html';
-	export let segment;
 
+	export let segment;
 
 	const { session } = stores();
 	userSession.set(session);

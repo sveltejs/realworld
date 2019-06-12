@@ -42,7 +42,7 @@
   </div>
 
 <script>
-  import { goto } from '@sapper/app';
+  import { goto, stores } from '@sapper/app';
   import ListErrors from '../_components/ListErrors.html';
   import * as api from '../_api.js';
 
@@ -50,11 +50,12 @@
 
   console.log(params)
   let inProgress = false,
-    user,
     errors;
-    
+  const { session } = stores();
+
   function addTag(input) {
-    article.taglist = [...article.taglist, input.value];
+    console.log(article)
+    article.tagList = article.tagList.concat(input.value);
     input.value = '';
   }
 
@@ -65,10 +66,10 @@
   function publish() {
 
     inProgress = true;
-
+    console.log(!params.slug, $session.user);
     const promise = !params.slug  ?
-      api.post('articles', { article }, user && user.token) :
-      api.put(`articles/${params.slug}`, { article }, user && user.token);
+      api.post('articles', { article }, $session.user && $session.user.token) :
+      api.put(`articles/${params.slug}`, { article }, $session.user && $session.user.token);
 
     promise.then(response => {
       if (response.article) {

@@ -5,7 +5,7 @@ export function post(req, res) {
 
 	api.post('users/login', { user }).then(response => {
 		if (response.user) req.session.user = response.user;
-
+		console.log(response.user);
 		res.set({
 			'Content-Type': 'application/json'
 		});

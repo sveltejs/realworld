@@ -13,7 +13,7 @@ function send({ method, path, data, token }) {
 	if (token) {
 		opts.headers['Authorization'] = `Token ${token}`;
 	}
-
+	console.log(`${base}/${path}`, path, token)
 	return fetch(`${base}/${path}`, opts)
 		.then(r => r.text())
 		.then(json => {

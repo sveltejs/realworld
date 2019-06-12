@@ -4,29 +4,6 @@
 
 <Index />
 
-<!-- <div class="home-page">
-
-	<div class="banner">
-		<div class="container">
-			<h1 class="logo-font">conduit</h1>
-			<p>A place to share your knowledge.</p>
-		</div>
-	</div>
-
-	<div class="container page">
-		<div class="row">
-			<MainView {tag} bind:tab />
-
-			<div class="col-md-3">
-				<div class="sidebar">
-					<p>Popular Tags</p>
-					<Tags {tags} on:select='{setTags}' />
-				</div>
-			</div>
-		</div>
-	</div>
-</div> -->
-
 <script>
 	import Index from './_Index.html';
 	// import { onMount } from 'svelte'; 

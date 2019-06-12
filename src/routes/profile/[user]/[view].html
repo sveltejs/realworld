@@ -35,11 +35,11 @@
 				<div class="articles-toggle">
 					<ul class="nav nav-pills outline-active">
 						<li class="nav-item">
-							<a href='/@{profile.username}' class="nav-link {favorites ? '' : 'active'}">My Articles</a>
+							<a href='/profile/@{profile.username}' class="nav-link {favorites ? '' : 'active'}">My Articles</a>
 						</li>
 
 						<li class="nav-item">
-							<a class="nav-link {favorites ? 'active' : ''}" href='/@{profile.username}/favorites'>Favorited Articles</a>
+							<a class="nav-link {favorites ? 'active' : ''}" href='/profile/@{profile.username}/favorites'>Favorited Articles</a>
 						</li>
 					</ul>
 				</div>
@@ -52,7 +52,7 @@
 
 
 <script context="module">
-		import * as api from '../_api.js';
+		import * as api from '../../_api.js';
 
 	export function preload({ params }, { user }) {
 		const username = params.user.slice(1);
@@ -65,7 +65,7 @@
 
 <script>
 	import { stores, goto } from '@sapper/app';
-	import ArticleList from '../_components/ArticleList/index.html';
+	import ArticleList from '../../_components/ArticleList/index.html';
 
 	export let profile, favorites;
 		
@@ -74,7 +74,7 @@
 	
 	function toggleFollowing() {
 
-		if (!isUser) {
+		if (!$session.user) {
 			goto('/login');
 			return;
 		}
