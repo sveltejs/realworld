@@ -11,6 +11,8 @@ const mode = process.env.NODE_ENV;
 const dev = mode === 'development';
 const legacy = !!process.env.SAPPER_LEGACY_BUILD;
 
+const onwarn = (warning, onwarn) => (warning.code === 'CIRCULAR_DEPENDENCY' && warning.message.includes('/@sapper/')) || onwarn(warning);
+
 export default {
 	client: {
 		input: config.client.input(),
@@ -50,8 +52,7 @@ export default {
 			})
 		],
 
-		// temporary, pending Rollup 1.0
-		experimentalCodeSplitting: true
+		onwarn,
 	},
 
 	server: {
@@ -73,8 +74,7 @@ export default {
 			require('module').builtinModules || Object.keys(process.binding('natives'))
 		),
 
-		// temporary, pending Rollup 1.0
-		experimentalCodeSplitting: true
+		onwarn,
 	},
 
 	serviceworker: {
