@@ -14,24 +14,25 @@
 			{new Date(comment.createdAt).toDateString()}
 		</span>
 
-		{#if $user && comment.author.username === $user.username}
+		{#if user && comment.author.username === user.username}
 			<span class="mod-options">
-				<i class="ion-trash-a" on:click='remove()'></i>
+				<i class="ion-trash-a" on:click='{remove}'></i>
 			</span>
 		{/if}
 	</div>
 </div>
 
 <script>
-  import { createEventDispatcher } from "svelte";
+	import { createEventDispatcher } from "svelte";
   import * as api from "../_api.js";
 
-	export let comment, slug;
+	export let comment, slug, user;
 	const dispatch = createEventDispatcher();
-  
+	
+	
   function remove() {
 		api
-		.del(`articles/${slug}/comments/${comment.id}`, $user && $user.token)
+		.del(`articles/${slug}/comments/${comment.id}`, user && user.token)
 		.then(response => {
 			dispatch("deleted");
 		});

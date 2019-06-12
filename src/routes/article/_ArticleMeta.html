@@ -27,8 +27,8 @@
 	import { goto } from '../../../__sapper__/client.js';
 	import * as api from '../_api.js';
 
-	let article, user;
-	$: canModify = $user && article.author.username === $user.username
+	export let article, user;
+	$: canModify = user && article.author.username === user.username
 
 
 	function remove() {

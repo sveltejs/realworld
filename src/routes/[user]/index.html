@@ -73,19 +73,21 @@
 	$: isUser = session.$user && (profile.username === $session.user.username)
 	
 	function toggleFollowing() {
-
+		console.log(profile, $session)
 		const promise = profile.following ?
 			api.del(`profiles/${profile.username}/follow`, $session.user && $session.user.token) :
 			api.post(`profiles/${profile.username}/follow`, null, $session.user && $session.user.token);
 
 		promise.then(response => {
 			console.log(response)
+
 			profile = response.profile;
-			favourites = response.favourites;
+			favorites = response.favorites;
 		});
 
 		// optimistic UI
 		profile.following = !profile.following;
+		//this.set({ profile });
 	}
 	
 </script>

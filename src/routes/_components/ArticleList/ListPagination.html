@@ -3,7 +3,7 @@
 		<ul class="pagination">
 
 			{#each range as v}
-				<li class='page-item {v === page ? "active": ""}' on:click='fire("select", { page: v })'>
+				<li class='page-item {v === page ? "active": ""}' on:click='{() => dispatch("select", { page: v })}'>
 					<a class="page-link" href=".">{v + 1}</a>
 				</li>
 			{/each}
@@ -12,13 +12,16 @@
 {/if}
 
 <script>
+	import { createEventDispatcher } from 'svelte';
+	
 	export let articlesCount, page;
 	let range;
+	const dispatch = createEventDispatcher();
 
 	$:  {
 		const rangeArr = [];
 		for (let i = 0; i < Math.ceil(articlesCount / 10); ++i) {
-			range.push(i);
+			rangeArr.push(i);
 		}
 		range = rangeArr;
 	}

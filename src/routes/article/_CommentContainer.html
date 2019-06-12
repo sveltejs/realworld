@@ -1,8 +1,8 @@
 <div class="col-xs-12 col-md-8 offset-md-2">
-	{#if $user}
+	{#if user}
 		<div>
 			<ListErrors {errors}/>
-			<CommentInput {slug} on:commented='{({ detail }) => comments = [detail.comment, ...comments] }'/>
+			<CommentInput {slug} {user} on:commented='{({ detail }) => comments = [detail.comment, ...comments] }'/>
 		</div>
 	{:else}
 		<p>
@@ -11,7 +11,7 @@
 	{/if}
 
 	{#each comments as comment, i (comment.id)}
-		<Comment {comment} {slug} on:deleted='{() => comments = comments.filter((_, index) => i !== index)}'/>
+		<Comment {comment} {slug} {user} on:deleted='{() => comments = comments.filter((_, index) => i !== index)}'/>
 	{/each}
 </div>
 
@@ -20,5 +20,5 @@
 	import CommentInput from './_CommentInput.html';
 	import Comment from './_Comment.html';
 
-	export let comments, errors, slug;
+	export let comments, errors, slug, user;
 </script>

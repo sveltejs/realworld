@@ -1,9 +1,17 @@
-<Nav segment={child.segment}/>
+<Nav {segment}/>
 
 <main>
 	<slot></slot>
 </main>
 
 <script>
+		import { stores } from '@sapper/app';
+	import { userSession } from '../store.js';
+
 	import Nav from '../routes/_components/Nav.html';
+	export let segment;
+
+
+	const { session } = stores();
+	userSession.set(session);
 </script>

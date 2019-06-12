@@ -26,12 +26,18 @@
 </div>
 
 <script>
-	import {onMount} from 'svelte'; 
-	
+	import { onMount } from 'svelte'; 
+	// import { stores } from '@sapper/app';
 	import MainView from './_components/MainView/index.html';
 	import Tags from './_components/Tags.html';
 	import * as api from './_api.js';
+	// import { userSession } from '../store.js';
 
+	// const { session } = stores();
+	// userSession.set(session);//
+
+	// $: console.log('session', $session)
+	let tab, tag, tags;
 
 	function setTags({ detail }) {
 		tag = detail.tag; 
@@ -39,8 +45,8 @@
 	}
 
 	onMount(() => {
-		api.get('tags').then(({ tags }) => {
-			this.set({ tags });
+		api.get('tags').then((response) => {
+			tags = response.tags
 		});
 	})
 </script>

@@ -11,7 +11,7 @@
 
 				<ListErrors {errors}/>
 
-				<SettingsForm on:save='{({ detail }) => save(detail)}' {...$user} {inProgress}/>
+				<SettingsForm on:save='{({ detail }) => save(detail)}' {...$session.user} {inProgress}/>
 
 				<hr />
 
@@ -24,14 +24,17 @@
 </div>
 
 <script>
-	import { goto } from '../../../__sapper__/client.js';
+	import { goto, stores } from '@sapper/app';
 	import ListErrors from '../_components/ListErrors.html';
 	import SettingsForm from './_SettingsForm.html';
+	import { userSession } from '../../store.js';
 
-	let inProgress;
+	let inProgress, errors, user;
+
+	const { session } = stores();
 
 	function logout() {
-		this.store.logout().then(() => {
+		userSession.logout().then(() => {
 			goto('/');
 		});
 	}
@@ -39,7 +42,7 @@
 	function save(user) {
 		inProgress = true;
 
-		this.store.save(user).then(response => {
+		userSession.save(user).then(response => {
 			user = response.user || user;
 			errors = response.errors;
 			inProgress = false;

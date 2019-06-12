@@ -4,8 +4,8 @@ import serve from 'serve-static';
 import bodyParser from 'body-parser';
 import session from 'express-session';
 import sessionFileStore from 'session-file-store';
-import * as sapper from '../__sapper__/server.js';
-import { Store } from 'svelte/store.js';
+import * as sapper from '@sapper/server';
+// import { Store } from 'svelte/store.js';
 
 const FileStore = sessionFileStore(session);
 
@@ -26,11 +26,9 @@ express()
 		compression({ threshold: 0 }),
 		serve('static'),
 		sapper.middleware({
-			store: req => {
-				return new Store({
-					user: req.session && req.session.user
-				});
-			}
+			session: req => ({
+				user: req.session && req.session.user
+			})
 		})
 	)
 	.listen(process.env.PORT);

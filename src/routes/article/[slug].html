@@ -7,7 +7,7 @@
 	<div class="banner">
 		<div class="container">
 			<h1>{article.title}</h1>
-			<ArticleMeta {article}/>
+			<ArticleMeta {article} user={$session.user}/>
 		</div>
 	</div>
 
@@ -34,7 +34,7 @@
 		</div>
 
 		<div class="row">
-			<CommentContainer {comments} errors={commentErrors} slug={params.slug}/>
+			<CommentContainer {comments} user={$session.user} errors={commentErrors} slug={params.slug}/>
 		</div>
 	</div>
 </div>
@@ -43,7 +43,7 @@
 	export function preload({ params }) {
 		return api.get(`articles/${params.slug}`, null).then(({ article }) => {
 			return {
-				article
+				article, params
 			};
 		});
 	}
@@ -51,14 +51,17 @@
 
 <script>
 	import { onMount } from 'svelte';
+	import { stores } from '@sapper/app';
 	import marked from 'marked';
+
 	import ArticleMeta from './_ArticleMeta.html';
 	import CommentContainer from './_CommentContainer.html';
 	import * as api from '../_api.js';
 
-	export let article;
+	export let article, params;
+	const { session } = stores();
 
-	let comments = []; // we'll lazy-load these in onMount
+	let commentErrors, comments = []; // we'll lazy-load these in onMount
 	$: markup = marked(article.body)
 	$: ({ slug } = params)
 
