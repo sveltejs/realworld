@@ -3,24 +3,24 @@
       <div class="row">
         <div class="col-md-10 offset-md-1 col-xs-12">
           <ListErrors {errors}/>
-  
+
           <form>
             <fieldset>
               <fieldset class="form-group">
                 <input class="form-control form-control-lg" type="text" placeholder="Article Title" bind:value={article.title}>
               </fieldset>
-  
+
               <fieldset class="form-group">
                 <input class="form-control" type="text" placeholder="What's this article about?" bind:value={article.description}>
               </fieldset>
-  
+
               <fieldset class="form-group">
                 <textarea class="form-control" rows="8" placeholder="Write your article (in markdown)" bind:value={article.body}/>
               </fieldset>
-  
+
               <fieldset class="form-group">
                 <input class="form-control" type="text" placeholder="Enter tags" use:enter='{addTag}'>
-  
+
                 <div class="tag-list">
                   {#each article.tagList as tag, i}
                     <span class="tag-default tag-pill">
@@ -30,7 +30,7 @@
                   {/each}
                 </div>
               </fieldset>
-  
+
               <button class="btn btn-lg pull-xs-right btn-primary" type="button" disabled={inProgress} on:click='{publish}'>
                 Publish Article
               </button>
@@ -48,13 +48,11 @@
 
   export let params, article;
 
-  console.log(params)
   let inProgress = false,
     errors;
   const { session } = stores();
 
   function addTag(input) {
-    console.log(article)
     article.tagList = article.tagList.concat(input.value);
     input.value = '';
   }
@@ -66,7 +64,6 @@
   function publish() {
 
     inProgress = true;
-    console.log(!params.slug, $session.user);
     const promise = !params.slug  ?
       api.post('articles', { article }, $session.user && $session.user.token) :
       api.put(`articles/${params.slug}`, { article }, $session.user && $session.user.token);
@@ -77,7 +74,7 @@
       }
     });
   }
-    
+
 
   function enter(node, callback) {
     function onkeydown(event) {
