@@ -51,24 +51,23 @@
 </div>
 
 <script>
-	import { stores, goto } from '@sapper/app';
+	import { goto } from '@sapper/app';
 	import ArticleList from '../../_components/ArticleList/index.svelte';
 
-	export let profile, favorites;
-	const { session } = stores();
-	
-	$: isUser = $session.user && (profile.username === $session.user.username)
-	
+	export let profile, favorites, user;
+
+	$: isUser = user && (profile.username === user.username)
+
 	function toggleFollowing() {
 
-		if (!$session.user) {
+		if (!user) {
 			goto('/login');
 			return;
 		}
 
 		const promise = profile.following ?
-			api.del(`profiles/${profile.username}/follow`, $session.user && $session.user.token) :
-			api.post(`profiles/${profile.username}/follow`, null, $session.user && $session.user.token);
+			api.del(`profiles/${profile.username}/follow`, user && user.token) :
+			api.post(`profiles/${profile.username}/follow`, null, user && user.token);
 
 		promise.then(response => {
 				profile = response.profile;
@@ -78,5 +77,5 @@
 		// optimistic UI
 		profile.following = !profile.following;
 	}
-	
+
 </script>

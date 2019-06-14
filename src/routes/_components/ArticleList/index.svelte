@@ -22,7 +22,7 @@
 	import ListPagination from './ListPagination.svelte';
 	import * as api from '../../_api.js';
 
-	export let tab, username, favorites, tag;
+	export let tab, username = false, favorites = false, tag;
 	const { session, page } = stores();
 	let query, articles, articlesCount;
 

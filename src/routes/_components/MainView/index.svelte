@@ -38,7 +38,7 @@
 	import { stores } from '@sapper/app';
 	import ArticleList from '../ArticleList/index.svelte';
 
-	export let tab = 'all', tag;
+	export let tab = 'all', tag = null;
 	const { session } = stores();
 
 	function yourFeed() {
@@ -47,7 +47,7 @@
 	}
 
 	function globalfeed() {
-		tab = "all"; 
+		tab = "all";
 		tag = null;
 	}
 </script>

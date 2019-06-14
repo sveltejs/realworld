@@ -17,16 +17,13 @@
   "dependencies": {
     "body-parser": "^1.18.3",
     "compression": "^1.7.1",
-    "express": "^4.16.3",
     "express-session": "^1.16.2",
     "marked": "^0.6.2",
     "node-fetch": "^2.1.2",
     "polka": "^0.5.2",
     "sapper": "^0.27.4",
-    "serve-static": "^1.13.1",
     "session-file-store": "^1.2.0",
-    "sirv": "^0.4.2",
-    "svelte-extras": "^2.0.2"
+    "sirv": "^0.4.2"
   },
   "devDependencies": {
     "@babel/core": "^7.1.5",
