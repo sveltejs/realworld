@@ -1,12 +1,8 @@
 <script>
 	import { stores } from '@sapper/app';
 	import Nav from '../routes/_components/Nav.svelte';
-	import { userSession } from '../store.js';
 
 	export let segment;
-
-	const { session } = stores();
-	userSession.set(session);
 </script>
 
 <Nav {segment}/>

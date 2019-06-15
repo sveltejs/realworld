@@ -1,7 +1,9 @@
 <script>
-	import { goto } from '@sapper/app';
+	import { goto, stores } from '@sapper/app';
 	import ListErrors from '../_components/ListErrors.svelte';
-	import { userSession } from '../../store.js';
+	import { post } from '../../utils.js';
+
+	const { session } = stores();
 
 	let username = '';
 	let email = '';
@@ -9,12 +11,13 @@
 	let errors = null;
 
 	async function submit(event) {
-		const response = await userSession.register({ username, email, password });
+		const response = await post(`auth/register`, { username, email, password });
 
 		// TODO handle network errors
-		if (response.errors) {
-			errors = response.errors;
-		} else {
+		errors = response.errors;
+
+		if (response.user) {
+			$session.user = response.user;
 			goto('/');
 		}
 	}

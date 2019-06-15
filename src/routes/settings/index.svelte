@@ -2,7 +2,7 @@
 	import { goto, stores } from '@sapper/app';
 	import ListErrors from '../_components/ListErrors.svelte';
 	import SettingsForm from './_SettingsForm.svelte';
-	import { userSession } from '../../store.js';
+	import { post } from '../../utils.js';
 
 	let inProgress;
 	let errors;
@@ -10,13 +10,19 @@
 	const { session } = stores();
 
 	async function logout() {
-		await userSession.logout();
+		await post(`auth/logout`);
+		$session.user = null;
 		goto('/');
 	}
 
 	async function save(event) {
 		inProgress = true;
-		({ errors } = userSession.save(event.detail));
+
+		const response = await post(`auth/save`, event.detail);
+
+		errors = response.errors;
+		if (response.user) $session.user = response.user;
+
 		inProgress = false;
 	}
 </script>
@@ -38,7 +44,7 @@
 
 				<hr />
 
-				<button class="btn btn-outline-danger" on:click='{logout}'>
+				<button class="btn btn-outline-danger" on:click={logout}>
 					Or click here to logout.
 				</button>
 			</div>
