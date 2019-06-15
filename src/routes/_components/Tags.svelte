@@ -1,3 +1,10 @@
+<script>
+	import { createEventDispatcher } from 'svelte';
+
+	export let tags;
+	const dispatch = createEventDispatcher();
+</script>
+
 {#if tags}
 	<div className="tag-list">
 		{#each tags as tag}
@@ -9,10 +16,3 @@
 {:else}
 	<div>Loading Tags...</div>
 {/if}
-
-<script>
-	import { createEventDispatcher } from 'svelte';
-
-	export let tags;
-	const dispatch = createEventDispatcher();
-</script>

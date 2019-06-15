@@ -1,3 +1,18 @@
+<script>
+	import { goto } from '@sapper/app';
+	import * as api from '../_api.js';
+
+	export let article;
+	export let user;
+
+	$: canModify = user && article.author.username === user.username;
+
+	async function remove() {
+		await api.del(`/articles/${article.slug}`, user && user.token);
+		goto('/');
+	}
+</script>
+
 <div class="article-meta">
 	<a href='/@{article.author.username}'>
 		<img src={article.author.image} alt={article.author.username} />
@@ -22,18 +37,3 @@
 		</span>
 	{/if}
 </div>
-
-<script>
-	import { goto } from '@sapper/app';
-	import * as api from '../_api.js';
-
-	export let article, user;
-	$: canModify = user && article.author.username === user.username
-
-
-	function remove() {
-		api.del(`/articles/${article.slug}`, user && user.token).then(response => {
-			goto('/');
-		});
-	}
-</script>

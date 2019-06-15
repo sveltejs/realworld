@@ -1,3 +1,26 @@
+<script>
+	import { goto } from '@sapper/app';
+	import ArticleList from '../../_components/ArticleList/index.svelte';
+	import * as api from '../../_api.js';
+
+	export let profile;
+	export let favorites;
+	export let user;
+
+	$: isUser = user && (profile.username === user.username);
+
+	async function toggleFollowing() {
+		if (!user) return goto('/login');
+
+		// optimistic UI
+		profile.following = !profile.following;
+
+		({ profile, favorites } = await profile.following
+			? api.post(`profiles/${profile.username}/follow`, null, user && user.token)
+			: api.del(`profiles/${profile.username}/follow`, user && user.token));
+	}
+</script>
+
 <svelte:head>
 	<title>{profile.username} • Conduit</title>
 </svelte:head>
@@ -49,33 +72,3 @@
 		</div>
 	</div>
 </div>
-
-<script>
-	import { goto } from '@sapper/app';
-	import ArticleList from '../../_components/ArticleList/index.svelte';
-
-	export let profile, favorites, user;
-
-	$: isUser = user && (profile.username === user.username)
-
-	function toggleFollowing() {
-
-		if (!user) {
-			goto('/login');
-			return;
-		}
-
-		const promise = profile.following ?
-			api.del(`profiles/${profile.username}/follow`, user && user.token) :
-			api.post(`profiles/${profile.username}/follow`, null, user && user.token);
-
-		promise.then(response => {
-				profile = response.profile;
-				favorites = response.favorites;
-		});
-
-		// optimistic UI
-		profile.following = !profile.following;
-	}
-
-</script>

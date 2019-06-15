@@ -1,3 +1,14 @@
+<script>
+	import ListErrors from '../_components/ListErrors.svelte';
+	import CommentInput from './_CommentInput.svelte';
+	import Comment from './_Comment.svelte';
+
+	export let comments;
+	export let errors;
+	export let slug;
+	export let user;
+</script>
+
 <div class="col-xs-12 col-md-8 offset-md-2">
 	{#if user}
 		<div>
@@ -14,11 +25,3 @@
 		<Comment {comment} {slug} {user} on:deleted='{() => comments = comments.filter((_, index) => i !== index)}'/>
 	{/each}
 </div>
-
-<script>
-	import ListErrors from '../_components/ListErrors.svelte';
-	import CommentInput from './_CommentInput.svelte';
-	import Comment from './_Comment.svelte';
-
-	export let comments, errors, slug, user;
-</script>

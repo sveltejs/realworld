@@ -1,3 +1,25 @@
+<script>
+	import * as api from '../../_api.js';
+
+	export let article;
+	export let user;
+
+	async function toggleFavorite() {
+		// optimistic UI
+		if (article.favorited) {
+			article.favoritesCount -= 1;
+			article.favorited = false;
+		} else {
+			article.favoritesCount += 1;
+			article.favorited = true;
+		}
+
+		({ article } = await article.favorited
+			? api.post(`articles/${article.slug}/favorite`, null, user && user.token)
+			: api.del(`articles/${article.slug}/favorite`, user && user.token));
+	}
+</script>
+
 <div class="article-preview">
 	<div class="article-meta">
 		<a href='/@{article.author.username}'>
@@ -34,29 +56,3 @@
 		</ul>
 	</a>
 </div>
-
-<script>
-	import * as api from '../../_api.js';
-
-	export let article, user;
-
-	function toggleFavorite() {
-		const promise = article.favorited ?
-			api.del(`articles/${article.slug}/favorite`, user && user.token) :
-			api.post(`articles/${article.slug}/favorite`, null, user && user.token);
-
-		promise.then(response => {
-			article = response.article;
-		});
-
-		// optimistic UI
-		if (article.favorited) {
-			article.favoritesCount -= 1;
-			article.favorited = false;
-		} else {
-			article.favoritesCount += 1;
-			article.favorited = true;
-		}
-	}
-	
-</script>

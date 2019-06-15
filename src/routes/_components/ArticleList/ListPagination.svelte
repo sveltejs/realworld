@@ -1,3 +1,20 @@
+<script>
+	import { createEventDispatcher } from 'svelte';
+
+	export let articlesCount;
+	export let page;
+
+	let range;
+	const dispatch = createEventDispatcher();
+
+	$: {
+		range = [];
+		for (let i = 0; i < Math.ceil(articlesCount / 10); ++i) {
+			range.push(i);
+		}
+	}
+</script>
+
 {#if articlesCount > 10}
 	<nav>
 		<ul class="pagination">
@@ -10,20 +27,3 @@
 		</ul>
 	</nav>
 {/if}
-
-<script>
-	import { createEventDispatcher } from 'svelte';
-	
-	export let articlesCount, page;
-	let range;
-	const dispatch = createEventDispatcher();
-
-	$:  {
-		const rangeArr = [];
-		for (let i = 0; i < Math.ceil(articlesCount / 10); ++i) {
-			rangeArr.push(i);
-		}
-		range = rangeArr;
-	}
-			
-</script>

@@ -1,3 +1,23 @@
+<script>
+	import { stores } from '@sapper/app';
+	import ArticleList from '../ArticleList/index.svelte';
+
+	export let tab = 'all';
+	export let tag = null;
+
+	const { session } = stores();
+
+	function yourFeed() {
+		tab = "feed";
+		tag = null;
+	}
+
+	function globalfeed() {
+		tab = "all";
+		tag = null;
+	}
+</script>
+
 <div class="col-md-9">
 	<div class="feed-toggle">
 		<ul class="nav nav-pills outline-active">
@@ -33,21 +53,3 @@
 
 	<ArticleList {tab} {tag}/>
 </div>
-
-<script>
-	import { stores } from '@sapper/app';
-	import ArticleList from '../ArticleList/index.svelte';
-
-	export let tab = 'all', tag = null;
-	const { session } = stores();
-
-	function yourFeed() {
-		tab = "feed";
-		tag = null;
-	}
-
-	function globalfeed() {
-		tab = "all";
-		tag = null;
-	}
-</script>

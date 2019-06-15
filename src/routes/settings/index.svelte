@@ -1,3 +1,26 @@
+<script>
+	import { goto, stores } from '@sapper/app';
+	import ListErrors from '../_components/ListErrors.svelte';
+	import SettingsForm from './_SettingsForm.svelte';
+	import { userSession } from '../../store.js';
+
+	let inProgress;
+	let errors;
+
+	const { session } = stores();
+
+	async function logout() {
+		await userSession.logout();
+		goto('/');
+	}
+
+	async function save(event) {
+		inProgress = true;
+		({ errors } = userSession.save(event.detail));
+		inProgress = false;
+	}
+</script>
+
 <svelte:head>
 	<title>Settings • Conduit</title>
 </svelte:head>
@@ -11,7 +34,7 @@
 
 				<ListErrors {errors}/>
 
-				<SettingsForm on:save='{({ detail }) => save(detail)}' {...$session.user} {inProgress}/>
+				<SettingsForm on:save={save} {...$session.user} {inProgress}/>
 
 				<hr />
 
@@ -22,29 +45,3 @@
 		</div>
 	</div>
 </div>
-
-<script>
-	import { goto, stores } from '@sapper/app';
-	import ListErrors from '../_components/ListErrors.svelte';
-	import SettingsForm from './_SettingsForm.svelte';
-	import { userSession } from '../../store.js';
-
-	let inProgress, errors, user;
-	const { session } = stores();
-
-	function logout() {
-		userSession.logout().then(() => {
-			goto('/');
-		});
-	}
-
-	function save(user) {
-		inProgress = true;
-
-		userSession.save(user).then(response => {
-			user = response.user || user;
-			errors = response.errors;
-			inProgress = false;
-		});
-	}
-</script>

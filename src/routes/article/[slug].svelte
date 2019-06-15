@@ -1,3 +1,37 @@
+<script context="module">
+	import * as api from '../_api.js';
+
+	export async function preload({ params }) {
+		const { slug } = params;
+		const { article } = await api.get(`articles/${params.slug}`, null);
+
+		return { article, slug };
+	}
+</script>
+
+<script>
+	import { onMount } from 'svelte';
+	import { stores } from '@sapper/app';
+	import marked from 'marked';
+
+	import ArticleMeta from './_ArticleMeta.svelte';
+	import CommentContainer from './_CommentContainer.svelte';
+
+	export let article;
+	export let slug;
+
+	const { session } = stores();
+
+	let commentErrors, comments = []; // we'll lazy-load these in onMount
+	$: markup = marked(article.body);
+
+	onMount(() => {
+		api.get(`articles/${slug}/comments`).then((res) => {
+			comments = res.comments;
+		});
+	});
+</script>
+
 <svelte:head>
 	<title>{article.title}</title>
 </svelte:head>
@@ -14,7 +48,6 @@
 	<div class="container page">
 		<div class="row article-content">
 			<div class="col-xs-12">
-
 				<div>{@html markup}</div>
 
 				<ul class="tag-list">
@@ -24,51 +57,15 @@
 						</li>
 					{/each}
 				</ul>
-
 			</div>
 		</div>
 
 		<hr />
 
-		<div class="article-actions">
-		</div>
+		<div class="article-actions"></div>
 
 		<div class="row">
-			<CommentContainer {comments} user={$session.user} errors={commentErrors} slug={params.slug}/>
+			<CommentContainer {slug} {comments} user={$session.user} errors={commentErrors}/>
 		</div>
 	</div>
 </div>
-
-<script context="module">
-	export function preload({ params }) {
-		return api.get(`articles/${params.slug}`, null).then(({ article }) => {
-			return {
-				article, params
-			};
-		});
-	}
-</script>
-
-<script>
-	import { onMount } from 'svelte';
-	import { stores } from '@sapper/app';
-	import marked from 'marked';
-
-	import ArticleMeta from './_ArticleMeta.svelte';
-	import CommentContainer from './_CommentContainer.svelte';
-	import * as api from '../_api.js';
-
-	export let article, params;
-	const { session } = stores();
-
-	let commentErrors, comments = []; // we'll lazy-load these in onMount
-	$: markup = marked(article.body)
-	$: ({ slug } = params)
-
-	onMount(() => {
-		api.get(`articles/${slug}/comments`).then((res) => {
-			comments = res.comments;
-		});
-	});
-	
-</script>

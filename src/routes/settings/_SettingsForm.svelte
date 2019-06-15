@@ -1,3 +1,14 @@
+<script>
+	import { createEventDispatcher } from 'svelte';
+
+	export let inProgress, image, username, bio, email, password = '';
+	const dispatch = createEventDispatcher();
+
+	function submit(event) {
+		dispatch('save', { image, username, bio, email, password });
+	}
+</script>
+
 <form on:submit|preventDefault='{submit}'>
 	<fieldset>
 		<fieldset class="form-group">
@@ -25,15 +36,3 @@
 		</button>
 	</fieldset>
 </form>
-
-<script>
-	import { createEventDispatcher } from 'svelte';
-
-	export let inProgress, image, username, bio, email, password = '';
-	const dispatch = createEventDispatcher();
-	
-	function submit(event) {
-		dispatch('save', { image, username, bio, email, password });
-	}
-		
-</script>

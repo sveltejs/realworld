@@ -1,3 +1,19 @@
+<script>
+	import { createEventDispatcher } from "svelte";
+	import * as api from "../_api.js";
+
+	export let comment;
+	export let slug;
+	export let user;
+
+	const dispatch = createEventDispatcher();
+
+	async function remove() {
+		await api.del(`articles/${slug}/comments/${comment.id}`, user && user.token);
+		dispatch("deleted");
+	}
+</script>
+
 <div class="card">
 	<div class="card-block">
 		<p class="card-text">{comment.body}</p>
@@ -21,20 +37,3 @@
 		{/if}
 	</div>
 </div>
-
-<script>
-	import { createEventDispatcher } from "svelte";
-  import * as api from "../_api.js";
-
-	export let comment, slug, user;
-	const dispatch = createEventDispatcher();
-	
-	
-  function remove() {
-		api
-		.del(`articles/${slug}/comments/${comment.id}`, user && user.token)
-		.then(response => {
-			dispatch("deleted");
-		});
-	}
-</script>

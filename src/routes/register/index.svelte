@@ -1,3 +1,25 @@
+<script>
+	import { goto } from '@sapper/app';
+	import ListErrors from '../_components/ListErrors.svelte';
+	import { userSession } from '../../store.js';
+
+	let username = '';
+	let email = '';
+	let password = '';
+	let errors = null;
+
+	async function submit(event) {
+		const response = await userSession.register({ username, email, password });
+
+		// TODO handle network errors
+		if (response.errors) {
+			errors = response.errors;
+		} else {
+			goto('/');
+		}
+	}
+</script>
+
 <svelte:head>
 	<title>Sign up • Conduit</title>
 </svelte:head>
@@ -5,7 +27,6 @@
 <div class="auth-page">
 	<div class="container page">
 		<div class="row">
-
 			<div class="col-md-6 offset-md-3 col-xs-12">
 				<h1 class="text-xs-center">Sign up</h1>
 				<p class="text-xs-center">
@@ -14,7 +35,7 @@
 
 				<ListErrors {errors}/>
 
-				<form on:submit|preventDefault='{submit}'>
+				<form on:submit|preventDefault={submit}>
 					<fieldset class="form-group">
 						<input class="form-control form-control-lg" type="text" placeholder="Your Name" bind:value={username}>
 					</fieldset>
@@ -29,34 +50,6 @@
 					</button>
 				</form>
 			</div>
-
 		</div>
 	</div>
 </div>
-
-<script>
-	import { goto } from '@sapper/app';
-	import ListErrors from '../_components/ListErrors.svelte';
-	import { userSession } from '../../store.js';
-
-	let username = '',
-	email = '',
-	password = '',
-	errors = null;
-				
-	function submit(event) {
-		userSession.register({ username, email, password })
-			.then(response => {
-				if (response.errors) {
-					errors = response.errors;
-				} else {
-					goto('/');
-				}
-			})
-			.catch(err => {
-				// TODO handle network errors
-				console.error({ err });
-			});
-	}
-		
-</script>

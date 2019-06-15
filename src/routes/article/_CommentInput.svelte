@@ -1,3 +1,22 @@
+<script>
+	import { createEventDispatcher } from 'svelte';
+	import * as api from '../_api.js';
+
+	export let slug;
+	export let user;
+
+	let body = '';
+
+	async function submit(event) {
+		const response = await api.post(`articles/${slug}/comments`, { comment: { body } }, user && user.token);
+
+		if (response.comment) {
+			dispatch('commented', response);
+			body = '';
+		}
+	}
+</script>
+
 <form class="card comment-form" on:submit|preventDefault='{submit}'>
 	<div class="card-block">
 		<textarea class="form-control" placeholder="Write a comment..." bind:value={body} rows="3"/>
@@ -8,21 +27,3 @@
 		<button class="btn btn-sm btn-primary" type="submit">Post Comment</button>
 	</div>
 </form>
-
-<script>
-	import { createEventDispatcher } from 'svelte';
-	import * as api from '../_api.js';
-	
-	export let slug, user;
-	let body = '';
-
-	function submit(event) {
-		api.post(`articles/${slug}/comments`, { comment: { body } }, user && user.token).then(response => {
-			if (response.comment) {
-				dispatch('commented', response);
-				body = '';
-			}
-		});
-	}
-		
-</script>

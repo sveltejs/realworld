@@ -1,3 +1,7 @@
+<script>
+	export let errors;
+</script>
+
 {#if errors}
 	<ul class="error-messages">
 		{#each Object.keys(errors) as key}
@@ -5,7 +9,3 @@
 		{/each}
 	</ul>
 {/if}
-
-<script>
-	export let errors;
-</script>

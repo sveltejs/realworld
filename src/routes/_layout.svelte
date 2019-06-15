@@ -1,9 +1,3 @@
-<Nav {segment}/>
-
-<main>
-	<slot></slot>
-</main>
-
 <script>
 	import { stores } from '@sapper/app';
 	import Nav from '../routes/_components/Nav.svelte';
@@ -14,3 +8,9 @@
 	const { session } = stores();
 	userSession.set(session);
 </script>
+
+<Nav {segment}/>
+
+<main>
+	<slot></slot>
+</main>
