@@ -23,13 +23,15 @@
 	async function publish() {
 		inProgress = true;
 
-		const response = await slug
+		const response = await (slug
 			? api.put(`articles/${slug}`, { article }, $session.user && $session.user.token)
-			: api.post('articles', { article }, $session.user && $session.user.token);
+			: api.post('articles', { article }, $session.user && $session.user.token));
 
 		if (response.article) {
 			goto(`/article/${response.article.slug}`);
 		}
+
+		inProgress = false;
 	}
 
 	function enter(node, callback) {

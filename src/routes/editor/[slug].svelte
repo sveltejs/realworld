@@ -3,7 +3,7 @@
 
 	export async function preload({ params }) {
 		const { slug } = params;
-		const { article } = api.get(`articles/${slug}`, null);
+		const { article } = await api.get(`articles/${slug}`, null);
 		return { article, slug };
 	}
 </script>
