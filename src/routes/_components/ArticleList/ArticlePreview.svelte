@@ -22,7 +22,7 @@
 
 <div class="article-preview">
 	<div class="article-meta">
-		<a href='/@{article.author.username}'>
+		<a href='/profile/@{article.author.username}'>
 			<img src={article.author.image} alt={article.author.username} />
 		</a>
 

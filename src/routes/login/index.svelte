@@ -34,7 +34,7 @@
 
 				<ListErrors {errors}/>
 
-				<form on:submit|preventDefault='{submit}'>
+				<form on:submit|preventDefault={submit}>
 					<fieldset class="form-group">
 						<input class="form-control form-control-lg" type="email" placeholder="Email" bind:value={email}>
 					</fieldset>
