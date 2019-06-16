@@ -1,3 +1,19 @@
+<script>
+	import { createEventDispatcher } from 'svelte';
+	import * as api from 'api.js';
+
+	export let comment;
+	export let slug;
+	export let user;
+
+	const dispatch = createEventDispatcher();
+
+	async function remove() {
+		await api.del(`articles/${slug}/comments/${comment.id}`, user && user.token);
+		dispatch("deleted");
+	}
+</script>
+
 <div class="card">
 	<div class="card-block">
 		<p class="card-text">{comment.body}</p>
@@ -14,27 +30,10 @@
 			{new Date(comment.createdAt).toDateString()}
 		</span>
 
-		{#if $user && comment.author.username === $user.username}
+		{#if user && comment.author.username === user.username}
 			<span class="mod-options">
-				<i class="ion-trash-a" on:click='remove()'></i>
+				<i class="ion-trash-a" on:click='{remove}'></i>
 			</span>
 		{/if}
 	</div>
 </div>
-
-<script>
-	import * as api from '../_api.js';
-
-	export default {
-		methods: {
-			remove() {
-				const { comment, slug } = this.get();
-				const { user } = this.store.get();
-
-				api.del(`articles/${slug}/comments/${comment.id}`, user && user.token).then(response => {
-					this.fire('deleted');
-				});
-			}
-		}
-	};
-</script>

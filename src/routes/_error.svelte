@@ -1,3 +1,9 @@
+<script>
+	export let error, status;
+
+	let dev = process.env.NODE_ENV === "development";
+</script>
+
 <svelte:head>
 	<title>{status}</title>
 </svelte:head>
@@ -11,7 +17,8 @@
 {/if}
 
 <style>
-	h1, p {
+	h1,
+	p {
 		margin: 0 auto;
 	}
 
@@ -31,11 +38,3 @@
 		}
 	}
 </style>
-
-<script>
-	export default {
-		helpers: {
-			dev: process.env.NODE_ENV === 'development'
-		}
-	};
-</script>

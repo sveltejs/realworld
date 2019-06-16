@@ -1,9 +1,28 @@
+<script>
+	import { onMount } from 'svelte';
+	import MainView from './_components/MainView/index.svelte';
+	import Tags from './_components/Tags.svelte';
+	import * as api from 'api.js';
+
+	let tab;
+	let tag;
+	let tags;
+
+	function setTags({ detail }) {
+		tag = detail.tag;
+		tab = "tag";
+	}
+
+	onMount(async () => {
+		({ tags } = await api.get('tags'));
+	});
+</script>
+
 <svelte:head>
 	<title>Conduit</title>
 </svelte:head>
 
 <div class="home-page">
-
 	<div class="banner">
 		<div class="container">
 			<h1 class="logo-font">conduit</h1>
@@ -18,25 +37,9 @@
 			<div class="col-md-3">
 				<div class="sidebar">
 					<p>Popular Tags</p>
-					<Tags {tags} on:select='set({ tag: event.tag, tab: "tag" })' />
+					<Tags {tags} on:select='{setTags}' />
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
-
-<script>
-	import MainView from './_components/MainView/index.html';
-	import Tags from './_components/Tags.html';
-	import * as api from './_api.js';
-
-	export default {
-		components: { MainView, Tags },
-
-		oncreate() {
-			api.get('tags').then(({ tags }) => {
-				this.set({ tags });
-			});
-		}
-	};
-</script>

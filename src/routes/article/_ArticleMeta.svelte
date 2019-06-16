@@ -1,3 +1,18 @@
+<script>
+	import { goto } from '@sapper/app';
+	import * as api from 'api.js';
+
+	export let article;
+	export let user;
+
+	$: canModify = user && article.author.username === user.username;
+
+	async function remove() {
+		await api.del(`/articles/${article.slug}`, user && user.token);
+		goto('/');
+	}
+</script>
+
 <div class="article-meta">
 	<a href='/@{article.author.username}'>
 		<img src={article.author.image} alt={article.author.username} />
@@ -16,31 +31,9 @@
 				<i class="ion-edit"/> Edit Article
 			</a>
 
-			<button class="btn btn-outline-danger btn-sm" on:click='remove()'>
+			<button class="btn btn-outline-danger btn-sm" on:click='{remove}'>
 				<i class="ion-trash-a"/> Delete Article
 			</button>
 		</span>
 	{/if}
 </div>
-
-<script>
-	import { goto } from '../../../__sapper__/client.js';
-	import * as api from '../_api.js';
-
-	export default {
-		computed: {
-			canModify: ({ article, $user }) => $user && article.author.username === $user.username
-		},
-
-		methods: {
-			remove() {
-				const { article } = this.get();
-				const { user } = this.store.get();
-
-				api.del(`/articles/${article.slug}`, user && user.token).then(response => {
-					goto('/');
-				});
-			}
-		}
-	};
-</script>

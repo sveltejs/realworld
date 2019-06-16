@@ -1,15 +1,18 @@
-import express from 'express';
+import sirv from 'sirv';
+import polka from 'polka';
 import compression from 'compression';
-import serve from 'serve-static';
 import bodyParser from 'body-parser';
 import session from 'express-session';
 import sessionFileStore from 'session-file-store';
-import * as sapper from '../__sapper__/server.js';
-import { Store } from 'svelte/store.js';
+import * as sapper from '@sapper/server';
 
 const FileStore = sessionFileStore(session);
 
-express()
+
+const { PORT, NODE_ENV } = process.env;
+const dev = NODE_ENV === 'development';
+
+polka()
 	.use(bodyParser.json())
 	.use(session({
 		secret: 'conduit',
@@ -24,13 +27,13 @@ express()
 	}))
 	.use(
 		compression({ threshold: 0 }),
-		serve('static'),
+		sirv('static', { dev }),
 		sapper.middleware({
-			store: req => {
-				return new Store({
-					user: req.session && req.session.user
-				});
-			}
+			session: req => ({
+				user: req.session && req.session.user
+			})
 		})
 	)
-	.listen(process.env.PORT);
+	.listen(PORT, err => {
+		if (err) console.log('error', err);
+	});
