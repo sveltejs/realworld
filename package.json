@@ -10,9 +10,7 @@
     "cy:run": "cypress run",
     "cy:open": "cypress open",
     "test": "(npm run build && export PORT=3100 && node __sapper__/build) & cypress run",
-    "prestage": "sapper build",
-    "stage": "now",
-    "deploy": "now && now alias"
+    "deploy": "make deploy"
   },
   "dependencies": {
     "body-parser": "^1.18.3",
