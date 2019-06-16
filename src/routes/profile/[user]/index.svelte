@@ -1,5 +1,5 @@
 <script context="module">
-		import * as api from 'api.js';
+	import * as api from 'api.js';
 
 	export async function preload({ params }, { user }) {
 		const username = params.user.slice(1);
@@ -10,10 +10,12 @@
 </script>
 
 <script>
-	import { stores, goto } from '@sapper/app';
+	import { stores } from '@sapper/app';
 	import Profile from './_Profile.svelte';
 
-	export let profile, favorites;
+	export let profile;
+	export let favorites;
+
 	const { session } = stores();
 </script>
 

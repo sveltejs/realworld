@@ -14,9 +14,9 @@
 			article.favorited = true;
 		}
 
-		({ article } = await article.favorited
+		({ article } = await (article.favorited
 			? api.post(`articles/${article.slug}/favorite`, null, user && user.token)
-			: api.del(`articles/${article.slug}/favorite`, user && user.token));
+			: api.del(`articles/${article.slug}/favorite`, user && user.token)));
 	}
 </script>
 
@@ -36,7 +36,7 @@
 
 		{#if user}
 			<div class="pull-xs-right">
-				<button class='btn btn-sm {article.favorited ? "btn-primary" : "btn-outline-primary"}' on:click='{toggleFavorite}'>
+				<button class='btn btn-sm {article.favorited ? "btn-primary" : "btn-outline-primary"}' on:click={toggleFavorite}>
 					<i class="ion-heart"></i> {article.favoritesCount}
 				</button>
 			</div>

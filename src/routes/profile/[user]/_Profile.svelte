@@ -15,9 +15,9 @@
 		// optimistic UI
 		profile.following = !profile.following;
 
-		({ profile, favorites } = await profile.following
+		({ profile, favorites } = await (profile.following
 			? api.post(`profiles/${profile.username}/follow`, null, user && user.token)
-			: api.del(`profiles/${profile.username}/follow`, user && user.token));
+			: api.del(`profiles/${profile.username}/follow`, user && user.token)));
 	}
 </script>
 
