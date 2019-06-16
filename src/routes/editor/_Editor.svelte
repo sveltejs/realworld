@@ -1,7 +1,7 @@
 <script>
 	import { goto, stores } from '@sapper/app';
 	import ListErrors from '../_components/ListErrors.svelte';
-	import * as api from '../_api.js';
+	import * as api from 'api.js';
 
 	export let article;
 	export let slug;

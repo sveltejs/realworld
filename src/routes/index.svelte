@@ -2,7 +2,7 @@
 	import { onMount } from 'svelte';
 	import MainView from './_components/MainView/index.svelte';
 	import Tags from './_components/Tags.svelte';
-	import * as api from './_api.js';
+	import * as api from 'api.js';
 
 	let tab;
 	let tag;

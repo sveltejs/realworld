@@ -1,5 +1,5 @@
 <script>
-	import * as api from '../../_api.js';
+	import * as api from 'api.js';
 
 	export let article;
 	export let user;

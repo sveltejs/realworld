@@ -2,7 +2,7 @@
 	import { stores } from '@sapper/app';
 	import ArticlePreview from './ArticlePreview.svelte';
 	import ListPagination from './ListPagination.svelte';
-	import * as api from '../../_api.js';
+	import * as api from 'api.js';
 
 	export let tab, username = false;
 	export let favorites = false;

@@ -1,11 +1,8 @@
 <script>
-	import { createEventDispatcher } from 'svelte';
-
 	export let articlesCount;
 	export let page;
 
 	let range;
-	const dispatch = createEventDispatcher();
 
 	$: {
 		range = [];

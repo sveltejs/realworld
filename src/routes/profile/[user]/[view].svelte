@@ -1,5 +1,5 @@
 <script context="module">
-	import * as api from '../../_api.js';
+	import * as api from 'api.js';
 
 	export async function preload({ params }, { user }) {
 		const username = params.user.slice(1);
