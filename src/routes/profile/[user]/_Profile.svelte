@@ -1,7 +1,7 @@
 <script>
 	import { goto } from '@sapper/app';
 	import ArticleList from '../../_components/ArticleList/index.svelte';
-	import * as api from 'api.js';
+	import * as api from '../../../api.js';
 
 	export let profile;
 	export let favorites;
@@ -32,7 +32,7 @@
 				<div class="col-xs-12 col-md-10 offset-md-1">
 					<img src={profile.image} class="user-img" alt={profile.username} />
 					<h4>{profile.username}</h4>
-					<p>{profile.bio}</p>
+					<p>{profile.bio || ''}</p>
 
 					{#if isUser}
 						<a href="/settings" class="btn btn-sm btn-outline-secondary action-btn">
