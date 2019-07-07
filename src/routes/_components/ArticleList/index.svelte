@@ -7,6 +7,7 @@
 	export let tab, username = false;
 	export let favorites = false;
 	export let tag;
+	export let p;
 
 	const { session, page } = stores();
 
@@ -14,12 +15,11 @@
 	let articles;
 	let articlesCount;
 
-	$: currentPage = $page.params && $page.params.page ? +$page.params.page - 1 : 0
 	$: {
 		const endpoint = tab === 'feed' ? 'articles/feed' : 'articles';
 		const page_size = tab === 'feed' ? 5 : 10;
 
-		let params = `limit=${page_size}&offset=${currentPage * page_size}`;
+		let params = `limit=${page_size}&offset=${(p - 1) * page_size}`;
 		if (tab === 'tag') params += `&tag=${tag}`;
 		if (tab === 'profile') params += `&${favorites ? 'favorited' : 'author'}=${encodeURIComponent(username)}`;
 

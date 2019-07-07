@@ -4,6 +4,7 @@
 
 	export let tab = 'all';
 	export let tag = null;
+	export let p;
 
 	const { session } = stores();
 
@@ -51,5 +52,5 @@
 		</ul>
 	</div>
 
-	<ArticleList {tab} {tag}/>
+	<ArticleList {p} {tab} {tag}/>
 </div>
