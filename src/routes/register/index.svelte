@@ -48,13 +48,13 @@
 
 				<form on:submit|preventDefault={submit}>
 					<fieldset class="form-group">
-						<input class="form-control form-control-lg" type="text" placeholder="Your Name" bind:value={username}>
+						<input class="form-control form-control-lg" type="text" required placeholder="Your Name" bind:value={username}>
 					</fieldset>
 					<fieldset class="form-group">
-						<input class="form-control form-control-lg" type="text" placeholder="Email" bind:value={email}>
+						<input class="form-control form-control-lg" type="email" required placeholder="Email" bind:value={email}>
 					</fieldset>
 					<fieldset class="form-group">
-						<input class="form-control form-control-lg" type="password" placeholder="Password" bind:value={password}>
+						<input class="form-control form-control-lg" type="password" required placeholder="Password" bind:value={password}>
 					</fieldset>
 					<button class="btn btn-lg btn-primary pull-xs-right">
 						Sign up
