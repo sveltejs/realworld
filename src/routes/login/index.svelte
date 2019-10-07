@@ -1,3 +1,11 @@
+<script context="module">
+	export async function preload({ params }, { user }) {
+		if (user) {
+			this.redirect(302, `/`);
+		}
+	}
+</script>
+
 <script>
 	import { goto, stores } from '@sapper/app';
 	import ListErrors from '../_components/ListErrors.svelte';
