@@ -10,7 +10,8 @@
     "cy:run": "cypress run",
     "cy:open": "cypress open",
     "test": "(npm run build && export PORT=3100 && node __sapper__/build) & cypress run",
-    "deploy": "make deploy"
+    "deploy": "make deploy",
+    "debug": "node --inspect node_modules/sapper/dist/cli.js dev"
   },
   "dependencies": {
     "body-parser": "^1.18.3",
