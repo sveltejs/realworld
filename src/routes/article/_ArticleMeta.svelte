@@ -8,7 +8,7 @@
 	$: canModify = user && article.author.username === user.username;
 
 	async function remove() {
-		await api.del(`/articles/${article.slug}`, user && user.token);
+		await api.del(`articles/${article.slug}`, user && user.token);
 		goto('/');
 	}
 </script>
