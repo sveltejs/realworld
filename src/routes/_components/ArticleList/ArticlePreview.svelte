@@ -20,6 +20,11 @@
 	}
 </script>
 
+<style>
+.article-meta a img
+  { overflow: hidden; }
+</style>
+
 <div class="article-preview">
 	<div class="article-meta">
 		<a href='/profile/@{article.author.username}'>
