@@ -1,6 +1,6 @@
-import resolve from 'rollup-plugin-node-resolve';
-import replace from 'rollup-plugin-replace';
-import commonjs from 'rollup-plugin-commonjs';
+import resolve from '@rollup/plugin-node-resolve';
+import replace from '@rollup/plugin-replace';
+import commonjs from '@rollup/plugin-commonjs';
 import svelte from 'rollup-plugin-svelte';
 import babel from 'rollup-plugin-babel';
 import { terser } from 'rollup-plugin-terser';
@@ -27,7 +27,10 @@ export default {
 				hydratable: true,
 				emitCss: true
 			}),
-			resolve(),
+			resolve({
+				browser: true,
+				dedupe: ['svelte']
+			}),
 			commonjs(),
 
 			legacy && babel({
@@ -52,6 +55,7 @@ export default {
 			})
 		],
 
+		preserveEntrySignatures: false,
 		onwarn,
 	},
 
@@ -67,13 +71,16 @@ export default {
 				generate: 'ssr',
 				dev
 			}),
-			resolve(),
+			resolve({
+				dedupe: ['svelte']
+			}),
 			commonjs()
 		],
 		external: Object.keys(pkg.dependencies).concat(
 			require('module').builtinModules || Object.keys(process.binding('natives'))
 		),
 
+		preserveEntrySignatures: 'strict',
 		onwarn,
 	},
 
@@ -88,6 +95,9 @@ export default {
 			}),
 			commonjs(),
 			!dev && terser()
-		]
+		],
+
+		preserveEntrySignatures: false,
+		onwarn,
 	}
 };
