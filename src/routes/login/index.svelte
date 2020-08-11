@@ -1,3 +1,11 @@
+<script context="module">
+	export async function preload({ params }, { user }) {
+		if (user) {
+			this.redirect(302, `/`);
+		}
+	}
+</script>
+
 <script>
 	import { goto, stores } from '@sapper/app';
 	import ListErrors from '../_components/ListErrors.svelte';
@@ -39,12 +47,12 @@
 
 				<form on:submit|preventDefault={submit}>
 					<fieldset class="form-group">
-						<input class="form-control form-control-lg" type="email" placeholder="Email" bind:value={email}>
+						<input class="form-control form-control-lg" type="email" required placeholder="Email" bind:value={email}>
 					</fieldset>
 					<fieldset class="form-group">
-						<input class="form-control form-control-lg" type="password" placeholder="Password" bind:value={password}>
+						<input class="form-control form-control-lg" type="password" required placeholder="Password" bind:value={password}>
 					</fieldset>
-					<button class="btn btn-lg btn-primary pull-xs-right" type="submit" disabled='{!email || !password}'>
+					<button class="btn btn-lg btn-primary pull-xs-right" type="submit">
 						Sign in
 					</button>
 				</form>
