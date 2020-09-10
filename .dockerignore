@@ -6,4 +6,3 @@
 /__sapper__/*
 !/__sapper__/build
 !/static
-!/content
