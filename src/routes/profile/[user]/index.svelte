@@ -5,6 +5,9 @@
 		const username = params.user.slice(1);
 
 		const { profile } = await api.get(`profiles/${username}`, user && user.token);
+		if (!profile) {
+			this.error(404, 'Username not found');
+		}
 		return { profile, favorites: params.view === 'favorites' };
 	}
 </script>
