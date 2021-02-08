@@ -16,7 +16,7 @@
     "body-parser": "^1.18.3",
     "compression": "^1.7.1",
     "express-session": "^1.16.2",
-    "marked": "^1.0.0",
+    "marked": "^2.0.0",
     "node-fetch": "^2.1.2",
     "polka": "^0.5.2",
     "session-file-store": "^1.2.0",
