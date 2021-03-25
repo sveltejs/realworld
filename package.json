@@ -17,7 +17,7 @@
     "compression": "^1.7.1",
     "express-session": "^1.16.2",
     "marked": "^2.0.0",
-    "node-fetch": "^2.1.2",
+    "node-fetch": "^2.6.1",
     "polka": "^0.5.2",
     "session-file-store": "^1.2.0",
     "sirv": "^1.0.0"
