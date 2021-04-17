@@ -9,6 +9,7 @@
 		"start": "svelte-kit start"
 	},
 	"devDependencies": {
+		"@sveltejs/adapter-netlify": "^1.0.0-next.0",
 		"@sveltejs/adapter-vercel": "next",
 		"@sveltejs/kit": "next",
 		"marked": "^2.0.1",

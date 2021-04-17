@@ -1,9 +1,10 @@
+const netlify = require('@sveltejs/adapter-netlify');
 const vercel = require('@sveltejs/adapter-vercel');
 const pkg = require('./package.json');
 
 module.exports = {
 	kit: {
-		adapter: vercel(),
+		adapter: process.env.VERCEL ? vercel() : netlify(),
 		target: '#svelte',
 		vite: {
 			ssr: {
