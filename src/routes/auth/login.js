@@ -1,12 +1,13 @@
-import * as api from 'api.js';
+import * as api from '$lib/api.js';
+import { respond } from './_respond';
 
-export function post(req, res) {
-	const user = req.body;
-
-	api.post('users/login', { user }).then(response => {
-		if (response.user) req.session.user = response.user;
-		res.setHeader('Content-Type', 'application/json');
-
-		res.end(JSON.stringify(response));
+export async function post(request) {
+	const body = await api.post('users/login', {
+		user: {
+			email: request.body.email,
+			password: request.body.password
+		}
 	});
+
+	return respond(body);
 }

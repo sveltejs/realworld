@@ -1,17 +1,16 @@
 <script context="module">
-	export async function preload({ params }, { user }) {
-		if (user) {
-			this.redirect(302, `/`);
+	export async function load({ session }) {
+		if (session.user) {
+			return { redirect: '/', status: 302 };
 		}
 	}
 </script>
 
 <script>
-	import { goto, stores } from '@sapper/app';
-	import ListErrors from '../_components/ListErrors.svelte';
-	import { post } from 'utils.js';
-
-	const { session } = stores();
+	import { session } from '$app/stores';
+	import { goto } from '$app/navigation';
+	import { post } from '$lib/utils.js';
+	import ListErrors from '$lib/ListErrors.svelte';
 
 	let username = '';
 	let email = '';
