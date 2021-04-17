@@ -8,10 +8,10 @@ module.exports = {
 		vite: {
 			ssr: {
 				// TODO the adapter should make this unnecessary
-				noExternal: [
+				noExternal: process.env.NODE_ENV === 'production' ? [
 					...Object.keys(pkg.dependencies),
 					...Object.keys(pkg.devDependencies)
-				]
+				] : []
 			}
 		}
 	}
