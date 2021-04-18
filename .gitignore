@@ -2,3 +2,4 @@
 /node_modules
 /.svelte
 /.netlify
+/.vercel_build_output
