@@ -14,13 +14,13 @@ For more information on how to this works with other frontends/backends, head ov
 ## Running locally
 
 ```bash
-pnpm install
-pnpm dev
+npm install
+npm run dev
 ```
 
 ...then open [localhost:3000](http://localhost:3000). To build and start in prod mode:
 
 ```bash
-pnpm build
-pnpm start
+npm run build
+npm run start
 ```
