@@ -1,7 +1,7 @@
 import * as api from '$lib/api.js';
 import { page_size } from '$lib/constants.js';
 
-export async function get_articles({ query, params, context }, type) {
+export async function get_articles({ query, params, locals }, type) {
 	const p = +query.get('page') || 1;
 
 	const q = new URLSearchParams([
@@ -12,7 +12,7 @@ export async function get_articles({ query, params, context }, type) {
 
 	const { articles, articlesCount } = await api.get(
 		`articles?${q}`,
-		context.user && context.user.token
+		locals.user && locals.user.token
 	);
 
 	return {

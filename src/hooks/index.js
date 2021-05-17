@@ -1,21 +1,15 @@
 import * as cookie from 'cookie';
-
-export function getContext({ headers }) {
+export function getSession({ headers }) {
 	const cookies = cookie.parse(headers.cookie || '');
 	const jwt = cookies.jwt && Buffer.from(cookies.jwt, 'base64').toString('utf-8');
+	const user = jwt ? JSON.parse(jwt) : null;
 
 	return {
-		user: jwt ? JSON.parse(jwt) : null
-	};
-}
-
-export function getSession({ context }) {
-	return {
-		user: context.user && {
-			username: context.user.username,
-			email: context.user.email,
-			image: context.user.image,
-			bio: context.user.bio
+		user: user && {
+			username: user.username,
+			email: user.email,
+			image: user.image,
+			bio: user.bio
 		}
 	};
 }
