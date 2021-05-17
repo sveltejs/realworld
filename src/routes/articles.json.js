@@ -1,7 +1,7 @@
 import * as api from '$lib/api';
 import { page_size } from '$lib/constants';
 
-export async function get({ query, context }) {
+export async function get({ query, locals }) {
 	const tab = query.get('tab') || 'all';
 	const tag = query.get('tag');
 	const page = +query.get('page') || 1;
@@ -19,7 +19,7 @@ export async function get({ query, context }) {
 
 	const { articles, articlesCount } = await api.get(
 		`${endpoint}?${q}`,
-		context.user && context.user.token
+		locals.user && locals.user.token
 	);
 
 	return {

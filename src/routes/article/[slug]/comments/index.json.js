@@ -1,10 +1,10 @@
 import * as api from '$lib/api.js';
 
-export async function get({ params, context }) {
+export async function get({ params, locals }) {
 	const { slug } = params;
 	const { comments } = await api.get(
 		`articles/${slug}/comments`,
-		context.user && context.user.token
+		locals.user && locals.user.token
 	);
 
 	return {
@@ -12,8 +12,8 @@ export async function get({ params, context }) {
 	};
 }
 
-export async function post({ params, body: form, headers, context }) {
-	if (!context.user) {
+export async function post({ params, body: form, headers, locals }) {
+	if (!locals.user) {
 		return { status: 401 };
 	}
 
@@ -23,7 +23,7 @@ export async function post({ params, body: form, headers, context }) {
 	const { comment } = await api.post(
 		`articles/${slug}/comments`,
 		{ comment: { body } },
-		context.user.token
+		locals.user.token
 	);
 
 	// for AJAX requests, return the newly created comment

@@ -1,8 +1,8 @@
 import * as api from '$lib/api.js';
 
-export async function get({ params, context }) {
+export async function get({ params, locals }) {
 	const { slug } = params;
-	const { article } = await api.get(`articles/${slug}`, context.user && context.user.token);
+	const { article } = await api.get(`articles/${slug}`, locals.user && locals.user.token);
 
 	return {
 		body: article

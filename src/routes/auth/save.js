@@ -1,14 +1,14 @@
 import * as api from '$lib/api.js';
 import { respond } from './_respond';
 
-export async function post({ body: user, context }) {
-	if (!context.user) {
+export async function post({ body: user, locals }) {
+	if (!locals.user) {
 		return {
 			status: 401
 		};
 	}
 
-	const { token } = context.user;
+	const { token } = locals.user;
 	const body = await api.put(
 		'user',
 		{
