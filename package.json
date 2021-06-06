@@ -5,7 +5,8 @@
 	"type": "module",
 	"scripts": {
 		"dev": "svelte-kit dev",
-		"build": "svelte-kit build --verbose"
+		"build": "svelte-kit build --verbose",
+		"preview": "svelte-kit preview"
 	},
 	"devDependencies": {
 		"@sveltejs/adapter-netlify": "next",
