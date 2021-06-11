@@ -1,15 +1,18 @@
 import * as cookie from 'cookie';
-export function getSession({ headers }) {
+
+export function handle({ headers }) {
 	const cookies = cookie.parse(headers.cookie || '');
 	const jwt = cookies.jwt && Buffer.from(cookies.jwt, 'base64').toString('utf-8');
-	const user = jwt ? JSON.parse(jwt) : null;
+	request.locals.user = jwt ? JSON.parse(jwt) : null;
+}
 
+export function getSession({ locals }) {
 	return {
-		user: user && {
-			username: user.username,
-			email: user.email,
-			image: user.image,
-			bio: user.bio
+		user: locals.user && {
+			username: locals.user.username,
+			email: locals.user.email,
+			image: locals.user.image,
+			bio: locals.user.bio
 		}
 	};
 }
