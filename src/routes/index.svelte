@@ -90,7 +90,7 @@
 			<div class="col-md-3">
 				<div class="sidebar">
 					<p>Popular Tags</p>
-					<div className="tag-list">
+					<div class="tag-list">
 						{#each tags as tag}
 							<a href="/?tag={tag}" rel="prefetch" class="tag-default tag-pill"> {tag} </a>
 						{/each}
