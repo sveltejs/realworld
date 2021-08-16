@@ -13,8 +13,7 @@
 		"@sveltejs/adapter-vercel": "next",
 		"@sveltejs/kit": "next",
 		"marked": "^2.0.1",
-		"svelte": "^3.35.0",
-		"vite": "^2.1.5"
+		"svelte": "^3.42.1"
 	},
 	"dependencies": {
 		"cookie": "^0.4.1"
