@@ -1,8 +1,8 @@
 import * as api from '$lib/api.js';
 import { page_size } from '$lib/constants.js';
 
-export async function get_articles({ query, params, locals }, type) {
-	const p = +query.get('page') || 1;
+export async function get_articles({ url, params, locals }, type) {
+	const p = +url.searchParams.get('page') || 1;
 
 	const q = new URLSearchParams([
 		['limit', page_size],

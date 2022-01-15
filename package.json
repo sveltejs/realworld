@@ -12,7 +12,7 @@
 		"@sveltejs/adapter-netlify": "next",
 		"@sveltejs/adapter-vercel": "next",
 		"@sveltejs/kit": "next",
-		"marked": "^2.0.1",
+		"marked": "^4.0.0",
 		"svelte": "^3.42.1"
 	},
 	"dependencies": {

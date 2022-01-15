@@ -1,7 +1,7 @@
 <script context="module">
-	export async function load({ page, fetch }) {
+	export async function load({ url, fetch }) {
 		const [{ articles, pages }, { tags }] = await Promise.all([
-			fetch(`/articles.json?${page.query}`, { credentials: 'include' }).then((r) => r.json()),
+			fetch(`/articles.json${url.search}`, { credentials: 'include' }).then((r) => r.json()),
 			fetch('/tags.json').then((r) => r.json())
 		]);
 
@@ -24,9 +24,9 @@
 	export let pages;
 	export let tags;
 
-	$: p = +$page.query.get('p') || 1;
-	$: tag = $page.query.get('tag');
-	$: tab = $page.query.get('tab') || 'all';
+	$: p = +$page.url.searchParams.get('p') || 1;
+	$: tag = $page.url.searchParams.get('tag');
+	$: tab = $page.url.searchParams.get('tab') || 'all';
 	$: page_link_base = tag ? `tag=${tag}` : `tab=${tab}`;
 </script>
 

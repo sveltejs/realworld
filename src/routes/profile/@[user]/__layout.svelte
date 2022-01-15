@@ -1,6 +1,6 @@
 <script context="module">
-	export async function load({ page, fetch }) {
-		const res = await fetch(`/profile/@${page.params.user}.json`);
+	export async function load({ params, fetch }) {
+		const res = await fetch(`/profile/@${params.user}.json`);
 
 		return {
 			props: {
@@ -17,7 +17,7 @@
 
 	// TODO would be nice to have a more idiomatic solution to this —
 	// https://github.com/sveltejs/kit/issues/269
-	$: segments = $page.path.split('/');
+	$: segments = $page.url.pathname.split('/');
 	$: is_favorites = segments.length === 4 && segments[3] === 'favorites';
 	$: is_user = $session.user && profile.username === $session.user.username;
 

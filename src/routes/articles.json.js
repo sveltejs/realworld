@@ -1,10 +1,10 @@
 import * as api from '$lib/api';
 import { page_size } from '$lib/constants';
 
-export async function get({ query, locals }) {
-	const tab = query.get('tab') || 'all';
-	const tag = query.get('tag');
-	const page = +query.get('page') || 1;
+export async function get({ url: { searchParams }, locals }) {
+	const tab = searchParams.get('tab') || 'all';
+	const tag = searchParams.get('tag');
+	const page = +searchParams.get('page') || 1;
 
 	const endpoint = tab === 'feed' ? 'articles/feed' : 'articles';
 

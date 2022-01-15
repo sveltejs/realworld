@@ -1,6 +1,6 @@
 <script context="module">
-	export async function load({ page, fetch }) {
-		const { slug } = page.params;
+	export async function load({ params, fetch }) {
+		const { slug } = params;
 		const [article, comments] = await Promise.all([
 			fetch(`/article/${slug}.json`).then((r) => r.json()),
 			fetch(`/article/${slug}/comments.json`).then((r) => r.json())
@@ -14,7 +14,7 @@
 
 <script>
 	import { session } from '$app/stores';
-	import marked from 'marked';
+	import { marked } from 'marked';
 
 	import ArticleMeta from './_ArticleMeta.svelte';
 	import CommentContainer from './_CommentContainer.svelte';
