@@ -1,10 +1,10 @@
 import * as cookie from 'cookie';
 
-export async function handle({ request, resolve }) {
-	const cookies = cookie.parse(request.headers.cookie || '');
+export async function handle({ event, resolve }) {
+	const cookies = cookie.parse(event.request.headers.get('cookie') || '');
 	const jwt = cookies.jwt && Buffer.from(cookies.jwt, 'base64').toString('utf-8');
-	request.locals.user = jwt ? JSON.parse(jwt) : null;
-	return await resolve(request);
+	event.locals.user = jwt ? JSON.parse(jwt) : null;
+	return await resolve(event);
 }
 
 export function getSession({ locals }) {

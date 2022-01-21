@@ -9,6 +9,6 @@ export async function get({ params, locals }) {
 	};
 }
 
-export async function put(request) {
+export async function put({ request }) {
 	console.log('put', request);
 }
