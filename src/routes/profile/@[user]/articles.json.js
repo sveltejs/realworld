@@ -1,5 +1,5 @@
 import { get_articles } from './_get_articles';
 
-export async function get({ request }) {
-	return get_articles(request, 'author');
+export async function get(event) {
+	return get_articles(event, 'author');
 }
