@@ -12,15 +12,14 @@ async function send({ method, path, data, token }) {
 		opts.headers['Authorization'] = `Token ${token}`;
 	}
 
-	return fetch(`${base}/${path}`, opts)
-		.then((r) => r.text())
-		.then((json) => {
-			try {
-				return JSON.parse(json);
-			} catch (err) {
-				return json;
-			}
-		});
+	const response = await fetch(`${base}/${path}`, opts)
+	const text = await response.text()
+
+	try {
+		return JSON.parse(text);
+	} catch (err) {
+		return text;
+	}
 }
 
 export function get(path, token) {
