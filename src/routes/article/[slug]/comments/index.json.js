@@ -12,12 +12,13 @@ export async function get({ params, locals }) {
 	};
 }
 
-export async function post({ params, body: form, headers, locals }) {
+export async function post({ params, request, locals }) {
 	if (!locals.user) {
 		return { status: 401 };
 	}
 
 	const { slug } = params;
+	const form = await request.formData();
 	const body = form.get('comment');
 
 	const { comment } = await api.post(
@@ -27,7 +28,7 @@ export async function post({ params, body: form, headers, locals }) {
 	);
 
 	// for AJAX requests, return the newly created comment
-	if (headers.accept === 'application/json') {
+	if (request.headers.get('accept') === 'application/json') {
 		return {
 			status: 201, // created
 			body: comment
