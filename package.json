@@ -1,22 +1,22 @@
 {
-	"name": "realworld.svelte.dev",
-	"version": "1.0.1-next.0",
-	"private": true,
-	"license": "MIT",
-	"type": "module",
-	"scripts": {
-		"dev": "svelte-kit dev",
-		"build": "svelte-kit build --verbose",
-		"preview": "svelte-kit preview"
-	},
-	"devDependencies": {
-		"@sveltejs/adapter-netlify": "next",
-		"@sveltejs/adapter-vercel": "next",
-		"@sveltejs/kit": "next",
-		"marked": "^4.0.0",
-		"svelte": "^3.42.1"
-	},
-	"dependencies": {
-		"cookie": "^0.5.0"
-	}
+  "name": "realworld.svelte.dev",
+  "version": "1.0.1-next.0",
+  "private": true,
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "dev": "svelte-kit dev",
+    "build": "svelte-kit build --verbose",
+    "preview": "svelte-kit preview"
+  },
+  "devDependencies": {
+    "@sveltejs/adapter-netlify": "next",
+    "@sveltejs/adapter-vercel": "next",
+    "@sveltejs/kit": "1.0.0-next.217",
+    "marked": "^4.0.0",
+    "svelte": "^3.42.1"
+  },
+  "dependencies": {
+    "cookie": "^0.5.0"
+  }
 }
