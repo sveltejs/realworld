@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "dev": "svelte-kit dev",
-    "build": "svelte-kit build --verbose",
+    "build": "NODE_OPTIONS=--max_old_space_size=16384 svelte-kit build",
     "preview": "svelte-kit preview"
   },
   "devDependencies": {
