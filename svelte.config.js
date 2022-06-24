@@ -3,6 +3,9 @@ import vercel from '@sveltejs/adapter-vercel';
 
 export default {
 	kit: {
-		adapter: process.env.VERCEL ? vercel() : netlify()
+		adapter: process.env.VERCEL ? vercel() : netlify(),
+		methodOverride: {
+			allowed: ['PUT', 'DELETE']
+		}
 	}
 };
