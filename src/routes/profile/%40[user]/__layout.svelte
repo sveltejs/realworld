@@ -65,7 +65,9 @@
 						</a>
 					{:else if $session.user}
 						<button
-							class="btn btn-sm action-btn {profile.following ? 'btn-secondary' : 'btn-outline-secondary'}"
+							class="btn btn-sm action-btn {profile.following
+								? 'btn-secondary'
+								: 'btn-outline-secondary'}"
 							on:click={toggle_following}
 						>
 							<i class="ion-plus-round" />
@@ -88,8 +90,8 @@
 								href="/profile/@{profile.username}"
 								class="nav-link"
 								rel="prefetch"
-								class:active={!is_favorites}
-							>Articles</a>
+								class:active={!is_favorites}>Articles</a
+							>
 						</li>
 
 						<li class="nav-item">
@@ -97,8 +99,8 @@
 								href="/profile/@{profile.username}/favorites"
 								class="nav-link"
 								rel="prefetch"
-								class:active={is_favorites}
-							>Favorites</a>
+								class:active={is_favorites}>Favorites</a
+							>
 						</li>
 					</ul>
 				</div>

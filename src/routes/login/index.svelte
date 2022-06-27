@@ -47,18 +47,28 @@
 					<a href="/register">Need an account?</a>
 				</p>
 
-				<ListErrors {errors}/>
+				<ListErrors {errors} />
 
 				<form on:submit|preventDefault={submit}>
 					<fieldset class="form-group">
-						<input class="form-control form-control-lg" type="email" required placeholder="Email" bind:value={email}>
+						<input
+							class="form-control form-control-lg"
+							type="email"
+							required
+							placeholder="Email"
+							bind:value={email}
+						/>
 					</fieldset>
 					<fieldset class="form-group">
-						<input class="form-control form-control-lg" type="password" required placeholder="Password" bind:value={password}>
+						<input
+							class="form-control form-control-lg"
+							type="password"
+							required
+							placeholder="Password"
+							bind:value={password}
+						/>
 					</fieldset>
-					<button class="btn btn-lg btn-primary pull-xs-right" type="submit">
-						Sign in
-					</button>
+					<button class="btn btn-lg btn-primary pull-xs-right" type="submit"> Sign in </button>
 				</form>
 			</div>
 		</div>

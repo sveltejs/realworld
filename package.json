@@ -7,12 +7,16 @@
 	"scripts": {
 		"dev": "svelte-kit dev",
 		"build": "svelte-kit build --verbose",
-		"preview": "svelte-kit preview"
+		"preview": "svelte-kit preview",
+		"lint": "prettier --check --plugin-search-dir=. .",
+		"format": "prettier --write --plugin-search-dir=. ."
 	},
 	"devDependencies": {
 		"@sveltejs/adapter-auto": "next",
 		"@sveltejs/kit": "next",
 		"marked": "^4.0.0",
+		"prettier": "^2.6.2",
+		"prettier-plugin-svelte": "^2.7.0",
 		"svelte": "^3.42.1"
 	},
 	"dependencies": {

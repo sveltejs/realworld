@@ -23,7 +23,7 @@ async function send({ method, path, data, token }) {
 				}
 
 				return resParsed;
-			} catch(err) {
+			} catch (err) {
 				return json;
 			}
 		});

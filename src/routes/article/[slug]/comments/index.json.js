@@ -2,10 +2,7 @@ import * as api from '$lib/api.js';
 
 export async function get({ params, locals }) {
 	const { slug } = params;
-	const { comments } = await api.get(
-		`articles/${slug}/comments`,
-		locals.user && locals.user.token
-	);
+	const { comments } = await api.get(`articles/${slug}/comments`, locals.user && locals.user.token);
 
 	return {
 		body: comments

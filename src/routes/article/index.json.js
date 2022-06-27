@@ -2,13 +2,12 @@ import * as api from '$lib/api.js';
 
 /** @type {import('@sveltejs/kit').RequestHandler} */
 export async function post({ request, locals }) {
-	
 	if (!locals.user) {
 		return { status: 401 };
 	}
-	
+
 	const form = await request.formData();
-	
+
 	const res = await api.post(
 		'articles',
 		{
@@ -33,7 +32,7 @@ export async function post({ request, locals }) {
 			body: res.article
 		};
 	}
-	
+
 	// for traditional (no-JS) form submissions, redirect
 	// to the new article
 	console.log(`redirecting to /article/${res.article.slug}`);
@@ -44,4 +43,4 @@ export async function post({ request, locals }) {
 			location: `/article/${res.article.slug}`
 		}
 	};
-};
+}

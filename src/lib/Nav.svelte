@@ -7,12 +7,19 @@
 		<a rel="prefetch" class="navbar-brand" href="/">conduit</a>
 		<ul class="nav navbar-nav pull-xs-right">
 			<li class="nav-item">
-				<a rel="prefetch" class="nav-link" class:active={$page.url.pathname === '/'} href="/">Home</a>
+				<a rel="prefetch" class="nav-link" class:active={$page.url.pathname === '/'} href="/"
+					>Home</a
+				>
 			</li>
 
 			{#if $session.user}
 				<li class="nav-item">
-					<a rel="prefetch" href="/editor" class="nav-link" class:active={$page.url.pathname === '/editor'}>
+					<a
+						rel="prefetch"
+						href="/editor"
+						class="nav-link"
+						class:active={$page.url.pathname === '/editor'}
+					>
 						<i class="ion-compose" />&nbsp;New Post
 					</a>
 				</li>
@@ -22,7 +29,8 @@
 						rel="prefetch"
 						href="/settings"
 						class="nav-link"
-						class:active={$page.url.pathname === '/settings'}>
+						class:active={$page.url.pathname === '/settings'}
+					>
 						<i class="ion-gear-a" />&nbsp;Settings
 					</a>
 				</li>
@@ -35,7 +43,12 @@
 				</li>
 			{:else}
 				<li class="nav-item">
-					<a rel="prefetch" href="/login" class="nav-link" class:active={$page.url.pathname === '/login'}>
+					<a
+						rel="prefetch"
+						href="/login"
+						class="nav-link"
+						class:active={$page.url.pathname === '/login'}
+					>
 						Sign in
 					</a>
 				</li>
@@ -45,7 +58,8 @@
 						rel="prefetch"
 						href="/register"
 						class="nav-link"
-						class:active={$page.url.pathname === '/register'}>
+						class:active={$page.url.pathname === '/register'}
+					>
 						Sign up
 					</a>
 				</li>

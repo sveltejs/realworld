@@ -21,4 +21,4 @@
 	export let article;
 </script>
 
-<Editor {article} {slug}/>
+<Editor {article} {slug} />

@@ -16,4 +16,4 @@
 	let article = { title: '', description: '', body: '', tagList: [] };
 </script>
 
-<Editor {article}/>
+<Editor {article} />
