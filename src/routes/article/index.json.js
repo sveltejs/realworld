@@ -11,21 +11,22 @@ export async function post({ request, locals }) {
 	
 	const res = await api.post(
 		'articles',
-		{ article: {
+		{
+			article: {
 				title: form.get('title'),
 				description: form.get('description'),
 				body: form.get('body'),
 				tagList: form.get('tagList').split(/[\t\n, ]+/)
-            }
-        },
+			}
+		},
 		locals.user && locals.user.token
 	);
 
-	if(res?.errors) {
+	if (res?.errors) {
 		return { status: 400, body: res.errors };
 	}
 
-		// for AJAX requests, return the newly created article
+	// for AJAX requests, return the newly created article
 	if (request.headers.get('accept') === 'application/json') {
 		return {
 			status: 201, // created
@@ -36,7 +37,6 @@ export async function post({ request, locals }) {
 	// for traditional (no-JS) form submissions, redirect
 	// to the new article
 	console.log(`redirecting to /article/${res.article.slug}`);
-	
 
 	return {
 		status: 303, // see other

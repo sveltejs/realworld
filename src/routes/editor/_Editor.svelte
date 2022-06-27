@@ -24,8 +24,8 @@
 
 	const onresponse = async (res) => {
 		if (res.ok) {
-			const newArticle = await res.json();
-			goto(`/article/${newArticle.slug}`);
+			const { slug } = await res.json();
+			goto(`/article/${slug}`);
 		}
 	};
 
