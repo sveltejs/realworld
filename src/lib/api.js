@@ -1,4 +1,4 @@
-const base = 'https://conduit.productionready.io/api';
+const base = 'https://api.realworld.io/api';
 
 async function send({ method, path, data, token }) {
 	const opts = { method, headers: {} };
@@ -16,8 +16,14 @@ async function send({ method, path, data, token }) {
 		.then((r) => r.text())
 		.then((json) => {
 			try {
-				return JSON.parse(json);
-			} catch (err) {
+				var resParsed = JSON.parse(json);
+
+				if (resParsed?.status === 'error') {
+					console.log(`API response error from ${base}/${path}: ${json}`);
+				}
+
+				return resParsed;
+			} catch(err) {
 				return json;
 			}
 		});

@@ -24,7 +24,8 @@
 
 	const onresponse = async (res) => {
 		if (res.ok) {
-			goto(res.headers.get('location'));
+			const { slug } = await res.json();
+			goto(`/article/${slug}`);
 		}
 	};
 
@@ -60,6 +61,7 @@
 								class="form-control form-control-lg"
 								type="text"
 								placeholder="Article Title"
+								name="title"
 								bind:value={article.title}
 							/>
 						</fieldset>
@@ -69,6 +71,7 @@
 								class="form-control"
 								type="text"
 								placeholder="What's this article about?"
+								name="description"
 								bind:value={article.description}
 							/>
 						</fieldset>
@@ -78,6 +81,7 @@
 								class="form-control"
 								rows="8"
 								placeholder="Write your article (in markdown)"
+								name="body"
 								bind:value={article.body}
 							/>
 						</fieldset>
@@ -87,6 +91,7 @@
 								class="form-control"
 								type="text"
 								placeholder="Enter tags"
+								name="tagList"
 								use:enter={add_tag}
 							/>
 
