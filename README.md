@@ -1,13 +1,16 @@
-#Describe the bug
+# Describe the bug
 When building large projects on vercel/netlify sveltekit builds fails due to exceeding build memory allocations.
 
 I believe this issue is related to vite/esbuild - kit maintainers if you feel I should post the issue elsewhere please let me know but I thought it would be best to make the issue known here first.
 
-##Context
+Relevant issues 
+https://github.com/vitejs/vite/issues/2433
+https://github.com/sveltejs/kit/issues/4795
+## Context
 
 We have migrated our codebase to sveltekit a long time ago and have been loving it. In the last few months I created a branch to upgrade our core svelte packages to the latest versions. Everything worked locally but I kept running into vague esbuild errors with every deploy to Vercel. After experimenting with many different sveltekit, esbuild and vite configs I could not get our project to build successfully on Vercel. I deployed the same code to Netlify and got a memory heap allocation error which narrowed down the cause of the issue.
 
-##Problem
+## Problem
 
 I believe the issue is that during the building/bundling esbuild is transforming too many files in parallel and holding too much in memory which results in a javascript heap allocation error.
 
@@ -17,17 +20,18 @@ In our production codebase we are at a point where this error occurs only on Ver
 
 For reference I know Vercel provides 8GB of memory per build.
 
-##Solution
+## Solution
 Not sure if its possible to implement some kind of progressive build strategy to combat these large builds or perhaps this issue is originating from some internal bug within esbuild package.
 
-##Reproduction
+## Reproduction
+(this repo)
 https://github.com/Axeldeblen/realworld-big-build
 
 run npm run build locally and deploy to vercl/netlify using default configs
 
 remove 1000 folders and commit to trigger another deploy, it should build successfully on those platforms I have done this in this PR - Axeldeblen/realworld-big-build#1
 
-##Logs
+## Logs
 local build failure
 ```
 <--- Last few GCs --->
@@ -104,7 +108,7 @@ System:
     @sveltejs/kit: 1.0.0-next.216 => 1.0.0-next.324
     svelte: ^3.42.1 => 3.47.0
 ```
-##Severity
+## Severity
 blocking an upgrade
 
 
