@@ -6,15 +6,16 @@
   "type": "module",
   "scripts": {
     "dev": "svelte-kit dev",
-    "build": "svelte-kit build --verbose",
+    "build": "vite build",
     "preview": "svelte-kit preview"
   },
   "devDependencies": {
     "@sveltejs/adapter-netlify": "next",
     "@sveltejs/adapter-vercel": "next",
-    "@sveltejs/kit": "next",
+    "@sveltejs/kit": "1.0.0-next.375",
     "marked": "^4.0.0",
-    "svelte": "^3.42.1"
+    "svelte": "^3.42.1",
+    "vite": "^3.0.0"
   },
   "dependencies": {
     "cookie": "^0.5.0"
