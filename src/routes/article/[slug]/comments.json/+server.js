@@ -1,6 +1,6 @@
 import * as api from '$lib/api.js';
 
-export async function get({ params, locals }) {
+export async function GET({ params, locals }) {
 	const { slug } = params;
 	const { comments } = await api.get(`articles/${slug}/comments`, locals.user && locals.user.token);
 
@@ -9,7 +9,7 @@ export async function get({ params, locals }) {
 	};
 }
 
-export async function post({ params, request, locals }) {
+export async function POST({ params, request, locals }) {
 	if (!locals.user) {
 		return { status: 401 };
 	}

@@ -1,6 +1,6 @@
 import * as api from '$lib/api.js';
 
-export async function del({ params, locals }) {
+export async function DELETE({ params, locals }) {
 	if (!locals.user) {
 		return { status: 401 };
 	}

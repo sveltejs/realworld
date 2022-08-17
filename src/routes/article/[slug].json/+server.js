@@ -8,6 +8,6 @@ export async function GET({ params, locals }) {
 	return json(article);
 }
 
-export async function put({ request }) {
+export async function PUT({ request }) {
 	console.log('put', request);
 }
