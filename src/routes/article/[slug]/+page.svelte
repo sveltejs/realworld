@@ -8,7 +8,7 @@
 	/** @type {import('./$types').PageData} */
 	export let data;
 
-	$: markup = marked(article.body);
+	$: markup = marked(data.article.body);
 </script>
 
 <svelte:head>
