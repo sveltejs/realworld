@@ -1,28 +1,10 @@
-<script context="module">
-	export async function load({ url, fetch }) {
-		const [{ articles, pages }, { tags }] = await Promise.all([
-			fetch(`/articles.json${url.search}`, { credentials: 'include' }).then((r) => r.json()),
-			fetch('/tags.json').then((r) => r.json())
-		]);
-
-		return {
-			props: {
-				articles,
-				pages,
-				tags
-			}
-		};
-	}
-</script>
-
 <script>
 	import { page, session } from '$app/stores';
 	import ArticleList from '$lib/ArticleList/index.svelte';
 	import Pagination from '$lib/Pagination.svelte';
 
-	export let articles;
-	export let pages;
-	export let tags;
+	/** @type {import('./$types').PageData} */
+	export let data;
 
 	$: p = +$page.url.searchParams.get('p') || 1;
 	$: tag = $page.url.searchParams.get('tag');
@@ -83,15 +65,15 @@
 					</ul>
 				</div>
 
-				<ArticleList {articles} />
-				<Pagination {pages} {p} href={(p) => `/?${page_link_base}&page=${p}`} />
+				<ArticleList articles={data.articles} />
+				<Pagination pages={data.pages} {p} href={(p) => `/?${page_link_base}&page=${p}`} />
 			</div>
 
 			<div class="col-md-3">
 				<div class="sidebar">
 					<p>Popular Tags</p>
 					<div class="tag-list">
-						{#each tags as tag}
+						{#each data.tags as tag}
 							<a href="/?tag={tag}" rel="prefetch" class="tag-default tag-pill"> {tag} </a>
 						{/each}
 					</div>

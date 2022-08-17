@@ -1,17 +1,3 @@
-<script context="module">
-	export async function load({ params, fetch }) {
-		const { slug } = params;
-		const [article, comments] = await Promise.all([
-			fetch(`/article/${slug}.json`).then((r) => r.json()),
-			fetch(`/article/${slug}/comments.json`).then((r) => r.json())
-		]);
-
-		return {
-			props: { article, comments, slug }
-		};
-	}
-</script>
-
 <script>
 	import { session } from '$app/stores';
 	import { marked } from 'marked';
@@ -19,22 +5,21 @@
 	import ArticleMeta from './_ArticleMeta.svelte';
 	import CommentContainer from './_CommentContainer.svelte';
 
-	export let article;
-	export let comments;
-	export let slug;
+	/** @type {import('./$types').PageData} */
+	export let data;
 
 	$: markup = marked(article.body);
 </script>
 
 <svelte:head>
-	<title>{article.title}</title>
+	<title>{data.article.title}</title>
 </svelte:head>
 
 <div class="article-page">
 	<div class="banner">
 		<div class="container">
-			<h1>{article.title}</h1>
-			<ArticleMeta {article} user={$session.user} />
+			<h1>{data.article.title}</h1>
+			<ArticleMeta article={data.article} user={$session.user} />
 		</div>
 	</div>
 
@@ -46,7 +31,7 @@
 				</div>
 
 				<ul class="tag-list">
-					{#each article.tagList as tag}
+					{#each data.article.tagList as tag}
 						<li class="tag-default tag-pill tag-outline">{tag}</li>
 					{/each}
 				</ul>
@@ -58,7 +43,7 @@
 		<div class="article-actions" />
 
 		<div class="row">
-			<CommentContainer {slug} {comments} user={$session.user} errors={[]} />
+			<CommentContainer slug={data.slug} comments={data.comments} user={$session.user} errors={[]} />
 		</div>
 	</div>
 </div>

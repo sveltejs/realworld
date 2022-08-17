@@ -1,3 +1,4 @@
+import { json } from '@sveltejs/kit';
 import * as api from '$lib/api';
 import { page_size } from '$lib/constants';
 
@@ -22,10 +23,8 @@ export async function GET({ url: { searchParams }, locals }) {
 		locals.user && locals.user.token
 	);
 
-	return {
-		body: {
-			articles,
-			pages: Math.ceil(articlesCount / page_size)
-		}
-	};
+	return json({
+		articles,
+		pages: Math.ceil(articlesCount / page_size)
+	});
 }

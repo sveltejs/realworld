@@ -1,26 +1,10 @@
-<script context="module">
-	export function load({ session }) {
-		const { user } = session;
-
-		if (!user) {
-			return {
-				status: 302,
-				redirect: '/login'
-			};
-		}
-
-		return {
-			props: { user }
-		};
-	}
-</script>
-
 <script>
 	import { session } from '$app/stores';
 	import ListErrors from '$lib/ListErrors.svelte';
 	import { post } from '$lib/utils.js';
 
-	export let user;
+	/** @type {import('./$types').PageData} */
+	export let data;
 
 	let in_progress;
 	let errors;
@@ -64,7 +48,7 @@
 								class="form-control"
 								type="text"
 								placeholder="URL of profile picture"
-								bind:value={user.image}
+								bind:value={data.user.image}
 							/>
 						</fieldset>
 
@@ -73,7 +57,7 @@
 								class="form-control form-control-lg"
 								type="text"
 								placeholder="Username"
-								bind:value={user.username}
+								bind:value={data.user.username}
 							/>
 						</fieldset>
 
@@ -82,7 +66,7 @@
 								class="form-control form-control-lg"
 								rows="8"
 								placeholder="Short bio about you"
-								bind:value={user.bio}
+								bind:value={data.user.bio}
 							/>
 						</fieldset>
 
@@ -91,7 +75,7 @@
 								class="form-control form-control-lg"
 								type="email"
 								placeholder="Email"
-								bind:value={user.email}
+								bind:value={data.user.email}
 							/>
 						</fieldset>
 
@@ -100,7 +84,7 @@
 								class="form-control form-control-lg"
 								type="password"
 								placeholder="New Password"
-								bind:value={user.password}
+								bind:value={data.user.password}
 							/>
 						</fieldset>
 

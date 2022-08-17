@@ -1,19 +1,8 @@
-<script context="module">
-	export async function load({ params, fetch }) {
-		const res = await fetch(`/profile/@${params.user}.json`);
-
-		return {
-			props: {
-				profile: await res.json()
-			}
-		};
-	}
-</script>
-
 <script>
 	import { page, session } from '$app/stores';
 
-	export let profile;
+	/** @type {import('./$types').PageData} */
+	export let data;
 
 	// TODO would be nice to have a more idiomatic solution to this —
 	// https://github.com/sveltejs/kit/issues/269
@@ -46,7 +35,7 @@
 </script>
 
 <svelte:head>
-	<title>{profile.username} • Conduit</title>
+	<title>{data.profile.username} • Conduit</title>
 </svelte:head>
 
 <div class="profile-page">
@@ -54,9 +43,9 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-xs-12 col-md-10 offset-md-1">
-					<img src={profile.image} class="user-img" alt={profile.username} />
-					<h4>{profile.username}</h4>
-					<p>{profile.bio}</p>
+					<img src={data.profile.image} class="user-img" alt={data.profile.username} />
+					<h4>{data.profile.username}</h4>
+					<p>{data.profile.bio}</p>
 
 					{#if is_user}
 						<a href="/settings" class="btn btn-sm btn-outline-secondary action-btn">
@@ -65,14 +54,14 @@
 						</a>
 					{:else if $session.user}
 						<button
-							class="btn btn-sm action-btn {profile.following
+							class="btn btn-sm action-btn {data.profile.following
 								? 'btn-secondary'
 								: 'btn-outline-secondary'}"
 							on:click={toggle_following}
 						>
 							<i class="ion-plus-round" />
-							{profile.following ? 'Unfollow' : 'Follow'}
-							{profile.username}
+							{data.profile.following ? 'Unfollow' : 'Follow'}
+							{data.profile.username}
 						</button>
 					{:else}<a href="/login">Sign in to follow</a>{/if}
 				</div>
@@ -87,7 +76,7 @@
 					<ul class="nav nav-pills outline-active">
 						<li class="nav-item">
 							<a
-								href="/profile/@{profile.username}"
+								href="/profile/@{data.profile.username}"
 								class="nav-link"
 								rel="prefetch"
 								class:active={!is_favorites}>Articles</a
@@ -96,7 +85,7 @@
 
 						<li class="nav-item">
 							<a
-								href="/profile/@{profile.username}/favorites"
+								href="/profile/@{data.profile.username}/favorites"
 								class="nav-link"
 								rel="prefetch"
 								class:active={is_favorites}>Favorites</a

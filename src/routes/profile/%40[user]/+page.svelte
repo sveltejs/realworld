@@ -6,7 +6,8 @@
 <script>
 	import ArticleList from '$lib/ArticleList/index.svelte';
 
-	export let articles;
+	/** @type {import('./$types').PageData} */
+	export let data;
 </script>
 
-<ArticleList {articles} />
+<ArticleList articles={data.articles} />
