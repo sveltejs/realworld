@@ -1,9 +1,10 @@
+import { json } from '@sveltejs/kit';
 import * as api from '$lib/api.js';
 
 /** @type {import('@sveltejs/kit').RequestHandler} */
 export async function POST({ request, locals }) {
 	if (!locals.user) {
-		return { status: 401 };
+		throw error(401);
 	}
 
 	const form = await request.formData();
@@ -22,25 +23,17 @@ export async function POST({ request, locals }) {
 	);
 
 	if (res?.errors) {
-		return { status: 400, body: res.errors };
+		throw error(400, res.errors);
 	}
 
 	// for AJAX requests, return the newly created article
 	if (request.headers.get('accept') === 'application/json') {
-		return {
-			status: 201, // created
-			body: res.article
-		};
+		return json(res.article, { status: 201 });
 	}
 
 	// for traditional (no-JS) form submissions, redirect
 	// to the new article
 	console.log(`redirecting to /article/${res.article.slug}`);
 
-	return {
-		status: 303, // see other
-		headers: {
-			location: `/article/${res.article.slug}`
-		}
-	};
+	throw redirect(303, `/article/${res.article.slug}`);
 }

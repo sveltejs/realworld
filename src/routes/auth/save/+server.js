@@ -1,11 +1,10 @@
+import { error } from '@sveltejs/kit';
 import * as api from '$lib/api.js';
 import { respond } from '../_respond';
 
 export async function POST({ request, locals }) {
 	if (!locals.user) {
-		return {
-			status: 401
-		};
+		throw error(401);
 	}
 
 	const user = await request.json();
