@@ -1,7 +1,7 @@
 import * as api from '$lib/api';
 import { page_size } from '$lib/constants';
 
-export async function get({ url: { searchParams }, locals }) {
+export async function GET({ url: { searchParams }, locals }) {
 	const tab = searchParams.get('tab') || 'all';
 	const tag = searchParams.get('tag');
 	const page = +searchParams.get('page') || 1;
