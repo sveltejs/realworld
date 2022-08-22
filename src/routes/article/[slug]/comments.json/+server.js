@@ -20,7 +20,7 @@ export async function POST({ params, request, locals }) {
 	const { comment } = await api.post(
 		`articles/${slug}/comments`,
 		{ comment: { body } },
-		locals.user.token,
+		locals.user.token
 	);
 
 	// for AJAX requests, return the newly created comment
