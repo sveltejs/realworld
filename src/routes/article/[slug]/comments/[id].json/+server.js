@@ -1,3 +1,4 @@
+import { error, json } from '@sveltejs/kit';
 import * as api from '$lib/api.js';
 
 export async function DELETE({ params, locals }) {
@@ -11,4 +12,7 @@ export async function DELETE({ params, locals }) {
 	if (error) {
 		throw (status, { error });
 	}
+
+	// comment was deleted successfully
+	return json({});
 }

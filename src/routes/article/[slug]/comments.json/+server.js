@@ -25,7 +25,7 @@ export async function POST({ params, request, locals }) {
 
 	// for AJAX requests, return the newly created comment
 	if (request.headers.get('accept') === 'application/json') {
-		throw json(comment, { status: 201 }); // 201 - created
+		return json(comment, { status: 201 }); // 201 - created
 	}
 
 	// for traditional (no-JS) form submissions, redirect
