@@ -20,12 +20,12 @@ export async function POST({ params, request, locals }) {
 	const { comment } = await api.post(
 		`articles/${slug}/comments`,
 		{ comment: { body } },
-		locals.user.token
+		locals.user.token,
 	);
 
 	// for AJAX requests, return the newly created comment
 	if (request.headers.get('accept') === 'application/json') {
-		throw json(comment, { status: 201 }); // 201 - created
+		return json(comment, { status: 201 }); // 201 - created
 	}
 
 	// for traditional (no-JS) form submissions, redirect
