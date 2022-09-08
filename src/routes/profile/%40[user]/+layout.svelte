@@ -17,7 +17,7 @@
 		const { following, username } = data.profile;
 
 		// optimistic UI
-      data.profile.following = !data.profile.following;
+      	data.profile.following = !data.profile.following;
 
 		const res = await fetch(`/profile/@${username}/follow`, {
 			method: following ? 'delete' : 'post'
@@ -29,7 +29,7 @@
 		// with our optimistic UI for some reason — but only
 		// if the button wasn't re-toggled in the meantime
 		if (token === current_token) {
-          data.profile = result.profile;
+			data.profile = result.profile;
 		}
 	}
 </script>
