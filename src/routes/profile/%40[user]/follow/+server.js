@@ -1,3 +1,4 @@
+import { json } from '@sveltejs/kit';
 import * as api from '$lib/api.js';
 
 export async function POST({ params, locals }) {

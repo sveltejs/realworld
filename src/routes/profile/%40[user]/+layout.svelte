@@ -8,16 +8,16 @@
 	// https://github.com/sveltejs/kit/issues/269
 	$: segments = $page.url.pathname.split('/');
 	$: is_favorites = segments.length === 4 && segments[3] === 'favorites';
-	$: is_user = $session.user && profile.username === $session.user.username;
+	$: is_user = $session.user && data.profile.username === $session.user.username;
 
 	let current_token;
 	async function toggle_following() {
 		const token = (current_token = {});
 
-		const { following, username } = profile;
+		const { following, username } = data.profile;
 
 		// optimistic UI
-		profile.following = !profile.following;
+		data.profile.following = !data.profile.following;
 
 		const res = await fetch(`/profile/@${username}/follow`, {
 			method: following ? 'delete' : 'post'
@@ -29,7 +29,7 @@
 		// with our optimistic UI for some reason — but only
 		// if the button wasn't re-toggled in the meantime
 		if (token === current_token) {
-			profile = result.profile;
+			data.profile = result.profile;
 		}
 	}
 </script>
@@ -45,7 +45,9 @@
 				<div class="col-xs-12 col-md-10 offset-md-1">
 					<img src={data.profile.image} class="user-img" alt={data.profile.username} />
 					<h4>{data.profile.username}</h4>
-					<p>{data.profile.bio}</p>
+					{#if data.profile.bio}
+						<p>{data.profile.bio}</p>
+					{/if}
 
 					{#if is_user}
 						<a href="/settings" class="btn btn-sm btn-outline-secondary action-btn">
