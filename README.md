@@ -15,7 +15,7 @@ npm install
 npm run dev
 ```
 
-...then open [localhost:5173](http://localhost:5173). To build and start in prod mode:
+To build and start in prod mode:
 
 ```bash
 npm run build
