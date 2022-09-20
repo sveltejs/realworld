@@ -21,7 +21,7 @@
 	async function save() {
 		in_progress = true;
 
-		const response = await post(`auth/save`, user);
+		const response = await post(`auth/save`, data.user);
 
 		errors = response.errors;
 		if (response.user) {
