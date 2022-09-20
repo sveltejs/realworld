@@ -1,5 +1,5 @@
 <script>
-	import { page, session } from '$app/stores';
+	import { page } from '$app/stores';
 	import ArticleList from '$lib/ArticleList/index.svelte';
 	import Pagination from '$lib/Pagination.svelte';
 
@@ -17,7 +17,7 @@
 </svelte:head>
 
 <div class="home-page">
-	{#if !$session.user}
+	{#if !data.user}
 		<div class="banner">
 			<div class="container">
 				<h1 class="logo-font">conduit</h1>
@@ -42,7 +42,7 @@
 							</a>
 						</li>
 
-						{#if $session.user}
+						{#if data.user}
 							<li class="nav-item">
 								<a href="/?tab=feed" rel="prefetch" class="nav-link" class:active={tab === 'feed'}>
 									Your Feed
@@ -65,7 +65,7 @@
 					</ul>
 				</div>
 
-				<ArticleList articles={data.articles} />
+				<ArticleList articles={data.articles} user={data.user} />
 				<Pagination pages={data.pages} {p} href={(p) => `/?${page_link_base}&page=${p}`} />
 			</div>
 

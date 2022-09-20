@@ -10,4 +10,4 @@
 	export let data;
 </script>
 
-<ArticleList articles={data.articles} />
+<ArticleList articles={data.articles} user={data.user} />

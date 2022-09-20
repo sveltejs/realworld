@@ -1,4 +1,5 @@
 <script>
+	import { invalidateAll } from '$app/navigation';
 	import { session } from '$app/stores';
 	import ListErrors from '$lib/ListErrors.svelte';
 	import { post } from '$lib/utils.js';
@@ -14,7 +15,7 @@
 
 		// this will trigger a redirect, because it
 		// causes the `load` function to run again
-		$session.user = null;
+		invalidateAll();
 	}
 
 	async function save() {
@@ -23,7 +24,11 @@
 		const response = await post(`auth/save`, user);
 
 		errors = response.errors;
-		if (response.user) $session.user = response.user;
+		if (response.user) {
+			// TODO: should we have a client-side store for the user to avoid
+			// the invalidation?
+			invalidateAll();
+		}
 
 		in_progress = false;
 	}

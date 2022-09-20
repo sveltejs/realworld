@@ -1,5 +1,4 @@
 <script>
-	import { session } from '$app/stores';
 	import { goto } from '$app/navigation';
 	import { post } from '$lib/utils.js';
 	import ListErrors from '$lib/ListErrors.svelte';
@@ -15,7 +14,6 @@
 		errors = response.errors;
 
 		if (response.user) {
-			$session.user = response.user;
 			goto('/');
 		}
 	}
