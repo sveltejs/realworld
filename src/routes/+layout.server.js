@@ -1,4 +1,4 @@
-export function getSession({ locals }) {
+export function load({ locals }) {
   console.log('locals', locals);
 	return {
 		user: locals.user && {
@@ -7,5 +7,5 @@ export function getSession({ locals }) {
 			image: locals.user.image,
 			bio: locals.user.bio
 		}
-	};
+  }
 }

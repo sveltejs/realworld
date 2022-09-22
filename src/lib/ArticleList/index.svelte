@@ -10,7 +10,7 @@
 {:else}
 	<div>
 		{#each articles as article (article.slug)}
-			<ArticlePreview {article} user={$page.user} />
+			<ArticlePreview {article} user={$page.data.user} />
 		{/each}
 	</div>
 {/if}
