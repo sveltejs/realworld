@@ -1,7 +1,8 @@
 import { redirect } from '@sveltejs/kit';
+import { page } from '$app/stores';
 
-export async function load({ session }) {
-	if (session.user) {
+export async function load() {
+	if (page.user) {
 		throw redirect(302, '/');
 	}
 

@@ -1,5 +1,5 @@
 <script>
-	import { session } from '$app/stores';
+	import { page } from '$app/stores';
 	import ListErrors from '$lib/ListErrors.svelte';
 	import { post } from '$lib/utils.js';
 
@@ -14,7 +14,7 @@
 
 		// this will trigger a redirect, because it
 		// causes the `load` function to run again
-		$session.user = null;
+		page.user = null;
 	}
 
 	async function save() {
@@ -23,7 +23,7 @@
 		const response = await post(`auth/save`, user);
 
 		errors = response.errors;
-		if (response.user) $session.user = response.user;
+		if (response.user) page.user = response.user;
 
 		in_progress = false;
 	}

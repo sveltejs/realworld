@@ -1,5 +1,5 @@
 <script>
-	import { page, session } from '$app/stores';
+	import { page } from '$app/stores';
 </script>
 
 <nav class="navbar navbar-light">
@@ -12,7 +12,7 @@
 				>
 			</li>
 
-			{#if $session.user}
+			{#if $page.user}
 				<li class="nav-item">
 					<a
 						rel="prefetch"
@@ -36,9 +36,9 @@
 				</li>
 
 				<li class="nav-item">
-					<a rel="prefetch" href="/profile/@{$session.user.username}" class="nav-link">
+					<a rel="prefetch" href="/profile/@{$page.user.username}" class="nav-link">
 						<!-- <img src={$user.image} class="user-pic" alt={$user.username}> -->
-						{$session.user.username}
+						{$page.user.username}
 					</a>
 				</li>
 			{:else}

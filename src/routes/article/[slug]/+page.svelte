@@ -1,5 +1,5 @@
 <script>
-	import { session } from '$app/stores';
+	import { page } from '$app/stores';
 	import { marked } from 'marked';
 
 	import ArticleMeta from './_ArticleMeta.svelte';
@@ -19,7 +19,7 @@
 	<div class="banner">
 		<div class="container">
 			<h1>{data.article.title}</h1>
-			<ArticleMeta article={data.article} user={$session.user} />
+			<ArticleMeta article={data.article} user={$page.user} />
 		</div>
 	</div>
 
@@ -43,7 +43,7 @@
 		<div class="article-actions" />
 
 		<div class="row">
-			<CommentContainer slug={data.slug} comments={data.comments} user={$session.user} errors={[]} />
+			<CommentContainer slug={data.slug} comments={data.comments} user={$page.user} errors={[]} />
 		</div>
 	</div>
 </div>
