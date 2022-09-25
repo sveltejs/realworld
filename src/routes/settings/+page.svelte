@@ -1,7 +1,9 @@
 <script>
 	import { page } from '$app/stores';
+	import { session } from '../../stores/sessions';
 	import ListErrors from '$lib/ListErrors.svelte';
 	import { post } from '$lib/utils.js';
+	import { goto } from '$app/navigation';
 
 	/** @type {import('./$types').PageData} */
 	export let data;
@@ -14,13 +16,14 @@
 
 		// this will trigger a redirect, because it
 		// causes the `load` function to run again
-		page.user = null;
+		$session.user = null;
+		goto('/')
 	}
 
 	async function save() {
 		in_progress = true;
 
-		const response = await post(`auth/save`, user);
+		const response = await post(`auth/save`, data.user);
 
 		errors = response.errors;
 		if (response.user) page.user = response.user;

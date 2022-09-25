@@ -1,5 +1,5 @@
 <script>
-	import { page } from '$app/stores';
+	import { session } from '../../stores/sessions';
 	import ArticlePreview from './ArticlePreview.svelte';
 
 	export let articles;
@@ -10,7 +10,7 @@
 {:else}
 	<div>
 		{#each articles as article (article.slug)}
-			<ArticlePreview {article} user={$page.data.user} />
+			<ArticlePreview {article} user={$session.user} />
 		{/each}
 	</div>
 {/if}
