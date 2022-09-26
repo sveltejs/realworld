@@ -5,7 +5,7 @@
 	import Nav from '$lib/Nav.svelte';
 	import PreloadingIndicator from '$lib/PreloadingIndicator.svelte';
 
-	$: $session = $page.data;
+	$session = $page.data;
 </script>
 
 {#if $navigating}

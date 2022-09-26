@@ -1,5 +1,4 @@
 <script>
-	import { page } from '$app/stores';
 	import { session } from '../../stores/sessions';
 	import { goto } from '$app/navigation';
 	import { post } from '$lib/utils.js';
