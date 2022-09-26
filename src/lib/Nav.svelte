@@ -1,7 +1,6 @@
 <script>
 	import { page } from '$app/stores';
-
-	export let user;
+	import { user } from '$lib/stores';
 </script>
 
 <nav class="navbar navbar-light">
@@ -14,7 +13,7 @@
 				>
 			</li>
 
-			{#if user}
+			{#if $user}
 				<li class="nav-item">
 					<a
 						rel="prefetch"
@@ -38,9 +37,9 @@
 				</li>
 
 				<li class="nav-item">
-					<a rel="prefetch" href="/profile/@{user.username}" class="nav-link">
+					<a rel="prefetch" href="/profile/@{$user.username}" class="nav-link">
 						<!-- <img src={$user.image} class="user-pic" alt={$user.username}> -->
-						{user.username}
+						{$user.username}
 					</a>
 				</li>
 			{:else}

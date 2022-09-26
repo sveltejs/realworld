@@ -1,6 +1,7 @@
 <script>
 	import { invalidateAll } from '$app/navigation';
 	import { session } from '$app/stores';
+	import { user } from '$lib/stores';
 	import ListErrors from '$lib/ListErrors.svelte';
 	import { post } from '$lib/utils.js';
 
@@ -12,6 +13,8 @@
 
 	async function logout() {
 		await post(`auth/logout`);
+
+		user.set(null);
 
 		// this will trigger a redirect, because it
 		// causes the `load` function to run again
@@ -25,9 +28,7 @@
 
 		errors = response.errors;
 		if (response.user) {
-			// TODO: should we have a client-side store for the user to avoid
-			// the invalidation?
-			invalidateAll();
+			user.set(response.user);
 		}
 
 		in_progress = false;

@@ -1,6 +1,7 @@
 <script>
 	import { marked } from 'marked';
 
+	import { user } from '$lib/stores';
 	import ArticleMeta from './_ArticleMeta.svelte';
 	import CommentContainer from './_CommentContainer.svelte';
 
@@ -18,7 +19,7 @@
 	<div class="banner">
 		<div class="container">
 			<h1>{data.article.title}</h1>
-			<ArticleMeta article={data.article} user={data.user} />
+			<ArticleMeta article={data.article} user={$user} />
 		</div>
 	</div>
 
@@ -42,7 +43,7 @@
 		<div class="article-actions" />
 
 		<div class="row">
-			<CommentContainer slug={data.slug} comments={data.comments} user={data.user} errors={[]} />
+			<CommentContainer slug={data.slug} comments={data.comments} user={$user} errors={[]} />
 		</div>
 	</div>
 </div>

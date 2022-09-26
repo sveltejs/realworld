@@ -1,16 +1,19 @@
 <script>
 	import { navigating } from '$app/stores';
+	import { user } from '$lib/stores';
 	import Nav from '$lib/Nav.svelte';
 	import PreloadingIndicator from '$lib/PreloadingIndicator.svelte';
 
 	export let data;
+
+	$: user.set(data.user);
 </script>
 
 {#if $navigating}
 	<PreloadingIndicator />
 {/if}
 
-<Nav user={data.user} />
+<Nav />
 
 <main>
 	<slot />

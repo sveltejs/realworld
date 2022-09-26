@@ -1,7 +1,7 @@
 <script>
+	import { user } from '$lib/stores';
 	import ArticlePreview from './ArticlePreview.svelte';
 
-	export let user;
 	export let articles;
 </script>
 
@@ -10,7 +10,7 @@
 {:else}
 	<div>
 		{#each articles as article (article.slug)}
-			<ArticlePreview {article} {user} />
+			<ArticlePreview {article} user={$user} />
 		{/each}
 	</div>
 {/if}

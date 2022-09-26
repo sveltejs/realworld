@@ -1,5 +1,6 @@
 <script>
 	import { page } from '$app/stores';
+	import { user } from '$lib/stores';
 
 	/** @type {import('./$types').PageData} */
 	export let data;
@@ -8,7 +9,7 @@
 	// https://github.com/sveltejs/kit/issues/269
 	$: segments = $page.url.pathname.split('/');
 	$: is_favorites = segments.length === 4 && segments[3] === 'favorites';
-	$: is_user = data.user && data.profile.username === data.user.username;
+	$: is_user = $user && data.profile.username === $user.username;
 
 	let current_token;
 	async function toggle_following() {
@@ -54,7 +55,7 @@
 							<i class="ion-gear-a" />
 							Edit Profile Settings
 						</a>
-					{:else if data.user}
+					{:else if $user}
 						<button
 							class="btn btn-sm action-btn {data.profile.following
 								? 'btn-secondary'

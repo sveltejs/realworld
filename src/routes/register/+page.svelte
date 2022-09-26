@@ -1,5 +1,6 @@
 <script>
 	import { goto } from '$app/navigation';
+	import { user } from '$lib/stores';
 	import { post } from '$lib/utils.js';
 	import ListErrors from '$lib/ListErrors.svelte';
 
@@ -15,6 +16,7 @@
 		errors = response.errors;
 
 		if (response.user) {
+			user.set(response.user);
 			goto('/');
 		}
 	}
