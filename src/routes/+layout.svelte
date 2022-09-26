@@ -12,9 +12,7 @@
 	<PreloadingIndicator />
 {/if}
 
-<Nav
-	session={$session}
-/>
+<Nav />
 
 <main>
 	<slot />
