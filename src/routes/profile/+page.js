@@ -1,6 +1,7 @@
 import { redirect } from '@sveltejs/kit';
+import { get, user as user_store } from '$lib/stores';
 
 export async function load({ parent }) {
-	const { user } = await parent();
+	const user = get(user_store) || (await parent()).user;
 	throw redirect(302, user ? `/profile/@${user.username}` : '/login');
 }

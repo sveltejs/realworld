@@ -1,5 +1,5 @@
 import { getContext, setContext } from 'svelte';
-import { writable } from 'svelte/store';
+import { get as get_store_value, writable } from 'svelte/store';
 import { browser } from '$app/environment';
 
 // safely create a store in order to avoid
@@ -30,3 +30,7 @@ export const user = {
 		return getStores().user.set(value);
 	}
 };
+
+export const get = function(store) {
+	return browser && globalStores ? get_store_value(store) : undefined;
+}
