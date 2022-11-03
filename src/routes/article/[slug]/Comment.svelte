@@ -1,19 +1,8 @@
 <script>
-	import { createEventDispatcher } from 'svelte';
-	import { ajax } from '$lib/actions.js';
+	import { enhance } from '$app/forms';
 
 	export let comment;
-	export let slug;
 	export let user;
-
-	const dispatch = createEventDispatcher();
-	const onresponse = (res) => {
-		if (res.ok) {
-			// check the comment was deleted (e.g. we didn't
-			// double-click and submit twice)
-			dispatch('deleted');
-		}
-	};
 </script>
 
 <div class="card">
@@ -26,20 +15,15 @@
 			<img src={comment.author.image} class="comment-author-img" alt={comment.author.username} />
 		</a>
 
-		<a href="/profile/@{comment.author.username}" class="comment-author"
-			>{comment.author.username}</a
-		>
+		<a href="/profile/@{comment.author.username}" class="comment-author">
+			{comment.author.username}
+		</a>
 
 		<span class="date-posted"> {new Date(comment.createdAt).toDateString()} </span>
 
 		{#if user && comment.author.username === user.username}
-			<form
-				action="/article/{slug}/comments/{comment.id}.json?_method=delete"
-				method="post"
-				class="mod-options"
-				use:ajax={{ onresponse }}
-			>
-				<button class="ion-trash-a" />
+			<form use:enhance method="POST" action="?/deleteComment&id={comment.id}" class="mod-options">
+				<button class="ion-trash-a" aria-label="Delete comment" />
 			</form>
 		{/if}
 	</div>

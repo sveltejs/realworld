@@ -12,21 +12,8 @@ async function send({ method, path, data, token }) {
 		opts.headers['Authorization'] = `Token ${token}`;
 	}
 
-	return fetch(`${base}/${path}`, opts)
-		.then((r) => r.text())
-		.then((json) => {
-			try {
-				var resParsed = JSON.parse(json);
-
-				if (resParsed?.status === 'error') {
-					console.log(`API response error from ${base}/${path}: ${json}`);
-				}
-
-				return resParsed;
-			} catch (err) {
-				return json;
-			}
-		});
+	const res = await fetch(`${base}/${path}`, opts);
+	return await res.json();
 }
 
 export function get(path, token) {

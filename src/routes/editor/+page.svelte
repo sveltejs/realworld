@@ -1,6 +1,16 @@
 <script>
-	import Editor from './_Editor.svelte';
-	let article = { title: '', description: '', body: '', tagList: [] };
+	import Editor from './Editor.svelte';
+
+	/** @type {import('./$types').ActionData} */
+	export let form;
 </script>
 
-<Editor {article} />
+<Editor
+	article={{
+		title: '',
+		description: '',
+		body: '',
+		tagList: []
+	}}
+	errors={form?.errors}
+/>

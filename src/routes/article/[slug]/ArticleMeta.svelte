@@ -1,16 +1,8 @@
 <script>
-	import { goto } from '$app/navigation';
-	import * as api from '$lib/api.js';
+	import { enhance } from '$app/forms';
 
 	export let article;
 	export let user;
-
-	$: can_modify = user && article.author.username === user.username;
-
-	async function remove() {
-		await api.del(`articles/${article.slug}`, user && user.token);
-		goto('/');
-	}
 </script>
 
 <div class="article-meta">
@@ -25,15 +17,17 @@
 		</span>
 	</div>
 
-	{#if can_modify}
+	{#if article.author.username === user?.username}
 		<span>
 			<a href="/editor/{article.slug}" class="btn btn-outline-secondary btn-sm">
 				<i class="ion-edit" /> Edit Article
 			</a>
 
-			<button class="btn btn-outline-danger btn-sm" on:click={remove}>
-				<i class="ion-trash-a" /> Delete Article
-			</button>
+			<form use:enhance method="POST" action="?/deleteArticle">
+				<button class="btn btn-outline-danger btn-sm">
+					<i class="ion-trash-a" /> Delete Article
+				</button>
+			</form>
 		</span>
 	{/if}
 </div>
