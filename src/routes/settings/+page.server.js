@@ -1,7 +1,7 @@
 import { invalid, redirect } from '@sveltejs/kit';
 import * as api from '$lib/api.js';
 
-export async function load({ locals }) {
+export function load({ locals }) {
 	if (!locals.user) throw redirect(302, '/login');
 }
 
