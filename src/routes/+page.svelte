@@ -39,11 +39,11 @@
 
 						{#if data}
 							<li class="nav-item">
-								<a href="/?tab=feed" class="nav-link" class:active={tab === 'feed'}> Your Feed </a>
+								<a href="/?tab=feed" class="nav-link" class:active={tab === 'feed'}>Your Feed</a>
 							</li>
 						{:else}
 							<li class="nav-item">
-								<a href="/login" class="nav-link">Sign in to see your Feed </a>
+								<a href="/login" class="nav-link">Sign in to see your Feed</a>
 							</li>
 						{/if}
 
@@ -67,7 +67,7 @@
 					<p>Popular Tags</p>
 					<div class="tag-list">
 						{#each data.tags as tag}
-							<a href="/?tag={tag}" class="tag-default tag-pill"> {tag} </a>
+							<a href="/?tag={tag}" class="tag-default tag-pill">{tag}</a>
 						{/each}
 					</div>
 				</div>

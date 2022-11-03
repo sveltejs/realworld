@@ -19,7 +19,7 @@
 			{comment.author.username}
 		</a>
 
-		<span class="date-posted"> {new Date(comment.createdAt).toDateString()} </span>
+		<span class="date-posted">{new Date(comment.createdAt).toDateString()}</span>
 
 		{#if user && comment.author.username === user.username}
 			<form use:enhance method="POST" action="?/deleteComment&id={comment.id}" class="mod-options">
