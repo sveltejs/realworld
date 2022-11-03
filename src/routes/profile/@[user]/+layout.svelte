@@ -1,37 +1,11 @@
 <script>
+	import { enhance } from '$app/forms';
 	import { page } from '$app/stores';
 
 	/** @type {import('./$types').PageData} */
 	export let data;
 
-	// TODO would be nice to have a more idiomatic solution to this —
-	// https://github.com/sveltejs/kit/issues/269
-	$: segments = $page.url.pathname.split('/');
-	$: is_favorites = segments.length === 4 && segments[3] === 'favorites';
-	$: is_user = data.user && data.profile.username === data.user.username;
-
-	let current_token;
-	async function toggle_following() {
-		const token = (current_token = {});
-
-		const { following, username } = data.profile;
-
-		// optimistic UI
-		data.profile.following = !data.profile.following;
-
-		const res = await fetch(`/profile/@${username}/follow`, {
-			method: following ? 'delete' : 'post'
-		});
-
-		const result = await res.json();
-
-		// synchronise with the server, in case it disagrees
-		// with our optimistic UI for some reason — but only
-		// if the button wasn't re-toggled in the meantime
-		if (token === current_token) {
-			data.profile = result.profile;
-		}
-	}
+	$: is_favorites = $page.routeId === '/profile/@[user]/favorites';
 </script>
 
 <svelte:head>
@@ -49,23 +23,31 @@
 						<p>{data.profile.bio}</p>
 					{/if}
 
-					{#if is_user}
+					{#if data.profile.username === data.user?.username}
 						<a href="/settings" class="btn btn-sm btn-outline-secondary action-btn">
 							<i class="ion-gear-a" />
 							Edit Profile Settings
 						</a>
 					{:else if data.user}
-						<button
-							class="btn btn-sm action-btn {data.profile.following
-								? 'btn-secondary'
-								: 'btn-outline-secondary'}"
-							on:click={toggle_following}
+						<form
+							method="POST"
+							action="/profile/@{data.profile.username}?/toggleFollow"
+							use:enhance
 						>
-							<i class="ion-plus-round" />
-							{data.profile.following ? 'Unfollow' : 'Follow'}
-							{data.profile.username}
-						</button>
-					{:else}<a href="/login">Sign in to follow</a>{/if}
+							<input hidden type="checkbox" name="following" checked={data.profile.following} />
+							<button
+								class="btn btn-sm action-btn"
+								class:btn-secondary={data.profile.following}
+								class:btn-outline-secondary={!data.profile.following}
+							>
+								<i class="ion-plus-round" />
+								{data.profile.following ? 'Unfollow' : 'Follow'}
+								{data.profile.username}
+							</button>
+						</form>
+					{:else}
+						<a href="/login">Sign in to follow</a>
+					{/if}
 				</div>
 			</div>
 		</div>
