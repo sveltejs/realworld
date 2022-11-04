@@ -21,7 +21,16 @@
 
 				<ListErrors errors={form?.errors} />
 
-				<form use:enhance method="POST" action="?/save">
+				<form
+					use:enhance={() => {
+						return ({ update }) => {
+							// don't clear the form when we update the profile
+							update({ reset: false });
+						};
+					}}
+					method="POST"
+					action="?/save"
+				>
 					<fieldset>
 						<fieldset class="form-group">
 							<input
