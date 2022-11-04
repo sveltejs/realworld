@@ -11,7 +11,7 @@
 	</a>
 
 	<div class="info">
-		<a href="/profile/@{article.author.username}" class="author"> {article.author.username}</a>
+		<a href="/profile/@{article.author.username}" class="author">{article.author.username}</a>
 		<span class="date">
 			{new Date(article.createdAt).toDateString()}
 		</span>
