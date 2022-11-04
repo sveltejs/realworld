@@ -1,12 +1,12 @@
 <script>
 	import { page } from '$app/stores';
 	import ArticleList from '$lib/ArticleList/index.svelte';
-	import Pagination from '$lib/Pagination.svelte';
+	import Pagination from './Pagination.svelte';
 
 	/** @type {import('./$types').PageData} */
 	export let data;
 
-	$: p = +$page.url.searchParams.get('page') ?? 1;
+	$: p = +($page.url.searchParams.get('page') ?? '1');
 	$: tag = $page.url.searchParams.get('tag');
 	$: tab = $page.url.searchParams.get('tab') ?? 'all';
 	$: page_link_base = tag ? `tag=${tag}` : `tab=${tab}`;
@@ -37,7 +37,7 @@
 							</a>
 						</li>
 
-						{#if data}
+						{#if data.user}
 							<li class="nav-item">
 								<a href="/?tab=feed" class="nav-link" class:active={tab === 'feed'}>Your Feed</a>
 							</li>
