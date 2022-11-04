@@ -1,32 +1,11 @@
 <script>
+	import { scale } from 'svelte/transition';
+	import { flip } from 'svelte/animate';
 	import { enhance } from '$app/forms';
 	import ListErrors from '$lib/ListErrors.svelte';
 
 	export let article;
 	export let errors;
-
-	function add_tag(input) {
-		article.tagList = [...article.tagList, input.value];
-		input.value = '';
-	}
-
-	function remove(index) {
-		article.tagList = [...article.tagList.slice(0, index), ...article.tagList.slice(index + 1)];
-	}
-
-	function enter(node, callback) {
-		function onkeydown(event) {
-			if (event.which === 13) callback(node);
-		}
-
-		node.addEventListener('keydown', onkeydown);
-
-		return {
-			destroy() {
-				node.removeEventListener('keydown', onkeydown);
-			}
-		};
-	}
 </script>
 
 <div class="editor-page">
@@ -66,21 +45,44 @@
 
 					<fieldset class="form-group">
 						<input
-							name="tagList"
 							class="form-control"
 							placeholder="Enter tags"
-							use:enter={add_tag}
-						/>
+							on:keydown={(event) => {
+								if (event.key === 'Enter') {
+									event.preventDefault();
+									if (!article.tagList.includes(event.target.value)) {
+										article.tagList = [...article.tagList, event.target.value];
+									}
 
-						<div class="tag-list">
-							{#each article.tagList as tag, i}
-								<span class="tag-default tag-pill">
-									<i class="ion-close-round" on:click={() => remove(i)} />
-									{tag}
-								</span>
-							{/each}
-						</div>
+									event.target.value = '';
+								}
+							}}
+						/>
 					</fieldset>
+
+					<div class="tag-list">
+						{#each article.tagList as tag, i (tag)}
+							<button
+								transition:scale|local={{ duration: 200 }}
+								animate:flip={{ duration: 200 }}
+								class="tag-default tag-pill"
+								on:click|preventDefault={() => {
+									article.tagList = [
+										...article.tagList.slice(0, i),
+										...article.tagList.slice(i + 1)
+									];
+								}}
+								aria-label="Remove {tag} tag"
+							>
+								<i class="ion-close-round" />
+								{tag}
+							</button>
+						{/each}
+					</div>
+
+					{#each article.tagList as tag}
+						<input hidden name="tag" value={tag} />
+					{/each}
 
 					<button class="btn btn-lg pull-xs-right btn-primary">Publish Article</button>
 				</form>
@@ -88,3 +90,9 @@
 		</div>
 	</div>
 </div>
+
+<style>
+	.tag-pill {
+		border: none;
+	}
+</style>
