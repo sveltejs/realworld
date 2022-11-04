@@ -32,7 +32,18 @@
 						<form
 							method="POST"
 							action="/profile/@{data.profile.username}?/toggleFollow"
-							use:enhance
+							use:enhance={({ form }) => {
+								// optimistic UI
+								data.profile.following = !data.profile.following;
+
+								const button = form.querySelector('button');
+								button.disabled = true;
+
+								return ({ result, update }) => {
+									button.disabled = false;
+									if (result.type === 'error') update();
+								};
+							}}
 						>
 							<input hidden type="checkbox" name="following" checked={data.profile.following} />
 							<button

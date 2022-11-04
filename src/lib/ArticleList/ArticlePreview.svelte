@@ -20,8 +20,8 @@
 			<form
 				method="POST"
 				action="/article/{article.slug}?/toggleFavorite"
-				use:enhance={() => {
-					// optimistic update
+				use:enhance={({ form }) => {
+					// optimistic UI
 					if (article.favorited) {
 						article.favorited = false;
 						article.favoritesCount -= 1;
@@ -29,6 +29,14 @@
 						article.favorited = true;
 						article.favoritesCount += 1;
 					}
+
+					const button = form.querySelector('button');
+					button.disabled = true;
+
+					return ({ result, update }) => {
+						button.disabled = false;
+						if (result.type === 'error') update();
+					};
 				}}
 				class="pull-xs-right"
 			>

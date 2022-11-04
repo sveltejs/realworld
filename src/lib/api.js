@@ -1,3 +1,5 @@
+import { error } from '@sveltejs/kit';
+
 const base = 'https://api.realworld.io/api';
 
 async function send({ method, path, data, token }) {
@@ -13,7 +15,11 @@ async function send({ method, path, data, token }) {
 	}
 
 	const res = await fetch(`${base}/${path}`, opts);
-	return await res.json();
+	if (res.ok || res.status === 422) {
+		return await res.json();
+	}
+
+	throw error(res.status);
 }
 
 export function get(path, token) {

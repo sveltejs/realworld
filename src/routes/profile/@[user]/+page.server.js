@@ -1,4 +1,5 @@
 import * as api from '$lib/api.js';
+import { invalid } from '@sveltejs/kit';
 import { get_articles } from './get_articles';
 
 /** @type {import('./$types').PageServerLoad} */
@@ -15,10 +16,12 @@ export const actions = {
 		const data = await request.formData();
 		const following = data.get('following') !== 'on';
 
-		if (following) {
-			await api.post(`profiles/${params.user}/follow`, null, locals.user.token);
-		} else {
-			await api.del(`profiles/${params.user}/follow`, locals.user.token);
+		const result = following
+			? await api.post(`profiles/${params.user}/follow`, null, locals.user.token)
+			: await api.del(`profiles/${params.user}/follow`, locals.user.token);
+
+		if (result.errors) {
+			return invalid(422, result);
 		}
 	}
 };
