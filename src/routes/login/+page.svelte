@@ -1,24 +1,9 @@
 <script>
-	import { session } from '$app/stores';
-	import { goto } from '$app/navigation';
-	import { post } from '$lib/utils.js';
+	import { enhance } from '$app/forms';
 	import ListErrors from '$lib/ListErrors.svelte';
 
-	let email = '';
-	let password = '';
-	let errors = null;
-
-	async function submit(event) {
-		const response = await post(`auth/login`, { email, password });
-
-		// TODO handle network errors
-		errors = response.errors;
-
-		if (response.user) {
-			$session.user = response.user;
-			goto('/');
-		}
-	}
+	/** @type {import('./$types').ActionData} */
+	export let form;
 </script>
 
 <svelte:head>
@@ -34,28 +19,28 @@
 					<a href="/register">Need an account?</a>
 				</p>
 
-				<ListErrors {errors} />
+				<ListErrors errors={form?.errors} />
 
-				<form on:submit|preventDefault={submit}>
+				<form use:enhance method="POST">
 					<fieldset class="form-group">
 						<input
 							class="form-control form-control-lg"
+							name="email"
 							type="email"
 							required
 							placeholder="Email"
-							bind:value={email}
 						/>
 					</fieldset>
 					<fieldset class="form-group">
 						<input
 							class="form-control form-control-lg"
+							name="password"
 							type="password"
 							required
 							placeholder="Password"
-							bind:value={password}
 						/>
 					</fieldset>
-					<button class="btn btn-lg btn-primary pull-xs-right" type="submit"> Sign in </button>
+					<button class="btn btn-lg btn-primary pull-xs-right" type="submit">Sign in</button>
 				</form>
 			</div>
 		</div>

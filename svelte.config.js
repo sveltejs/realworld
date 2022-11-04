@@ -1,10 +1,7 @@
-import adapter from '@sveltejs/adapter-auto';
+import adapter from '@sveltejs/adapter-vercel';
 
 export default {
 	kit: {
-		adapter: adapter(),
-		methodOverride: {
-			allowed: ['PUT', 'DELETE']
-		}
+		adapter: adapter({ edge: true })
 	}
 };

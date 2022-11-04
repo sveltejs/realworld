@@ -1,9 +1,8 @@
 <script>
-	import { session } from '$app/stores';
 	import { marked } from 'marked';
 
-	import ArticleMeta from './_ArticleMeta.svelte';
-	import CommentContainer from './_CommentContainer.svelte';
+	import ArticleMeta from './ArticleMeta.svelte';
+	import CommentContainer from './CommentContainer.svelte';
 
 	/** @type {import('./$types').PageData} */
 	export let data;
@@ -19,7 +18,7 @@
 	<div class="banner">
 		<div class="container">
 			<h1>{data.article.title}</h1>
-			<ArticleMeta article={data.article} user={$session.user} />
+			<ArticleMeta article={data.article} user={data.user} />
 		</div>
 	</div>
 
@@ -43,7 +42,7 @@
 		<div class="article-actions" />
 
 		<div class="row">
-			<CommentContainer slug={data.slug} comments={data.comments} user={$session.user} errors={[]} />
+			<CommentContainer comments={data.comments} user={data.user} errors={[]} />
 		</div>
 	</div>
 </div>

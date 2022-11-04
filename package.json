@@ -13,13 +13,13 @@
 	},
 	"devDependencies": {
 		"@sveltejs/adapter-auto": "next",
+		"@sveltejs/adapter-vercel": "1.0.0-next.81",
 		"@sveltejs/kit": "next",
-		"marked": "^4.0.0",
-		"prettier": "^2.6.2",
-		"prettier-plugin-svelte": "^2.7.0",
-		"svelte": "^3.49.0"
-	},
-	"dependencies": {
-		"cookie": "^0.5.0"
+		"marked": "^4.2.1",
+		"prettier": "^2.7.1",
+		"prettier-plugin-svelte": "^2.8.0",
+		"svelte": "^3.52.0",
+		"typescript": "^4.8.4",
+		"vite": "^3.2.2"
 	}
 }
