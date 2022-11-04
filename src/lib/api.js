@@ -16,7 +16,8 @@ async function send({ method, path, data, token }) {
 
 	const res = await fetch(`${base}/${path}`, opts);
 	if (res.ok || res.status === 422) {
-		return await res.json();
+		const text = await res.text();
+		return text ? JSON.parse(text) : {};
 	}
 
 	throw error(res.status);

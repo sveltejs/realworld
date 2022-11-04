@@ -38,10 +38,10 @@ export const actions = {
 		if (result.error) throw error(result.status, result.error);
 	},
 
-	deleteArticle: async ({ locals }) => {
+	deleteArticle: async ({ locals, params }) => {
 		if (!locals.user) throw error(401);
 
-		await api.del(`articles/${article.slug}`, locals.user.token);
+		await api.del(`articles/${params.slug}`, locals.user.token);
 		throw redirect(307, '/');
 	},
 
