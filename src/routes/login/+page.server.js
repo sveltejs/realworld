@@ -22,7 +22,7 @@ export const actions = {
 			return invalid(401, body);
 		}
 
-		const value = Buffer.from(JSON.stringify(body.user)).toString('base64');
+		const value = btoa(JSON.stringify(body.user));
 		cookies.set('jwt', value, { path: '/' });
 
 		throw redirect(307, '/');

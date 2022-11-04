@@ -28,7 +28,7 @@ export const actions = {
 		const body = await api.put('user', { user }, locals.user.token);
 		if (body.errors) return invalid(400, body.errors);
 
-		const value = Buffer.from(JSON.stringify(body.user)).toString('base64');
+		const value = btoa(JSON.stringify(body.user));
 		cookies.set('jwt', value, { path: '/' });
 
 		locals.user = body.user;
