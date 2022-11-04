@@ -8,6 +8,7 @@ specifiers:
   prettier: ^2.7.1
   prettier-plugin-svelte: ^2.8.0
   svelte: ^3.52.0
+  typescript: ^4.8.4
   vite: ^3.2.2
 
 devDependencies:
@@ -18,6 +19,7 @@ devDependencies:
   prettier: 2.7.1
   prettier-plugin-svelte: 2.8.0_lrllcp5xtrkmmdzifit4hd52ze
   svelte: 3.52.0
+  typescript: 4.8.4
   vite: 3.2.2
 
 packages:
@@ -1010,6 +1012,12 @@ packages:
 
   /tr46/0.0.3:
     resolution: {integrity: sha512-N3WMsuqV66lT30CrXNbEjx4GEwlow3v6rr4mCcv6prnfwhS01rkgyFdjPNBYd9br7LpXV1+Emh01fHnq2Gdgrw==}
+    dev: true
+
+  /typescript/4.8.4:
+    resolution: {integrity: sha512-QCh+85mCy+h0IGff8r5XWzOVSbBO+KfeYrMQh7NJ58QujwcE22u+NUSmUxqF+un70P9GXKxa2HCNiTTMJknyjQ==}
+    engines: {node: '>=4.2.0'}
+    hasBin: true
     dev: true
 
   /undici/5.12.0:
