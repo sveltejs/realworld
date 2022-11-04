@@ -1,23 +1,8 @@
 <script>
-	import * as api from '$lib/api.js';
+	import { enhance } from '$app/forms';
 
 	export let article;
 	export let user;
-
-	async function toggle_favorite() {
-		// optimistic UI
-		if (article.favorited) {
-			article.favoritesCount -= 1;
-			article.favorited = false;
-		} else {
-			article.favoritesCount += 1;
-			article.favorited = true;
-		}
-
-		({ article } = await (article.favorited
-			? api.post(`articles/${article.slug}/favorite`, null, user && user.token)
-			: api.del(`articles/${article.slug}/favorite`, user && user.token)));
-	}
 </script>
 
 <div class="article-preview">
@@ -32,15 +17,27 @@
 		</div>
 
 		{#if user}
-			<div class="pull-xs-right">
-				<button
-					class="btn btn-sm {article.favorited ? 'btn-primary' : 'btn-outline-primary'}"
-					on:click={toggle_favorite}
-				>
+			<form
+				method="POST"
+				action="/article/{article.slug}?/toggleFavorite"
+				use:enhance={() => {
+					// optimistic update
+					if (article.favorited) {
+						article.favorited = false;
+						article.favoritesCount -= 1;
+					} else {
+						article.favorited = true;
+						article.favoritesCount += 1;
+					}
+				}}
+				class="pull-xs-right"
+			>
+				<input hidden type="checkbox" name="favorited" checked={article.favorited} />
+				<button class="btn btn-sm {article.favorited ? 'btn-primary' : 'btn-outline-primary'}">
 					<i class="ion-heart" />
 					{article.favoritesCount}
 				</button>
-			</div>
+			</form>
 		{/if}
 	</div>
 
