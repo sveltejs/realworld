@@ -80,7 +80,9 @@
 						{/each}
 					</div>
 
-					<input hidden name="tagList" value={article.tagList.join(',')} />
+					{#each article.tagList as tag}
+						<input hidden name="tag" value={tag} />
+					{/each}
 
 					<button class="btn btn-lg pull-xs-right btn-primary">Publish Article</button>
 				</form>

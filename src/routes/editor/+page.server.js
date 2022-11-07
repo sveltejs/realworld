@@ -20,10 +20,7 @@ export const actions = {
 					title: data.get('title'),
 					description: data.get('description'),
 					body: data.get('body'),
-					tagList: data
-						.get('tagList')
-						.split(/[\t\n, ]+/)
-						.filter((t) => !!t)
+					tagList: data.getAll('tag')
 				}
 			},
 			locals.user.token
