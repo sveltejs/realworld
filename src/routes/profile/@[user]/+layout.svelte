@@ -5,7 +5,7 @@
 	/** @type {import('./$types').PageData} */
 	export let data;
 
-	$: is_favorites = $page.routeId === '/profile/@[user]/favorites';
+	$: is_favorites = $page.route.id === '/profile/@[user]/favorites';
 </script>
 
 <svelte:head>
