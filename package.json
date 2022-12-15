@@ -12,8 +12,8 @@
 		"format": "prettier --write --plugin-search-dir=. ."
 	},
 	"devDependencies": {
-		"@sveltejs/adapter-vercel": "next",
-		"@sveltejs/kit": "next",
+		"@sveltejs/adapter-vercel": "^1.0.0",
+		"@sveltejs/kit": "^1.0.0",
 		"marked": "^4.2.1",
 		"prettier": "^2.7.1",
 		"prettier-plugin-svelte": "^2.8.0",
