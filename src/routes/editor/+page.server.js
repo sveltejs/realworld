@@ -1,4 +1,4 @@
-import { redirect, invalid } from '@sveltejs/kit';
+import { redirect, fail } from '@sveltejs/kit';
 import * as api from '$lib/api.js';
 
 /** @type {import('./$types').PageServerLoad} */
@@ -26,7 +26,7 @@ export const actions = {
 			locals.user.token
 		);
 
-		if (result.errors) return invalid(400, result);
+		if (result.errors) return fail(400, result);
 
 		throw redirect(303, `/article/${result.article.slug}`);
 	}

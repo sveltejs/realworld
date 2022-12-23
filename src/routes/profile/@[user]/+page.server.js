@@ -1,5 +1,5 @@
 import * as api from '$lib/api.js';
-import { invalid } from '@sveltejs/kit';
+import { fail } from '@sveltejs/kit';
 import { get_articles } from './get_articles';
 
 /** @type {import('./$types').PageServerLoad} */
@@ -21,7 +21,7 @@ export const actions = {
 			: await api.del(`profiles/${params.user}/follow`, locals.user.token);
 
 		if (result.errors) {
-			return invalid(422, result);
+			return fail(422, result);
 		}
 	}
 };
