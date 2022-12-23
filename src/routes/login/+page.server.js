@@ -1,4 +1,4 @@
-import { invalid, redirect } from '@sveltejs/kit';
+import { fail, redirect } from '@sveltejs/kit';
 import * as api from '$lib/api.js';
 
 /** @type {import('./$types').PageServerLoad} */
@@ -19,7 +19,7 @@ export const actions = {
 		});
 
 		if (body.errors) {
-			return invalid(401, body);
+			return fail(401, body);
 		}
 
 		const value = btoa(JSON.stringify(body.user));

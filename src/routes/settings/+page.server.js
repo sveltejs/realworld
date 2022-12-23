@@ -1,4 +1,4 @@
-import { invalid, redirect } from '@sveltejs/kit';
+import { fail, redirect } from '@sveltejs/kit';
 import * as api from '$lib/api.js';
 
 export function load({ locals }) {
@@ -26,7 +26,7 @@ export const actions = {
 		};
 
 		const body = await api.put('user', { user }, locals.user.token);
-		if (body.errors) return invalid(400, body.errors);
+		if (body.errors) return fail(400, body.errors);
 
 		const value = btoa(JSON.stringify(body.user));
 		cookies.set('jwt', value, { path: '/' });
