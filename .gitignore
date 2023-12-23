@@ -3,4 +3,4 @@
 /build
 /.netlify
 /.svelte-kit
-/.vercel_build_output
+/.vercel

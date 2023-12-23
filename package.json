@@ -8,17 +8,17 @@
 		"dev": "vite dev",
 		"build": "vite build",
 		"preview": "vite preview",
-		"lint": "prettier --check --plugin-search-dir=. .",
-		"format": "prettier --write --plugin-search-dir=. ."
+		"lint": "prettier --check .",
+		"format": "prettier --write ."
 	},
 	"devDependencies": {
-		"@sveltejs/adapter-vercel": "^1.0.0",
-		"@sveltejs/kit": "^1.0.0",
-		"marked": "^4.2.1",
-		"prettier": "^2.7.1",
-		"prettier-plugin-svelte": "^2.8.0",
-		"svelte": "^3.54.0",
-		"typescript": "^4.9.4",
-		"vite": "^4.0.5"
+		"@sveltejs/adapter-vercel": "^4.0.3",
+		"@sveltejs/kit": "^2.0.6",
+		"marked": "^11.1.0",
+		"prettier": "^3.1.1",
+		"prettier-plugin-svelte": "^3.1.2",
+		"svelte": "^4.2.8",
+		"typescript": "^5.3.3",
+		"vite": "^5.0.10"
 	}
 }
