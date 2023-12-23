@@ -11,6 +11,9 @@ devDependencies:
   '@sveltejs/kit':
     specifier: ^2.0.6
     version: 2.0.6(@sveltejs/vite-plugin-svelte@3.0.1)(svelte@4.2.8)(vite@5.0.10)
+  '@sveltejs/vite-plugin-svelte':
+    specifier: ^3.0.1
+    version: 3.0.1(svelte@4.2.8)(vite@5.0.10)
   marked:
     specifier: ^11.1.0
     version: 11.1.0
