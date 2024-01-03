@@ -1,13 +1,9 @@
 <script>
-	import { marked } from 'marked';
-
 	import ArticleMeta from './ArticleMeta.svelte';
 	import CommentContainer from './CommentContainer.svelte';
 
 	/** @type {import('./$types').PageData} */
 	export let data;
-
-	$: markup = marked(data.article.body);
 </script>
 
 <svelte:head>
@@ -26,7 +22,7 @@
 		<div class="row article-content">
 			<div class="col-xs-12">
 				<div>
-					{@html markup}
+					{@html data.article.body}
 				</div>
 
 				<ul class="tag-list">
