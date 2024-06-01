@@ -2,7 +2,7 @@ import { redirect } from '@sveltejs/kit';
 import * as api from '$lib/api.js';
 
 export async function load({ locals, params }) {
-	if (!locals.user) throw redirect(302, `/login`);
+	if (!locals.user) redirect(302, `/login`);
 
 	const { article } = await api.get(`articles/${params.slug}`, locals.user.token);
 	return { article };
@@ -11,7 +11,7 @@ export async function load({ locals, params }) {
 /** @type {import('./$types').Actions} */
 export const actions = {
 	default: async ({ locals, params, request }) => {
-		if (!locals.user) throw error(401);
+		if (!locals.user) error(401);
 
 		const data = await request.formData();
 
@@ -28,8 +28,8 @@ export const actions = {
 			locals.user.token
 		);
 
-		if (result.errors) throw error(400, result.errors);
+		if (result.errors) error(400, result.errors);
 
-		throw redirect(303, `/article/${result.article.slug}`);
+		redirect(303, `/article/${result.article.slug}`);
 	}
 };

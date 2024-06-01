@@ -20,7 +20,7 @@ async function send({ method, path, data, token }) {
 		return text ? JSON.parse(text) : {};
 	}
 
-	throw error(res.status);
+	error(res.status);
 }
 
 export function get(path, token) {

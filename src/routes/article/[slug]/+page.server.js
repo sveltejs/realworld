@@ -17,7 +17,7 @@ export async function load({ locals, params }) {
 /** @type {import('./$types').Actions} */
 export const actions = {
 	createComment: async ({ locals, params, request }) => {
-		if (!locals.user) throw error(401);
+		if (!locals.user) error(401);
 
 		const data = await request.formData();
 
@@ -33,23 +33,23 @@ export const actions = {
 	},
 
 	deleteComment: async ({ locals, params, url }) => {
-		if (!locals.user) throw error(401);
+		if (!locals.user) error(401);
 
 		const id = url.searchParams.get('id');
 		const result = await api.del(`articles/${params.slug}/comments/${id}`, locals.user.token);
 
-		if (result.error) throw error(result.status, result.error);
+		if (result.error) error(result.status, result.error);
 	},
 
 	deleteArticle: async ({ locals, params }) => {
-		if (!locals.user) throw error(401);
+		if (!locals.user) error(401);
 
 		await api.del(`articles/${params.slug}`, locals.user.token);
-		throw redirect(307, '/');
+		redirect(307, '/');
 	},
 
 	toggleFavorite: async ({ locals, params, request }) => {
-		if (!locals.user) throw error(401);
+		if (!locals.user) error(401);
 
 		const data = await request.formData();
 		const favorited = data.get('favorited') !== 'on';
@@ -60,6 +60,6 @@ export const actions = {
 			api.del(`articles/${params.slug}/favorite`, locals.user.token);
 		}
 
-		throw redirect(307, request.headers.get('referer') ?? `/article/${params.slug}`);
+		redirect(307, request.headers.get('referer') ?? `/article/${params.slug}`);
 	}
 };

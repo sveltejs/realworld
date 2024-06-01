@@ -11,7 +11,7 @@ export async function load(event) {
 /** @type {import('./$types').Actions} */
 export const actions = {
 	toggleFollow: async ({ locals, params, request }) => {
-		if (!locals.user) throw error(401);
+		if (!locals.user) error(401);
 
 		const data = await request.formData();
 		const following = data.get('following') !== 'on';
