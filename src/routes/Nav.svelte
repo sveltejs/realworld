@@ -13,13 +13,13 @@
 			{#if $page.data.user}
 				<li class="nav-item">
 					<a href="/editor" class="nav-link" class:active={$page.url.pathname === '/editor'}>
-						<i class="ion-compose" />&nbsp;New Post
+						<i class="ion-compose"></i>&nbsp;New Post
 					</a>
 				</li>
 
 				<li class="nav-item">
 					<a href="/settings" class="nav-link" class:active={$page.url.pathname === '/settings'}>
-						<i class="ion-gear-a" />&nbsp;Settings
+						<i class="ion-gear-a"></i>&nbsp;Settings
 					</a>
 				</li>
 

@@ -2,8 +2,7 @@
 	import CommentInput from './CommentInput.svelte';
 	import Comment from './Comment.svelte';
 
-	export let comments;
-	export let user;
+	const { comments, user } = $props();
 </script>
 
 <div class="col-xs-12 col-md-8 offset-md-2">

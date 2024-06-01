@@ -1,8 +1,7 @@
 <script>
 	import ArticleList from '$lib/ArticleList/index.svelte';
 
-	/** @type {import('./$types').PageData} */
-	export let data;
+	const { data } = $props();
 </script>
 
 <ArticleList articles={data.articles} />

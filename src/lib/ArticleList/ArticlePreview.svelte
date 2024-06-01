@@ -1,8 +1,7 @@
 <script>
 	import { enhance } from '$app/forms';
 
-	export let article;
-	export let user;
+	const { article, user } = $props();
 </script>
 
 <div class="article-preview">
@@ -42,7 +41,7 @@
 			>
 				<input hidden type="checkbox" name="favorited" checked={article.favorited} />
 				<button class="btn btn-sm {article.favorited ? 'btn-primary' : 'btn-outline-primary'}">
-					<i class="ion-heart" />
+					<i class="ion-heart"></i>
 					{article.favoritesCount}
 				</button>
 			</form>
@@ -55,7 +54,7 @@
 		<span>Read more...</span>
 		<ul class="tag-list">
 			{#each article.tagList as tag}
-				<li class="tag-default tag-pill tag-outline"><a href="/?tag={tag}">{tag}</a></li>
+				<li class="tag-default tag-pill tag-outline">{tag}</li>
 			{/each}
 		</ul>
 	</a>

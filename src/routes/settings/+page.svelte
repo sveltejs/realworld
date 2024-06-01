@@ -2,11 +2,7 @@
 	import { enhance } from '$app/forms';
 	import ListErrors from '$lib/ListErrors.svelte';
 
-	/** @type {import('./$types').PageData} */
-	export let data;
-
-	/** @type {import('./$types').ActionData} */
-	export let form;
+	const { data, form } = $props();
 </script>
 
 <svelte:head>
@@ -59,7 +55,7 @@
 								rows="8"
 								placeholder="Short bio about you"
 								value={data.user.bio}
-							/>
+							></textarea>
 						</fieldset>
 
 						<fieldset class="form-group">

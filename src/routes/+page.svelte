@@ -3,13 +3,12 @@
 	import ArticleList from '$lib/ArticleList/index.svelte';
 	import Pagination from './Pagination.svelte';
 
-	/** @type {import('./$types').PageData} */
-	export let data;
+	const { data } = $props();
 
-	$: p = +($page.url.searchParams.get('page') ?? '1');
-	$: tag = $page.url.searchParams.get('tag');
-	$: tab = $page.url.searchParams.get('tab') ?? 'all';
-	$: page_link_base = tag ? `tag=${tag}` : `tab=${tab}`;
+	const p = $derived(+($page.url.searchParams.get('page') ?? '1'));
+	const tag = $derived($page.url.searchParams.get('tag'));
+	const tab = $derived($page.url.searchParams.get('tab') ?? 'all');
+	const page_link_base = $derived(tag ? `tag=${tag}` : `tab=${tab}`);
 </script>
 
 <svelte:head>
@@ -50,7 +49,7 @@
 						{#if tag}
 							<li class="nav-item">
 								<a href="/?tag={tag}" class="nav-link active">
-									<i class="ion-pound" />
+									<i class="ion-pound"></i>
 									{tag}
 								</a>
 							</li>
