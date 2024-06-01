@@ -1,5 +1,5 @@
 import * as api from '$lib/api.js';
-import { fail } from '@sveltejs/kit';
+import { error, fail } from '@sveltejs/kit';
 import { get_articles } from './get_articles';
 
 /** @type {import('./$types').PageServerLoad} */
