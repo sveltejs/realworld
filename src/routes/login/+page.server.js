@@ -3,7 +3,7 @@ import * as api from '$lib/api.js';
 
 /** @type {import('./$types').PageServerLoad} */
 export async function load({ locals }) {
-	if (locals.user) throw redirect(307, '/');
+	if (locals.user) redirect(307, '/');
 }
 
 /** @type {import('./$types').Actions} */
@@ -25,6 +25,6 @@ export const actions = {
 		const value = btoa(JSON.stringify(body.user));
 		cookies.set('jwt', value, { path: '/' });
 
-		throw redirect(307, '/');
+		redirect(307, '/');
 	}
 };

@@ -4,7 +4,7 @@ import * as api from '$lib/api.js';
 /** @type {import('./$types').PageServerLoad} */
 export async function load({ parent }) {
 	const { user } = await parent();
-	if (user) throw redirect(307, '/');
+	if (user) redirect(307, '/');
 }
 
 /** @type {import('./$types').Actions} */
@@ -27,6 +27,6 @@ export const actions = {
 		const value = btoa(JSON.stringify(body.user));
 		cookies.set('jwt', value, { path: '/' });
 
-		throw redirect(307, '/');
+		redirect(307, '/');
 	}
 };

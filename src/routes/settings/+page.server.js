@@ -1,8 +1,8 @@
-import { fail, redirect } from '@sveltejs/kit';
+import { error, fail, redirect } from '@sveltejs/kit';
 import * as api from '$lib/api.js';
 
 export function load({ locals }) {
-	if (!locals.user) throw redirect(302, '/login');
+	if (!locals.user) redirect(302, '/login');
 }
 
 /** @type {import('./$types').Actions} */
@@ -13,7 +13,7 @@ export const actions = {
 	},
 
 	save: async ({ cookies, locals, request }) => {
-		if (!locals.user) throw error(401);
+		if (!locals.user) error(401);
 
 		const data = await request.formData();
 

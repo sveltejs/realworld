@@ -1,15 +1,15 @@
-import { redirect, fail } from '@sveltejs/kit';
+import { error, fail, redirect } from '@sveltejs/kit';
 import * as api from '$lib/api.js';
 
 /** @type {import('./$types').PageServerLoad} */
 export async function load({ locals }) {
-	if (!locals.user) throw redirect(302, `/login`);
+	if (!locals.user) redirect(302, `/login`);
 }
 
 /** @type {import('./$types').Actions} */
 export const actions = {
 	default: async ({ locals, request }) => {
-		if (!locals.user) throw error(401);
+		if (!locals.user) error(401);
 
 		const data = await request.formData();
 
@@ -28,6 +28,6 @@ export const actions = {
 
 		if (result.errors) return fail(400, result);
 
-		throw redirect(303, `/article/${result.article.slug}`);
+		redirect(303, `/article/${result.article.slug}`);
 	}
 };
