@@ -1,7 +1,7 @@
 import * as api from '$lib/api.js';
 import { error, redirect } from '@sveltejs/kit';
 import { marked } from 'marked';
-import sanitizeHtml from "sanitize-html";
+import sanitizeHtml from 'sanitize-html';
 
 /** @type {import('./$types').PageServerLoad} */
 export async function load({ locals, params }) {
