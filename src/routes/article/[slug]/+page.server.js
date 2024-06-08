@@ -1,6 +1,7 @@
 import * as api from '$lib/api.js';
 import { error, redirect } from '@sveltejs/kit';
 import { marked } from 'marked';
+import sanitizeHtml from 'sanitize-html';
 
 /** @type {import('./$types').PageServerLoad} */
 export async function load({ locals, params }) {
@@ -9,7 +10,8 @@ export async function load({ locals, params }) {
 		api.get(`articles/${params.slug}/comments`, locals.user?.token)
 	]);
 
-	article.body = marked(article.body);
+	const dirty = marked(article.body);
+	article.body = sanitizeHtml(dirty);
 
 	return { article, comments };
 }

@@ -18,6 +18,7 @@
 		"marked": "^11.1.0",
 		"prettier": "^3.1.1",
 		"prettier-plugin-svelte": "^3.1.2",
+		"sanitize-html": "^2.13.0",
 		"svelte": "^4.2.8",
 		"typescript": "^5.3.3",
 		"vite": "^5.0.13"
