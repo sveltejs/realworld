@@ -55,7 +55,7 @@
 		<span>Read more...</span>
 		<ul class="tag-list">
 			{#each article.tagList as tag}
-				<li class="tag-default tag-pill tag-outline"><a href="/?tag={tag}">{tag}</a></li>
+				<li class="tag-default tag-pill tag-outline">{tag}</li>
 			{/each}
 		</ul>
 	</a>
