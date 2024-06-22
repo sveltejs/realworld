@@ -4,8 +4,9 @@
 	import { enhance } from '$app/forms';
 	import ListErrors from '$lib/ListErrors.svelte';
 
-	export let article;
-	export let errors;
+	const { article, errors } = $props();
+
+	let tagList = $state(article.tagList);
 </script>
 
 <div class="editor-page">
@@ -40,18 +41,18 @@
 							rows="8"
 							placeholder="Write your article (in markdown)"
 							value={article.body}
-						/>
+						></textarea>
 					</fieldset>
 
 					<fieldset class="form-group">
 						<input
 							class="form-control"
 							placeholder="Enter tags"
-							on:keydown={(event) => {
+							onkeydown={(event) => {
 								if (event.key === 'Enter') {
 									event.preventDefault();
-									if (!article.tagList.includes(event.target.value)) {
-										article.tagList = [...article.tagList, event.target.value];
+									if (!tagList.includes(event.target.value)) {
+										tagList.push(event.target.value);
 									}
 
 									event.target.value = '';
@@ -61,26 +62,24 @@
 					</fieldset>
 
 					<div class="tag-list">
-						{#each article.tagList as tag, i (tag)}
+						{#each tagList as tag, i (tag)}
 							<button
 								transition:scale|local={{ duration: 200 }}
 								animate:flip={{ duration: 200 }}
 								class="tag-default tag-pill"
-								on:click|preventDefault={() => {
-									article.tagList = [
-										...article.tagList.slice(0, i),
-										...article.tagList.slice(i + 1)
-									];
+								type="button"
+								onclick={() => {
+									tagList.splice(i, 1);
 								}}
 								aria-label="Remove {tag} tag"
 							>
-								<i class="ion-close-round" />
+								<i class="ion-close-round"></i>
 								{tag}
 							</button>
 						{/each}
 					</div>
 
-					{#each article.tagList as tag}
+					{#each tagList as tag}
 						<input hidden name="tag" value={tag} />
 					{/each}
 

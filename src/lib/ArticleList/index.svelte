@@ -2,7 +2,7 @@
 	import { page } from '$app/stores';
 	import ArticlePreview from './ArticlePreview.svelte';
 
-	export let articles;
+	const { articles } = $props();
 </script>
 
 {#if articles.length === 0}

@@ -2,12 +2,12 @@
 	import { enhance } from '$app/forms';
 	import { placeholder } from '$lib/constants.js';
 
-	export let user;
+	const { user } = $props();
 </script>
 
 <form use:enhance method="POST" action="?/createComment" class="card comment-form">
 	<div class="card-block">
-		<textarea class="form-control" name="comment" placeholder="Write a comment..." rows="3" />
+		<textarea class="form-control" name="comment" placeholder="Write a comment..." rows="3"></textarea>
 	</div>
 
 	<div class="card-footer">

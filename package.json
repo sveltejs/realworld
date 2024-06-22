@@ -12,15 +12,15 @@
 		"format": "prettier --write ."
 	},
 	"devDependencies": {
-		"@sveltejs/adapter-vercel": "^4.0.3",
-		"@sveltejs/kit": "^2.4.3",
-		"@sveltejs/vite-plugin-svelte": "^3.0.1",
-		"marked": "^11.1.0",
-		"prettier": "^3.1.1",
-		"prettier-plugin-svelte": "^3.1.2",
+		"@sveltejs/adapter-vercel": "^5.3.2",
+		"@sveltejs/kit": "^2.5.17",
+		"@sveltejs/vite-plugin-svelte": "^3.1.1",
+		"marked": "^13.0.0",
+		"prettier": "^3.3.2",
+		"prettier-plugin-svelte": "^3.2.5",
 		"sanitize-html": "^2.13.0",
-		"svelte": "^4.2.8",
-		"typescript": "^5.3.3",
-		"vite": "^5.0.13"
+		"svelte": "5.0.0-next.164",
+		"typescript": "^5.5.2",
+		"vite": "^5.3.1"
 	}
 }

@@ -2,8 +2,7 @@
 	import ArticleMeta from './ArticleMeta.svelte';
 	import CommentContainer from './CommentContainer.svelte';
 
-	/** @type {import('./$types').PageData} */
-	export let data;
+	const { data } = $props();
 </script>
 
 <svelte:head>
@@ -35,7 +34,7 @@
 
 		<hr />
 
-		<div class="article-actions" />
+		<div class="article-actions"></div>
 
 		<div class="row">
 			<CommentContainer comments={data.comments} user={data.user} errors={[]} />
