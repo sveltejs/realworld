@@ -1,8 +1,7 @@
 <script>
 	import Editor from './Editor.svelte';
 
-	/** @type {import('./$types').ActionData} */
-	export let form;
+	const { form } = $props();
 </script>
 
 <Editor

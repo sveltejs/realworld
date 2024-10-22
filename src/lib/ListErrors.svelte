@@ -1,5 +1,5 @@
 <script>
-	export let errors;
+	const { errors } = $props();
 </script>
 
 {#if errors}

@@ -2,10 +2,9 @@
 	import { enhance } from '$app/forms';
 	import { page } from '$app/stores';
 
-	/** @type {import('./$types').PageData} */
-	export let data;
+	const { children, data } = $props();
 
-	$: is_favorites = $page.route.id === '/profile/@[user]/favorites';
+	const is_favorites = $derived($page.route.id === '/profile/@[user]/favorites');
 </script>
 
 <svelte:head>
@@ -25,7 +24,7 @@
 
 					{#if data.profile.username === data.user?.username}
 						<a href="/settings" class="btn btn-sm btn-outline-secondary action-btn">
-							<i class="ion-gear-a" />
+							<i class="ion-gear-a"></i>
 							Edit Profile Settings
 						</a>
 					{:else if data.user}
@@ -51,7 +50,7 @@
 								class:btn-secondary={data.profile.following}
 								class:btn-outline-secondary={!data.profile.following}
 							>
-								<i class="ion-plus-round" />
+								<i class="ion-plus-round"></i>
 								{data.profile.following ? 'Unfollow' : 'Follow'}
 								{data.profile.username}
 							</button>
@@ -91,7 +90,7 @@
 					</ul>
 				</div>
 
-				<slot />
+				{@render children()}
 			</div>
 		</div>
 	</div>

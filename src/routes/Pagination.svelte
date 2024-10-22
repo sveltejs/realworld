@@ -1,16 +1,13 @@
 <script>
-	export let pages;
-	export let p;
-	export let href;
+	const { pages, p, href } = $props();
 
-	let range;
-
-	$: {
-		range = [];
-		for (let i = 1; i <= pages; ++i) {
-			range.push(i);
+	const range = $derived.by(() => {
+		const result = [];
+		for (let i = 1; i <= pages; i++) {
+			result.push(i);
 		}
-	}
+		return result;
+	});
 </script>
 
 {#if pages > 1}
