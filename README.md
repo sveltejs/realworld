@@ -10,14 +10,14 @@ For more information on how to this works with other frontends/backends, head ov
 
 ## Running locally
 
-```bash
-npm install
-npm run dev
+```sh
+pnpm install
+pnpm run dev
 ```
 
 To build and start in prod mode:
 
-```bash
-npm run build
-npm run preview
+```sh
+pnpm run build
+pnpm run preview
 ```

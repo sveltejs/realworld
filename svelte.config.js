@@ -1,7 +1,7 @@
 import adapter from '@sveltejs/adapter-vercel';
 
 /** @type {import('@sveltejs/kit').Config} */
-export default {
+const config = {
 	compilerOptions: {
 		runes: true
 	},
@@ -9,3 +9,5 @@ export default {
 		adapter: adapter({ runtime: 'edge' })
 	}
 };
+
+export default config;
