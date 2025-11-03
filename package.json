@@ -22,5 +22,6 @@
 		"svelte": "^5.43.2",
 		"typescript": "^5.9.3",
 		"vite": "^7.1.12"
-	}
+	},
+	"packageManager": "pnpm@10.20.0"
 }
