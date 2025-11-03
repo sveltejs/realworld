@@ -11,13 +11,13 @@ For more information on how to this works with other frontends/backends, head ov
 ## Running locally
 
 ```sh
-npm install
-npm run dev
+pnpm install
+pnpm dev
 ```
 
 To build and start in prod mode:
 
 ```sh
-npm run build
-npm run preview
+pnpm build
+pnpm preview
 ```
