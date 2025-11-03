@@ -1,12 +1,12 @@
 <script>
-	import { navigating } from '$app/stores';
+	import { navigating } from '$app/state';
 	import Nav from './Nav.svelte';
 	import PreloadingIndicator from './PreloadingIndicator.svelte';
 
 	const { children } = $props();
 </script>
 
-{#if $navigating}
+{#if navigating}
 	<PreloadingIndicator />
 {/if}
 
