@@ -10,14 +10,14 @@ For more information on how to this works with other frontends/backends, head ov
 
 ## Running locally
 
-```bash
+```sh
 npm install
 npm run dev
 ```
 
 To build and start in prod mode:
 
-```bash
+```sh
 npm run build
 npm run preview
 ```
