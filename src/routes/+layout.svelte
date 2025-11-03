@@ -11,7 +11,7 @@
 	<link rel="icon" href={favicon} />
 </svelte:head>
 
-{#if navigating}
+{#if navigating.from}
 	<PreloadingIndicator />
 {/if}
 
