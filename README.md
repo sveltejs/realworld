@@ -12,12 +12,12 @@ For more information on how to this works with other frontends/backends, head ov
 
 ```sh
 pnpm install
-pnpm dev
+pnpm run dev
 ```
 
 To build and start in prod mode:
 
 ```sh
-pnpm build
-pnpm preview
+pnpm run build
+pnpm run preview
 ```
