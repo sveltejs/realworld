@@ -1,0 +1,142 @@
+/* Dark mode overrides for the RealWorld Bootstrap 4 theme.
+   The base theme is loaded from a CDN (demo.productionready.io/main.css),
+   so these rules use !important to win over it regardless of load order. */
+
+:root {
+	color-scheme: dark;
+}
+
+html,
+body {
+	background-color: #16181d !important;
+	color: #e6e6e6 !important;
+}
+
+a {
+	color: #7aa2f7 !important;
+}
+
+/* Navbar */
+.navbar-light {
+	background-color: #1f2229 !important;
+}
+.navbar-light .navbar-brand,
+.navbar-light .navbar-brand:focus,
+.navbar-light .navbar-brand:hover,
+.navbar-light .navbar-nav .nav-link {
+	color: #e6e6e6 !important;
+}
+.navbar-light .navbar-toggler {
+	border-color: #444 !important;
+}
+.navbar-light .navbar-toggler-icon {
+	filter: invert(1);
+}
+
+/* Banner / hero */
+.banner {
+	background: #1f2229 !important;
+	color: #f2f2f2 !important;
+}
+.banner h1,
+.banner p {
+	color: #f2f2f2 !important;
+}
+
+/* Cards (article previews, comments) */
+.card,
+.card-block,
+.card-footer {
+	background-color: #1f2229 !important;
+	border-color: #343842 !important;
+	color: #e6e6e6 !important;
+}
+.card-footer {
+	border-top-color: #343842 !important;
+}
+
+/* Article preview + meta */
+.article-preview {
+	border-top-color: #343842 !important;
+}
+.article-meta,
+.article-meta a {
+	color: #b9bdc7 !important;
+}
+
+/* Forms */
+.form-control {
+	background-color: #16181d !important;
+	color: #e6e6e6 !important;
+	border-color: #343842 !important;
+}
+.form-control:focus {
+	background-color: #16181d !important;
+	color: #e6e6e6 !important;
+	border-color: #7aa2f7 !important;
+	box-shadow: 0 0 0 0.2rem rgba(122, 162, 247, 0.25) !important;
+}
+.form-control::placeholder {
+	color: #8b8f99 !important;
+}
+
+/* Buttons */
+.btn {
+	color: #e6e6e6 !important;
+}
+.btn-outline-primary,
+.btn-outline-secondary,
+.btn-outline-danger {
+	color: #e6e6e6 !important;
+	border-color: #555b66 !important;
+}
+.btn-outline-primary:hover,
+.btn-outline-secondary:hover,
+.btn-outline-danger:hover {
+	color: #16181d !important;
+	background-color: #e6e6e6 !important;
+}
+
+/* Tags / pills */
+.tag-default {
+	background-color: #343842 !important;
+	color: #e6e6e6 !important;
+}
+.tag-default.tag-outline {
+	border-color: #555b66 !important;
+	color: #b9bdc7 !important;
+}
+
+/* Feed toggle / nav tabs */
+.nav-pills .nav-link {
+	color: #b9bdc7 !important;
+}
+.nav-pills .nav-link.active {
+	color: #f2f2f2 !important;
+	background-color: transparent !important;
+	border-bottom: 2px solid #7aa2f7 !important;
+}
+
+/* Pagination */
+.page-item .page-link {
+	background-color: #1f2229 !important;
+	border-color: #343842 !important;
+	color: #7aa2f7 !important;
+}
+.page-item.active .page-link {
+	background-color: #7aa2f7 !important;
+	border-color: #7aa2f7 !important;
+	color: #16181d !important;
+}
+.page-item.disabled .page-link {
+	background-color: #16181d !important;
+	color: #6b707a !important;
+}
+
+/* Misc text helpers */
+.text-muted {
+	color: #9aa0ab !important;
+}
+hr {
+	border-top-color: #343842 !important;
+}

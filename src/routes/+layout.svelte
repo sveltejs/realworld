@@ -1,5 +1,6 @@
 <script>
 	import { navigating } from '$app/state';
+	import '../app.css';
 	import favicon from '$lib/assets/favicon.ico';
 	import Nav from './Nav.svelte';
 	import PreloadingIndicator from './PreloadingIndicator.svelte';
