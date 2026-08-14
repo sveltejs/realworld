@@ -1,3 +1,4 @@
+import { encode_session } from '$lib/session.js';
 import { fail, redirect } from '@sveltejs/kit';
 import * as api from '$lib/api.js';
 
@@ -24,9 +25,9 @@ export const actions = {
 			return fail(401, body);
 		}
 
-		const value = btoa(JSON.stringify(body.user));
+		const value = encode_session(body.user);
 		cookies.set('jwt', value, { path: '/' });
 
-		redirect(307, '/');
+		redirect(303, '/');
 	}
 };

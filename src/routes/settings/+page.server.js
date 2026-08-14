@@ -1,3 +1,4 @@
+import { encode_session } from '$lib/session.js';
 import { error, fail, redirect } from '@sveltejs/kit';
 import * as api from '$lib/api.js';
 
@@ -10,6 +11,8 @@ export const actions = {
 	logout: async ({ cookies, locals }) => {
 		cookies.delete('jwt', { path: '/' });
 		locals.user = null;
+
+		redirect(303, '/');
 	},
 
 	save: async ({ cookies, locals, request }) => {
@@ -20,17 +23,22 @@ export const actions = {
 		const user = {
 			username: data.get('username'),
 			email: data.get('email'),
-			password: data.get('password'),
 			image: data.get('image'),
 			bio: data.get('bio')
 		};
 
-		const body = await api.put('user', { user }, locals.user.token);
-		if (body.errors) return fail(400, body.errors);
+		// only send a password when the user typed one
+		const password = data.get('password');
+		if (password) user.password = password;
 
-		const value = btoa(JSON.stringify(body.user));
+		const body = await api.put('user', { user }, locals.user.token);
+		if (body.errors) return fail(422, body);
+
+		const value = encode_session(body.user);
 		cookies.set('jwt', value, { path: '/' });
 
 		locals.user = body.user;
+
+		redirect(303, `/profile/${body.user.username}`);
 	}
 };

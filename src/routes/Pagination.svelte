@@ -3,7 +3,7 @@
 
 	const range = $derived.by(() => {
 		const result = [];
-		for (let i = 1; i <= pages; i++) {
+		for (let i = 1; i <= pages; i += 1) {
 			result.push(i);
 		}
 		return result;

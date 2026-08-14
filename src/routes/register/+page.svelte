@@ -48,7 +48,7 @@
 							placeholder="Password"
 						/>
 					</fieldset>
-					<button class="btn btn-lg btn-primary pull-xs-right">Sign up</button>
+					<button class="btn btn-lg btn-primary pull-xs-right" type="submit">Sign up</button>
 				</form>
 			</div>
 		</div>

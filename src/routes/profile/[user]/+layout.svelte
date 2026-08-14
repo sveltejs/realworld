@@ -1,10 +1,11 @@
 <script>
 	import { enhance } from '$app/forms';
 	import { page } from '$app/stores';
+	import { placeholder } from '$lib/constants.js';
 
 	const { children, data } = $props();
 
-	const is_favorites = $derived($page.route.id === '/profile/@[user]/favorites');
+	const is_favorites = $derived($page.route.id === '/profile/[user]/favorites');
 </script>
 
 <svelte:head>
@@ -16,11 +17,13 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-xs-12 col-md-10 offset-md-1">
-					<img src={data.profile.image} class="user-img" alt={data.profile.username} />
+					<img
+						src={data.profile.image || placeholder}
+						class="user-img"
+						alt={data.profile.username}
+					/>
 					<h4>{data.profile.username}</h4>
-					{#if data.profile.bio}
-						<p>{data.profile.bio}</p>
-					{/if}
+					<p>{data.profile.bio ?? ''}</p>
 
 					{#if data.profile.username === data.user?.username}
 						<a href="/settings" class="btn btn-sm btn-outline-secondary action-btn">
@@ -30,21 +33,22 @@
 					{:else if data.user}
 						<form
 							method="POST"
-							action="/profile/@{data.profile.username}?/toggleFollow"
-							use:enhance={({ form }) => {
+							action="/profile/{data.profile.username}?/toggleFollow&follow={data.profile.following
+								? 'false'
+								: 'true'}"
+							use:enhance={({ formElement }) => {
 								// optimistic UI
 								data.profile.following = !data.profile.following;
 
-								const button = form.querySelector('button');
+								const button = formElement.querySelector('button');
 								button.disabled = true;
 
-								return ({ result, update }) => {
+								return ({ update }) => {
 									button.disabled = false;
-									if (result.type === 'error') update();
+									update();
 								};
 							}}
 						>
-							<input hidden type="checkbox" name="following" checked={data.profile.following} />
 							<button
 								class="btn btn-sm action-btn"
 								class:btn-secondary={data.profile.following}
@@ -70,21 +74,21 @@
 					<ul class="nav nav-pills outline-active">
 						<li class="nav-item">
 							<a
-								href="/profile/@{data.profile.username}"
+								href="/profile/{data.profile.username}"
 								class="nav-link"
 								class:active={!is_favorites}
 							>
-								Articles
+								My Articles
 							</a>
 						</li>
 
 						<li class="nav-item">
 							<a
-								href="/profile/@{data.profile.username}/favorites"
+								href="/profile/{data.profile.username}/favorites"
 								class="nav-link"
 								class:active={is_favorites}
 							>
-								Favorites
+								Favorited Articles
 							</a>
 						</li>
 					</ul>

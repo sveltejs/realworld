@@ -1,6 +1,7 @@
 <script>
 	import { enhance } from '$app/forms';
 	import ListErrors from '$lib/ListErrors.svelte';
+	import { escape_html } from '$lib/escape_html.js';
 
 	const { data, form } = $props();
 </script>
@@ -34,7 +35,7 @@
 								name="image"
 								type="text"
 								placeholder="URL of profile picture"
-								value={data.user.image}
+								defaultValue={data.user.image ?? ''}
 							/>
 						</fieldset>
 
@@ -44,18 +45,16 @@
 								name="username"
 								type="text"
 								placeholder="Username"
-								value={data.user.username}
+								defaultValue={data.user.username}
 							/>
 						</fieldset>
 
 						<fieldset class="form-group">
-							<textarea
-								class="form-control form-control-lg"
-								name="bio"
-								rows="8"
-								placeholder="Short bio about you"
-								value={data.user.bio}
-							></textarea>
+							<!-- rendered via @html so hydration leaves the field untouched: Svelte's
+							     textarea value handling mutates the element during hydration, which
+							     can clobber text typed before hydration completes; the extra \n is
+							     eaten by the HTML parser, preserving bios that start with a newline -->
+							{@html `<textarea class="form-control form-control-lg" name="bio" rows="8" placeholder="Short bio about you">\n${escape_html(data.user.bio ?? '')}</textarea>`}
 						</fieldset>
 
 						<fieldset class="form-group">
@@ -64,7 +63,7 @@
 								name="email"
 								type="email"
 								placeholder="Email"
-								value={data.user.email}
+								defaultValue={data.user.email}
 							/>
 						</fieldset>
 
@@ -77,7 +76,9 @@
 							/>
 						</fieldset>
 
-						<button class="btn btn-lg btn-primary pull-xs-right">Update Settings</button>
+						<button class="btn btn-lg btn-primary pull-xs-right" type="submit">
+							Update Settings
+						</button>
 					</fieldset>
 				</form>
 

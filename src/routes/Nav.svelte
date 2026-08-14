@@ -1,6 +1,7 @@
 <script>
 	import { page } from '$app/state';
 	import logo from '$lib/assets/conduit-logo.svg';
+	import { placeholder } from '$lib/constants.js';
 </script>
 
 <nav class="navbar navbar-light">
@@ -27,7 +28,12 @@
 				</li>
 
 				<li class="nav-item">
-					<a href="/profile/@{page.data.user.username}" class="nav-link">
+					<a href="/profile/{page.data.user.username}" class="nav-link">
+						<img
+							src={page.data.user.image || placeholder}
+							class="user-pic"
+							alt={page.data.user.username}
+						/>
 						{page.data.user.username}
 					</a>
 				</li>

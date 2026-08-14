@@ -4,17 +4,18 @@ import { get_articles } from './get_articles';
 
 /** @type {import('./$types').PageServerLoad} */
 export async function load(event) {
-	const { articles, page } = await get_articles(event, 'author');
-	return { articles, page };
+	const { articles, pages } = await get_articles(event, 'author');
+	return { articles, pages };
 }
 
 /** @type {import('./$types').Actions} */
 export const actions = {
-	toggleFollow: async ({ locals, params, request }) => {
+	toggleFollow: async ({ locals, params, url }) => {
 		if (!locals.user) error(401);
 
-		const data = await request.formData();
-		const following = data.get('following') !== 'on';
+		// the intent lives in the query string (not the body) so the API call
+		// still happens when the client navigates away before the body arrives
+		const following = url.searchParams.get('follow') !== 'false';
 
 		const result = following
 			? await api.post(`profiles/${params.user}/follow`, null, locals.user.token)

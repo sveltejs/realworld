@@ -1,5 +1,5 @@
 import * as api from '$lib/api.js';
-import { error, redirect } from '@sveltejs/kit';
+import { error, fail, redirect } from '@sveltejs/kit';
 import { marked } from 'marked';
 import sanitizeHtml from 'sanitize-html';
 
@@ -23,7 +23,7 @@ export const actions = {
 
 		const data = await request.formData();
 
-		await api.post(
+		const result = await api.post(
 			`articles/${params.slug}/comments`,
 			{
 				comment: {
@@ -32,6 +32,8 @@ export const actions = {
 			},
 			locals.user.token
 		);
+
+		if (result.errors) return fail(422, result);
 	},
 
 	deleteComment: async ({ locals, params, url }) => {
@@ -40,28 +42,29 @@ export const actions = {
 		const id = url.searchParams.get('id');
 		const result = await api.del(`articles/${params.slug}/comments/${id}`, locals.user.token);
 
-		if (result.error) error(result.status, result.error);
+		if (result.errors) return fail(422, result);
 	},
 
 	deleteArticle: async ({ locals, params }) => {
 		if (!locals.user) error(401);
 
 		await api.del(`articles/${params.slug}`, locals.user.token);
-		redirect(307, '/');
+		redirect(303, '/');
 	},
 
-	toggleFavorite: async ({ locals, params, request }) => {
+	toggleFavorite: async ({ locals, params, request, url }) => {
 		if (!locals.user) error(401);
 
-		const data = await request.formData();
-		const favorited = data.get('favorited') !== 'on';
+		// the intent lives in the query string (not the body) so the API call
+		// still happens when the client navigates away before the body arrives
+		const favorited = url.searchParams.get('favorite') !== 'false';
 
-		if (favorited) {
-			api.post(`articles/${params.slug}/favorite`, null, locals.user.token);
-		} else {
-			api.del(`articles/${params.slug}/favorite`, locals.user.token);
-		}
+		const result = favorited
+			? await api.post(`articles/${params.slug}/favorite`, null, locals.user.token)
+			: await api.del(`articles/${params.slug}/favorite`, locals.user.token);
 
-		redirect(307, request.headers.get('referer') ?? `/article/${params.slug}`);
+		if (result.errors) return fail(422, result);
+
+		redirect(303, request.headers.get('referer') ?? `/article/${params.slug}`);
 	}
 };

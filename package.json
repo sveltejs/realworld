@@ -9,9 +9,22 @@
 		"build": "vite build",
 		"preview": "vite preview",
 		"lint": "prettier --check .",
-		"format": "prettier --write ."
+		"format": "prettier --write .",
+		"test": "vitest run",
+		"test:unit": "vitest",
+		"test:e2e": "playwright test --grep-invert @security",
+		"test:e2e:security": "playwright test --grep @security",
+		"test:e2e:ui": "playwright test --ui",
+		"test:e2e:report": "playwright show-report",
+		"test:e2e:disabled": "cat realworld-e2e-tests/DISABLED_TESTS.md",
+		"spec:check": "bash scripts/check-realworld-spec.sh",
+		"spec:update": "bash scripts/update-realworld-spec.sh"
+	},
+	"engines": {
+		"node": ">=22"
 	},
 	"devDependencies": {
+		"@playwright/test": "^1.62.1",
 		"@sveltejs/adapter-vercel": "^6.3.2",
 		"@sveltejs/kit": "^2.52.2",
 		"@sveltejs/vite-plugin-svelte": "^6.2.1",
@@ -21,7 +34,8 @@
 		"sanitize-html": "^2.17.0",
 		"svelte": "^5.55.7",
 		"typescript": "^5.9.3",
-		"vite": "^7.3.2"
+		"vite": "^7.3.2",
+		"vitest": "^4.1.10"
 	},
 	"packageManager": "pnpm@10.20.0"
 }

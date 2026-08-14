@@ -1,8 +1,7 @@
 <script>
-	import { scale } from 'svelte/transition';
-	import { flip } from 'svelte/animate';
 	import { enhance } from '$app/forms';
 	import ListErrors from '$lib/ListErrors.svelte';
+	import { escape_html } from '$lib/escape_html.js';
 
 	const { article, errors } = $props();
 
@@ -21,7 +20,7 @@
 							name="title"
 							class="form-control form-control-lg"
 							placeholder="Article Title"
-							value={article.title}
+							defaultValue={article.title}
 						/>
 					</fieldset>
 
@@ -30,18 +29,16 @@
 							name="description"
 							class="form-control"
 							placeholder="What's this article about?"
-							value={article.description}
+							defaultValue={article.description}
 						/>
 					</fieldset>
 
 					<fieldset class="form-group">
-						<textarea
-							name="body"
-							class="form-control"
-							rows="8"
-							placeholder="Write your article (in markdown)"
-							value={article.body}
-						></textarea>
+						<!-- rendered via @html so hydration leaves the field untouched: Svelte's
+						     textarea value handling mutates the element during hydration, which
+						     can clobber text typed before hydration completes; the extra \n is
+						     eaten by the HTML parser, preserving bodies that start with a newline -->
+						{@html `<textarea name="body" class="form-control" rows="8" placeholder="Write your article (in markdown)">\n${escape_html(article.body)}</textarea>`}
 					</fieldset>
 
 					<fieldset class="form-group">
@@ -64,8 +61,6 @@
 					<div class="tag-list">
 						{#each tagList as tag, i (tag)}
 							<button
-								transition:scale|local={{ duration: 200 }}
-								animate:flip={{ duration: 200 }}
 								class="tag-default tag-pill"
 								type="button"
 								onclick={() => {
@@ -83,7 +78,8 @@
 						<input hidden name="tag" value={tag} />
 					{/each}
 
-					<button class="btn btn-lg pull-xs-right btn-primary">Publish Article</button>
+					<button class="btn btn-lg pull-xs-right btn-primary" type="submit">Publish Article</button
+					>
 				</form>
 			</div>
 		</div>

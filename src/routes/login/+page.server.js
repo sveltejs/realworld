@@ -1,9 +1,23 @@
+import { encode_session } from '$lib/session.js';
 import { fail, redirect } from '@sveltejs/kit';
 import * as api from '$lib/api.js';
 
 /** @type {import('./$types').PageServerLoad} */
-export async function load({ locals }) {
-	if (locals.user) redirect(307, '/');
+export async function load({ cookies, locals }) {
+	if (!locals.user) return;
+
+	// only bounce away if the session is actually alive; a dead one (expired or
+	// revoked token) lands here via api.js's 401 redirect, so clear the stale
+	// cookie and show the form — otherwise /login would loop back to /
+	try {
+		await api.get('user', locals.user.token);
+	} catch {
+		cookies.delete('jwt', { path: '/' });
+		locals.user = null;
+		return;
+	}
+
+	redirect(307, '/');
 }
 
 /** @type {import('./$types').Actions} */
@@ -22,9 +36,9 @@ export const actions = {
 			return fail(401, body);
 		}
 
-		const value = btoa(JSON.stringify(body.user));
+		const value = encode_session(body.user);
 		cookies.set('jwt', value, { path: '/' });
 
-		redirect(307, '/');
+		redirect(303, '/');
 	}
 };
